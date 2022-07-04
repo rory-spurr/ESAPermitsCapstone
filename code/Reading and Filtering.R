@@ -34,6 +34,29 @@ wcr_rev5 <- wcr_rev4 %>%
                              "Rockfish, Bocaccio" = "bocaccio",
                              "Rockfish, Yelloweye" = "yelloweye rockfish"))
 
+# recoding HUCs to account for HUCs that were altered or moved
+# broken hucs are 18020103, 18020109, 18020112, 18020118,
+# 18040005, 18060001, 18060012
+
+# What to change them to:
+# 18020103 = 18020156 # very certain
+# 18020109 = 18020163 # very certain
+# 18020112 = 18020154 # very certain based on location descriptions
+# 18020118 = 18020154 # very certain based on location descriptions
+# 18040005 = 18040012 # very certain based on location descriptions
+# 18060001 = 18060015 # split between 18050006 as well, arbitrarily picked
+# 18060012 = 18060006 # chose this over Monterrey Bay as population is South-Central Cal Coast
+
+wcr_rev5 <- wcr_rev5 %>% 
+  mutate(HUCNumber = recode(HUCNumber,
+                            `18020103` = 18020156,
+                            `18020109` = 18020163,
+                            `18020112` = 18020154,
+                            `18020118` = 18020154,
+                            `18040005` = 18040012,
+                            `18060001` = 18060015,
+                            `18060012` = 18060006))
+
 adults <- wcr_rev5 %>% 
   filter(LifeStage == "Adult")
 juvenile <- wcr_rev5 %>% 
