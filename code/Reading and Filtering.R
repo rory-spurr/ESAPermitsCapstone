@@ -3,6 +3,9 @@
 library(tidyverse)
 library(sf)
 
+# =================================================================================
+# Permit Data
+# =================================================================================
 # West Coast region read in -> with Alana's filters
 wcr.init <- read_csv("data/WCRpermitBiOp_allregns_all_years__7Jan2022.csv")
 
@@ -54,22 +57,25 @@ adults <- wcr %>%
 juvenile <- wcr %>% 
   filter(LifeStage == "Juvenile")
 
-# Geodatabases and other Spatial Objects
-# Reading in geodatabase/datafiles
-st_layers(dsn = here("data/WBD_National_GDB", "WBD_National_GDB.gdb"))
-
-wbd.hucs <- read_sf(dsn = here("data/WBD_National_GDB", "WBD_National_GDB.gdb"), layer = "WBDHU8")
+# =================================================================================
+# Spatial Data
+# =================================================================================
+# Reading in HUC 8 shape file
+wbd.hucs <- read_sf("data/WCR_HUC8/WCR_HUC8.shp")
 wbd.hucs$huc8 <- as.double(wbd.hucs$huc8)
 
-state.bound <- read_sf(here("data/cb_2018_us_state_20m", "cb_2018_us_state_20m.shp"))
+# state boundary shape files
+state.bound <- read_sf("data/cb_2018_us_state_20m/cb_2018_us_state_20m.shp")
 wcr.bound <- state.bound %>%
   filter(NAME == "Washington" | NAME == "Oregon" |
            NAME == "California" | NAME == "Idaho")
 
-# Joining the Files
-wcr_spatial <- right_join(x = wbd.hucs, y = wcr_rev5, by = c("huc8" = "HUCNumber"))
+# Joining Permit data and spatial data
+wcr_spatial <- right_join(x = wbd.hucs, y = wcr, by = c("huc8" = "HUCNumber"))
 
-#===================================================================================
+# =================================================================================
+# Helpful functions and data organization
+# =================================================================================
 # Aggregating the number of apps per Species
 species.num.apps <- function(dat){ # I put this in a function to reduce global variables
   # get species names
