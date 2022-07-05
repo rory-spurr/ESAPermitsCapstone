@@ -42,7 +42,7 @@ wcr <- wcr.init %>%
 # broken hucs are 18020103, 18020109, 18020112, 18020118,
 # 18040005, 18060001, 18060012
 
-# What to change them to:
+# Notes on what to change them to:
 # 18020103 = 18020156 # very certain
 # 18020109 = 18020163 # very certain
 # 18020112 = 18020154 # very certain based on location descriptions
@@ -51,7 +51,7 @@ wcr <- wcr.init %>%
 # 18060001 = 18060015 # split between 18050006 as well, arbitrarily picked
 # 18060012 = 18060006 # chose this over Monterrey Bay as population is South-Central Cal Coast
 
-# Seperate DF by life stage
+# Separate DF by life stage
 adults <- wcr %>% 
   filter(LifeStage == "Adult")
 juvenile <- wcr %>% 
