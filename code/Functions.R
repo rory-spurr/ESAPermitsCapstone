@@ -7,27 +7,15 @@
 species.num.apps <- function(dat){ # I put this in a function to reduce global variables
   # get species names
   species <- unique(dat$CommonName)
-  # total number of species
-  nspecies <- length(species)
-  
-  #create tibble os species and the number of apps
+  #create tibble as species and the number of apps
   nApps <- table(dat$CommonName)
   SpeciesDist <- as_tibble(cbind(species, nApps))
-  
-  # # the following chunk sorts and organizes data (in the barplot) 
-  # but breaks in R Shiny therefore its commented out for now
-  # sorted <- sort(SpeciesDist$nApps)
-  # positions <- vector(length = nspecies)
-  # for (i in 1:nspecies){
-  #   positions[i] <- which(SpeciesDist$nApps == sorted[i])
-  # }
-  # speciesLevels <- species[positions]
-  # SpeciesDist$species <- factor(SpeciesDist$species,
-  #                               levels = speciesLevels)
-  SpeciesDist$nApps <- as.numeric(SpeciesDist$nApps)
+  SpeciesDist <- SpeciesDist %>% 
+    mutate(nApps = as.numeric(nApps)) %>%
+    arrange(nApps) # sort in ascending order
   return(SpeciesDist)
 }
-
+species.num.apps(wcr)
 
 
 # ============================================================================
