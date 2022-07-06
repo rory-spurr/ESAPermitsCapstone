@@ -6,3 +6,5 @@ Rory Spurr and Alana Santana (SMEA MMA students) main contributors, Diana Dishma
 
 Project Goals:
 Improve communication of the research permitting process under the ESA for researchers, co-managers, and the public. This will be accomplished by creating data products and communication tools that summarize ESA-listed fish research for the NOAA West Coast Region (WCR).
+
+Testing Github to see if I can solve a merge conflict
