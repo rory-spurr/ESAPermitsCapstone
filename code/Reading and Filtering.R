@@ -38,7 +38,6 @@ wcr <- wcr.init %>%
                             `18040005` = 18040012,
                             `18060001` = 18060015,
                             `18060012` = 18060006)) %>% 
-  select(c(CommonName, Population)) %>% 
   mutate(Species = paste(Population, CommonName, sep = " "))
 
 # check notes below:
