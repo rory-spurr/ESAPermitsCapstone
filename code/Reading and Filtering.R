@@ -37,7 +37,11 @@ wcr <- wcr.init %>%
                             `18020118` = 18020154,
                             `18040005` = 18040012,
                             `18060001` = 18060015,
-                            `18060012` = 18060006)) # check notes below:
+                            `18060012` = 18060006)) %>% 
+  select(c(CommonName, Population)) %>% 
+  mutate(Species = paste(Population, CommonName, sep = " "))
+
+# check notes below:
 # recoding HUCs to account for HUCs that were altered or moved
 # broken hucs are 18020103, 18020109, 18020112, 18020118,
 # 18040005, 18060001, 18060012
