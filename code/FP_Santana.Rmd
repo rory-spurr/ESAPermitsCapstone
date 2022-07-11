@@ -29,8 +29,8 @@ sf_use_s2(FALSE)
 
 ```{r, include=FALSE}
 #Read in data
-wcr <- read.csv(here("data", "WCR.csv"))
-wbd.hucs <- read_sf(dsn = here("data", "WBD_National_GDB", "WBD_National_GDB.gdb"), layer = "WBDHU8")
+wcr <- read.csv(here("data", "WCRpermitBiOp_allregns_all_years__7Jan2022.csv"))
+wbd.hucs <- read_sf(here("data", "WCR_HUC8", "WCR_HUC8.shp"))
 state.bound <- read_sf(here("data", "cb_2018_us_state_20m", "cb_2018_us_state_20m.shp"))
 ```
 
