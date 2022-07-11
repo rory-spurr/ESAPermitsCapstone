@@ -125,7 +125,7 @@ pal4
 # Create Leaflet Map
 # ===================================================================
 
-leaflet(final.spatial) %>% 
+leaf_map <- leaflet(final.spatial) %>% 
   addProviderTiles(providers$Stamen.TonerLite) %>% 
   setView(lng = -124.072971, lat = 40.887325,
           zoom = 4) %>% 
