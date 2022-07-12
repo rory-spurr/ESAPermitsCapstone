@@ -25,8 +25,8 @@ library(htmlwidgets)
 # HUC 8. Each species has its own column making this DF friendly for Leaflet.
 # Spatial data is then attached.
 
-newDF <- aggregate(juvenile$ExpTake, 
-                   by = list(juvenile$HUCNumber, juvenile$CommonName),
+newDF <- aggregate(juveniles$ExpTake, 
+                   by = list(juveniles$HUCNumber, juveniles$CommonName),
                    FUN = sum) # aggregate total expected take by HUC
 names(newDF) <- c("huc8", "CommonName", "ExpTake") # rename columns
 wideDF <- newDF %>%

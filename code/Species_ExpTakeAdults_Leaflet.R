@@ -86,7 +86,7 @@ final.spatial$labels3 <- ifelse(!is.na(final.spatial$`green sturgeon`),
 pal3 <- colorBin(palette = "viridis",
                  domain = final.spatial$`green sturgeon`,
                  na.color = "transparent",
-                 bins = quantile(final.spatial$`green sturgeon`, na.rm = T))
+                 bins = 2, pretty = F)
 pal3
 
 final.spatial$labels4 <- ifelse(!is.na(final.spatial$`coho salmon`), paste0(
