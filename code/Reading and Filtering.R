@@ -57,7 +57,7 @@ wcr <- wcr.init %>%
 # Separate DF by life stage
 adults <- wcr %>% 
   filter(LifeStage == "Adult")
-juvenile <- wcr %>% 
+juveniles <- wcr %>% 
   filter(LifeStage == "Juvenile")
 
 # =================================================================================
