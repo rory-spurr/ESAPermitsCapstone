@@ -1,6 +1,5 @@
 # Rory Spurr
-# SMEA 586
-# Final Project
+# Leaflet Map for expected take, only juveniles research
 
 # Install libraries at your convenience
 # =======================
@@ -17,7 +16,7 @@ library(leaflet.providers)
 library(htmlwidgets)
 
 # Source dependent scripts
-source("code/Reading and Filtering.R")
+# source("code/Reading and Filtering.R") Commented out for Shiny integration
 
 # ===================================================================
 # Data manipulation
@@ -26,8 +25,8 @@ source("code/Reading and Filtering.R")
 # HUC 8. Each species has its own column making this DF friendly for Leaflet.
 # Spatial data is then attached.
 
-newDF <- aggregate(juvenile$ExpTake, 
-                   by = list(juvenile$HUCNumber, juvenile$CommonName),
+newDF <- aggregate(juveniles$ExpTake, 
+                   by = list(juveniles$HUCNumber, juveniles$CommonName),
                    FUN = sum) # aggregate total expected take by HUC
 names(newDF) <- c("huc8", "CommonName", "ExpTake") # rename columns
 wideDF <- newDF %>%
@@ -125,7 +124,7 @@ pal4
 # Create Leaflet Map
 # ===================================================================
 
-leaf_map <- leaflet(final.spatial) %>% 
+leaf_ExpTake_juveniles <- leaflet(final.spatial) %>% 
   addProviderTiles(providers$Stamen.TonerLite) %>% 
   setView(lng = -124.072971, lat = 40.887325,
           zoom = 4) %>% 
