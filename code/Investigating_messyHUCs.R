@@ -17,4 +17,8 @@ the89adult <- adults %>% filter(HUCNumber == 99999999)
 PS_bound <- read_sf("data/WAPSP_Nearshore_Credits_Marine_Basins/Nearshore_MarineBasins_wm.shp")
 
 ggplot()+
-  geom_sf(data = PS_bound)
+  geom_sf(data = PS_bound, aes(fill = MarinBasin))
+
+if (is.na(juveniles$HUCNumber) == T) {
+  
+}
