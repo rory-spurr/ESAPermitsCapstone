@@ -38,7 +38,6 @@ wcr <- wcr.init %>%
                             `18040005` = 18040012,
                             `18060001` = 18060015,
                             `18060012` = 18060006)) %>% 
-  select(c(CommonName, Population)) %>% 
   mutate(Species = paste(Population, CommonName, sep = " "))
 
 # check notes below:
@@ -58,7 +57,7 @@ wcr <- wcr.init %>%
 # Separate DF by life stage
 adults <- wcr %>% 
   filter(LifeStage == "Adult")
-juvenile <- wcr %>% 
+juveniles <- wcr %>% 
   filter(LifeStage == "Juvenile")
 
 # =================================================================================

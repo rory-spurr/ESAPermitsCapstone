@@ -17,7 +17,7 @@ library(leaflet.providers)
 library(htmlwidgets)
 
 # Source dependent scripts
-source("code/Reading and Filtering.R")
+# source("code/Reading and Filtering.R") # commented out for Shiny integration
 
 # ===================================================================
 # Data manipulation
@@ -26,8 +26,8 @@ source("code/Reading and Filtering.R")
 # HUC 8. Each species has its own column making this DF friendly for Leaflet.
 # Spatial data is then attached.
 
-newDF <- aggregate(juvenile$ExpTake, 
-                   by = list(juvenile$HUCNumber, juvenile$CommonName),
+newDF <- aggregate(adults$ExpTake, 
+                   by = list(adults$HUCNumber, adults$CommonName),
                    FUN = sum) # aggregate total expected take by HUC
 names(newDF) <- c("huc8", "CommonName", "ExpTake") # rename columns
 wideDF <- newDF %>%
@@ -86,7 +86,7 @@ final.spatial$labels3 <- ifelse(!is.na(final.spatial$`green sturgeon`),
 pal3 <- colorBin(palette = "viridis",
                  domain = final.spatial$`green sturgeon`,
                  na.color = "transparent",
-                 bins = quantile(final.spatial$`green sturgeon`, na.rm = T))
+                 bins = 2, pretty = F)
 pal3
 
 final.spatial$labels4 <- ifelse(!is.na(final.spatial$`coho salmon`), paste0(
@@ -125,7 +125,7 @@ pal4
 # Create Leaflet Map
 # ===================================================================
 
-leaflet(final.spatial) %>% 
+leaf_ExpTake_adults <- leaflet(final.spatial) %>% 
   addProviderTiles(providers$Stamen.TonerLite) %>% 
   setView(lng = -124.072971, lat = 40.887325,
           zoom = 4) %>% 
@@ -182,8 +182,9 @@ leaflet(final.spatial) %>%
             group = "Coho", position = "bottomleft",
             className = "info legend Coho") %>% 
   addLayersControl(
-    baseGroups = c("Chinook", "Steelhead",
-                   "Green Sturgeon", "Coho")) %>% 
+    overlayGroups = c("Chinook", "Steelhead",
+                   "Green Sturgeon", "Coho"),
+    options = layersControlOptions(collapsed = F)) %>% 
   htmlwidgets::onRender("
       function(el, x) {
          var updateLegend = function () {
