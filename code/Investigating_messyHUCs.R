@@ -1,0 +1,20 @@
+yr <- juveniles %>% filter(CommonName == "yelloweye rockfish")
+yr$WaterbodyName
+
+
+bocaccio <- juveniles %>% filter(CommonName == "bocaccio")
+bocaccio$WaterbodyName
+
+# seems like waterbody name would be easiest to use/incorporate into a map
+
+theNAjuv <- juveniles %>% filter(is.na(HUCNumber) == T)
+the89juv <- juveniles %>% filter(HUCNumber == 99999999)
+
+theNAadult <- adults %>% filter(is.na(HUCNumber) == T)
+the89adult <- adults %>% filter(HUCNumber == 99999999)
+
+
+PS_bound <- read_sf("data/WAPSP_Nearshore_Credits_Marine_Basins/Nearshore_MarineBasins_wm.shp")
+
+ggplot()+
+  geom_sf(data = PS_bound)
