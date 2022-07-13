@@ -182,8 +182,9 @@ leaf_ExpTake_adults <- leaflet(final.spatial) %>%
             group = "Coho", position = "bottomleft",
             className = "info legend Coho") %>% 
   addLayersControl(
-    baseGroups = c("Chinook", "Steelhead",
-                   "Green Sturgeon", "Coho")) %>% 
+    overlayGroups = c("Chinook", "Steelhead",
+                   "Green Sturgeon", "Coho"),
+    options = layersControlOptions(collapsed = F)) %>% 
   htmlwidgets::onRender("
       function(el, x) {
          var updateLegend = function () {
