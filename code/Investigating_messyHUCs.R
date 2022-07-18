@@ -13,6 +13,14 @@ the89juv <- juveniles %>% filter(HUCNumber == 99999999)
 theNAadult <- adults %>% filter(is.na(HUCNumber) == T)
 the89adult <- adults %>% filter(HUCNumber == 99999999)
 
+
+# Change the "N/A" character string values to NA for computing ease
+the89adult <- the89adult %>%
+  mutate(across(c(WaterbodyName, StreamName), na_if, "N/A"))
+
+waterbody.tab <- table(the89adult$WaterbodyName, the89adult$StreamName, useNA = T)
+waterbody.tab
+
 ggplot()+
   geom_sf(data = PS_bound, aes(fill = MarinBasin))
 
@@ -21,5 +29,7 @@ if (is.na(juveniles$HUCNumber) == T) {
 }
 
 
-# for NA value HUCs, the area is really all of the Puget Sound, so not quite sure how to handle that.
+
+
+
 
