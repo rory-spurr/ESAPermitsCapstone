@@ -37,9 +37,10 @@ write.csv(waterbody.tab.juv, "data/Juvs_table.csv")
 # Need CSVs for messy HUCs
 juv.messy.huc <- juveniles %>% 
   filter(HUCNumber == 99999999 | is.na(HUCNumber) == T)
+write.csv(juv.messy.huc, "data/juv_messy_huc.csv")
 
 adult.messy.huc <- adults %>%
   filter(HUCNumber == 99999999 | is.na(HUCNumber) == T)
+write.csv(adult.messy.huc, "data/adult_messy_huc.csv")
 
-
-
+salmon <- wbd.hucs %>% filter(huc8 == 18010210) # salmon river basin may have its own HUC 8
