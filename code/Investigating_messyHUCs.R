@@ -18,18 +18,28 @@ the89adult <- adults %>% filter(HUCNumber == 99999999)
 the89adult <- the89adult %>%
   mutate(across(c(WaterbodyName, StreamName), na_if, "N/A"))
 
-waterbody.tab <- table(the89adult$WaterbodyName, the89adult$StreamName, useNA = T)
-waterbody.tab
-
-ggplot()+
-  geom_sf(data = PS_bound, aes(fill = MarinBasin))
-
-if (is.na(juveniles$HUCNumber) == T) {
-  
-}
+the89juv <- the89juv %>%
+  mutate(across(c(WaterbodyName, StreamName), na_if, "N/A"))
 
 
+# create table displaying all the different water body/stream combinations for 
+# 9999999 hucs
+waterbody.tab.adult <- table(the89adult$WaterbodyName, the89adult$StreamName, useNA = "always",
+                       dnn = c("WaterbodyName", "StreamName"))
+waterbody.tab.juv <- table(the89juv$WaterbodyName, the89juv$StreamName, useNA = "always",
+                           dnn = c("WaterbodyName", "StreamName"))
 
+waterbody.tab.juv
+
+write.csv(waterbody.tab.adult, "data/Adults_table.csv")
+write.csv(waterbody.tab.juv, "data/Juvs_table.csv")
+
+# Need CSVs for messy HUCs
+juv.messy.huc <- juveniles %>% 
+  filter(HUCNumber == 99999999 | is.na(HUCNumber) == T)
+
+adult.messy.huc <- adults %>%
+  filter(HUCNumber == 99999999 | is.na(HUCNumber) == T)
 
 
 
