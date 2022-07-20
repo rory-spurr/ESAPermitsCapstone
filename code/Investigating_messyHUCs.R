@@ -43,4 +43,23 @@ adult.messy.huc <- adults %>%
   filter(HUCNumber == 99999999 | is.na(HUCNumber) == T)
 write.csv(adult.messy.huc, "data/adult_messy_huc.csv")
 
+
+
+snake <- wbd.hucs %>% filter(huc8 == 10160008) # snake may have changed HUC 8
 salmon <- wbd.hucs %>% filter(huc8 == 18010210) # salmon river basin may have its own HUC 8
+LC <- wbd.hucs %>% filter(huc8 == 17080006) # lower Columbia has a HUC
+clear <- wbd.hucs %>% filter(huc8 == 17060306)
+
+ggplot() +
+  geom_sf(data = wcr.bound) +
+  geom_sf(data = LC, aes(fill = "red"))
+
+
+
+
+
+
+
+
+
+
