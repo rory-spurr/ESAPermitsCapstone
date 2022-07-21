@@ -30,6 +30,16 @@ final.spatial <- right_join(wbd.hucs, wideDF, by = "huc8") # join with spatial d
 final.spatial <- st_transform(final.spatial, crs = 4326)
 
 ######### creating palettes ##########
+final.spatial$labels <- ifelse(!is.na(final.spatial$`Chinook salmon`), 
+                               paste0(
+                                 "<strong> Name: </strong>",
+                                 final.spatial$name, "<br/> ",
+                                 "<strong> HUC 8: </strong>",
+                                 final.spatial$huc8, "<br/> ",
+                                 "<strong> Expected Take (# of fish): </strong> ",
+                                 final.spatial$`Chinook salmon`, "<br/> "
+                               ) %>%
+                                 lapply(htmltools::HTML), NA)
 pal <- colorBin(palette = "viridis",
                 domain = final.spatial$`Chinook salmon`,
                 na.color = NA,
@@ -83,7 +93,7 @@ pal4 <- colorBin(palette = "viridis",
                  bins = quantile(final.spatial$`coho salmon`, na.rm = T))
 
 ########### adult take ###########
-leaflet(final.spatial) %>% 
+leaf_ExpTake_adults <- leaflet(final.spatial) %>% 
   addProviderTiles(providers$Stamen.TonerLite) %>% 
   setView(lng = -124.072971, lat = 40.887325,
           zoom = 4) %>% 
@@ -158,7 +168,8 @@ leaflet(final.spatial) %>%
     }")
 
 # Note - Some popups do not work
-# Note - Chinook popup labels also broken 
+# Note - Include geartype and ind mort
+
 # =======================================================
 ########## data setup ##########
 newDF1 <- aggregate(juveniles$ExpTake, 
@@ -171,6 +182,16 @@ final.spatial <- right_join(wbd.hucs, wideDF, by = "huc8") # join with spatial d
 final.spatial <- st_transform(final.spatial, crs = 4326)
 
 ######### creating palettes ##########
+final.spatial$labels <- ifelse(!is.na(final.spatial$`Chinook salmon`), 
+                              paste0(
+                                "<strong> Name: </strong>",
+                                final.spatial$name, "<br/> ",
+                                "<strong> HUC 8: </strong>",
+                                final.spatial$huc8, "<br/> ",
+                                "<strong> Expected Take (# of fish): </strong> ",
+                                final.spatial$`Chinook salmon`, "<br/> "
+                              ) %>%
+                                lapply(htmltools::HTML), NA)
 palJ <- colorBin(palette = "viridis",
                 domain = final.spatial$`Chinook salmon`,
                 na.color = NA,
@@ -224,7 +245,7 @@ palJ4 <- colorBin(palette = "viridis",
                  bins = quantile(final.spatial$`coho salmon`, na.rm = T))
 
 ########### juvenile take ###########
-leaflet(final.spatial) %>% 
+leaf_ExpTake_juveniles <- leaflet(final.spatial) %>% 
   addProviderTiles(providers$Stamen.TonerLite) %>% 
   setView(lng = -124.072971, lat = 40.887325,
           zoom = 4) %>% 
@@ -298,8 +319,31 @@ leaflet(final.spatial) %>%
          this.on('baselayerchange', el => updateLegend());
     }")
 
-# Note - Chinook is default and labels are broken when other species are clicked off
-# Note - Consider making an amalgamation of take to have as default 
+# Note - Chinook is default despite all labels being clicked. 
+# Note - Consider making an amalgamation of take to have as default.
+# Note - Include geartype and ind mort
 
 #==============================================================
 #R Shiny Dashboard
+ui <- fluidPage(
+  radioButtons(
+    inputId = "AorJ",
+    label = "Choose Life Stage",
+    choices = c("Adults", "Juveniles")
+  ),
+  leafletOutput("map")
+)
+
+
+server <- function(input, output){
+  output$map <- renderLeaflet({
+    leaf_map <- switch(input$AorJ,
+                       "Adults" = leaf_ExpTake_adults,
+                       "Juveniles" = leaf_ExpTake_juveniles)
+    return(leaf_map)
+  }
+  )
+}
+
+
+shinyApp(ui = ui, server = server)
