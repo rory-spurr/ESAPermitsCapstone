@@ -156,6 +156,9 @@ leaflet(final.spatial) %>%
          updateLegend();
          this.on('baselayerchange', el => updateLegend());
     }")
+
+# Note - Some popups do not work
+# Note - Chinook popup labels also broken 
 # =======================================================
 ########## data setup ##########
 newDF1 <- aggregate(juveniles$ExpTake, 
@@ -294,5 +297,9 @@ leaflet(final.spatial) %>%
          updateLegend();
          this.on('baselayerchange', el => updateLegend());
     }")
+
+# Note - Chinook is default and labels are broken when other species are clicked off
+# Note - Consider making an amalgamation of take to have as default 
+
 #==============================================================
 #R Shiny Dashboard
