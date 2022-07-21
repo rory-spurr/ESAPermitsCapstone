@@ -325,7 +325,8 @@ leaf_ExpTake_juveniles <- leaflet(final.spatial) %>%
 
 #==============================================================
 #R Shiny Dashboard
-ui <- fluidPage(
+ui <- dashboardPage(
+  dashboardHeader(title = "Maps"),
   radioButtons(
     inputId = "AorJ",
     label = "Choose Life Stage",
