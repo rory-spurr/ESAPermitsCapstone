@@ -15,7 +15,7 @@ library(leaflet)
 
 #==============================================================
 #Sourcing Script
-source("code/Reading and Filtering.R") # commented out for Shiny integration
+#source("code/Reading and Filtering.R") # commented out for Shiny integration
 
 #==============================================================
 #Leaflet setup
@@ -93,7 +93,7 @@ pal4 <- colorBin(palette = "viridis",
                  bins = quantile(final.spatial$`coho salmon`, na.rm = T))
 
 ########### adult take ###########
-leaflet(final.spatial) %>% 
+leaf_ExpTake_adults <- leaflet(final.spatial) %>% 
   addProviderTiles(providers$Stamen.TonerLite) %>% 
   setView(lng = -124.072971, lat = 40.887325,
           zoom = 4) %>% 
@@ -245,7 +245,7 @@ palJ4 <- colorBin(palette = "viridis",
                  bins = quantile(final.spatial$`coho salmon`, na.rm = T))
 
 ########### juvenile take ###########
-leaflet(final.spatial) %>% 
+leaf_ExpTake_juveniles <- leaflet(final.spatial) %>% 
   addProviderTiles(providers$Stamen.TonerLite) %>% 
   setView(lng = -124.072971, lat = 40.887325,
           zoom = 4) %>% 
