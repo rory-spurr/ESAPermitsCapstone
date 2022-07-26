@@ -11,9 +11,9 @@ wcr.init <- read_csv("data/WCRpermitBiOp_allregns_all_years__7Jan2022.csv")
 
 
 wcr <- wcr.init %>% 
-  # filter(PermitStatus == "Issued") %>%
+  filter(PermitStatus == "Issued") %>%
   filter(DateIssued >"2012-01-01") %>%
-  # filter(DateExpired >= Sys.Date()) %>% #DateField >= Sys.Date() puts it to the date of the system
+  filter(DateExpired >= Sys.Date()) %>% #DateField >= Sys.Date() puts it to the date of the system
   filter(ResultCode == c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d")) %>%
   mutate(LifeStage = recode(LifeStage,
                             "Smolt" = "Juvenile",
