@@ -57,7 +57,7 @@ ggplot() +
 
 # Making a table to send to Diana
 messyHUCtable <- wcr %>% filter(HUCNumber == 99999999 | is.na(HUCNumber) == T)
-
+write.csv(messyHUCtable, "data/all_messy_hucs.csv")
 
 
 
