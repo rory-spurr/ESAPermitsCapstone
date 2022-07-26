@@ -73,6 +73,9 @@ wcr.bound <- state.bound %>%
   filter(NAME == "Washington" | NAME == "Oregon" |
            NAME == "California" | NAME == "Idaho")
 
+# Puget Sound areas Shapefile
+PS_bound <- read_sf("data/WAPSP_Nearshore_Credits_Marine_Basins/Nearshore_MarineBasins_wm.shp")
+
 # Joining Permit data and spatial data
 wcr_spatial <- right_join(x = wbd.hucs, y = wcr, by = c("huc8" = "HUCNumber"))
 
