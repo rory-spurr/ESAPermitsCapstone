@@ -9,10 +9,11 @@ library(sf)
 # West Coast region read in -> with Alana's filters
 wcr.init <- read_csv("data/WCRpermitBiOp_allregns_all_years__7Jan2022.csv")
 
+
 wcr <- wcr.init %>% 
-  filter(PermitStatus == "Issued") %>%
+  # filter(PermitStatus == "Issued") %>%
   filter(DateIssued >"2012-01-01") %>%
-  filter(DateExpired >= Sys.Date()) %>% #DateField >= Sys.Date() puts it to the date of the system
+  # filter(DateExpired >= Sys.Date()) %>% #DateField >= Sys.Date() puts it to the date of the system
   filter(ResultCode == c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d")) %>%
   mutate(LifeStage = recode(LifeStage,
                             "Smolt" = "Juvenile",
@@ -39,6 +40,10 @@ wcr <- wcr.init %>%
                             `18060001` = 18060015,
                             `18060012` = 18060006)) %>% 
   mutate(Species = paste(Population, CommonName, sep = " "))
+
+wcr_new <- read_csv("data/WCRPermitBiOp_Pass report data 4d and S10_22March22.csv")
+wcr_filt <- wcr_new %>%
+  filter(ResultCode == c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d"))
 
 # check notes below:
 # recoding HUCs to account for HUCs that were altered or moved
@@ -78,6 +83,4 @@ PS_bound <- read_sf("data/WAPSP_Nearshore_Credits_Marine_Basins/Nearshore_Marine
 
 # Joining Permit data and spatial data
 wcr_spatial <- right_join(x = wbd.hucs, y = wcr, by = c("huc8" = "HUCNumber"))
-
-
 
