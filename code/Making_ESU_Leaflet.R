@@ -34,6 +34,8 @@ server <- function(input, output){
         clearShapes() %>%
         addPolygons(
           fillColor = ~pal(filteredData()$ExpTake),
+          color = "transparent",
+          fillOpacity = 0.7,
           popup = ~labels,
           highlight = highlightOptions(color = "white",
                                        bringToFront = T)
