@@ -39,7 +39,14 @@ server <- function(input, output){
           popup = ~labels,
           highlight = highlightOptions(color = "white",
                                        bringToFront = T)
-          )
+          ) %>%
+      clearControls() %>%
+      addLegend(
+        pal = pal,
+        values = filteredData()$ExpTake,
+        title = "Authorized Take (# of fish)",
+        position = "bottomleft"
+      )
   })
 }
 

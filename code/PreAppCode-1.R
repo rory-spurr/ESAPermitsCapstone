@@ -29,7 +29,7 @@ ESU.spatial$labels <- paste0(
     ESU.spatial$name, "<br/> ",
     "<strong> HUC 8: </strong>",
     ESU.spatial$huc8, "<br/> ",
-    "<strong> Expected Take (# of fish): </strong> ",
+    "<strong> Authorized Take (# of fish): </strong> ",
     ESU.spatial$ExpTake, "<br/> "
   ) %>%
     lapply(htmltools::HTML)
