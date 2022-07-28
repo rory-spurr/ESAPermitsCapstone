@@ -10,7 +10,8 @@ library(htmlwidgets)
 wcr <- wcr %>%
   rename_population() %>%
   rename_takeaction() %>%
-  create_totalmorts()
+  create_totalmorts() %>%
+  order_table()
 
 ESUs <- unique(wcr$Species)
 ESUs
