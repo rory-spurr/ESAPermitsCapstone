@@ -29,7 +29,7 @@ server <- function(input, output){
     pal <- colorNumeric(palette = "viridis",
                     domain = filteredData()$ExpTake)
 
-    leafletProxy("map", data = filteredData()) %>%
+    proxy <- leafletProxy("map", data = filteredData()) %>%
         clearShapes() %>%
         addPolygons(
           fillColor = ~pal(filteredData()$ExpTake),
@@ -45,12 +45,12 @@ server <- function(input, output){
         values = filteredData()$ExpTake,
         title = "Authorized Take (# of fish)",
         position = "bottomleft"
-      ) %>%
-      setView(
-        lng = st_coordinates(st_centroid(st_as_sfc(st_bbox(filteredData()))))[1],
-        lat = st_coordinates(st_centroid(st_as_sfc(st_bbox(filteredData()))))[2],
-        zoom = 6
       )
+      ifelse(!is.na(st_bbox(filteredData())[1]) == T,
+        proxy %>% setView(lng = st_coordinates(st_centroid(st_as_sfc(st_bbox(filteredData()))))[1],
+                          lat = st_coordinates(st_centroid(st_as_sfc(st_bbox(filteredData()))))[2],
+                          zoom = 6), 
+        proxy %>% setView(map, lng = -124.072971, lat = 40.887325, zoom = 4))
   })
 }
 
