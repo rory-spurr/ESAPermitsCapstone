@@ -24,7 +24,8 @@ server <- function(input, output){
     leaflet(ESU.spatial) %>% 
       addProviderTiles(providers$Stamen.TerrainBackground) %>%
       setView(lng = -124.072971, lat = 40.887325,
-              zoom = 4)
+              zoom = 4) %>%
+      addResetMapButton()
   })
   observe({
     pal <- colorNumeric(palette = "viridis",
@@ -46,7 +47,7 @@ server <- function(input, output){
         values = filteredData()$ExpTake,
         title = "Authorized Take (# of fish)",
         position = "bottomleft"
-      )
+      ) 
   })
 }
 
