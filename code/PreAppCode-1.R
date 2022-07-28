@@ -33,4 +33,3 @@ ESU.spatial$labels <- paste0(
     ESU.spatial$ExpTake, "<br/> "
   ) %>%
     lapply(htmltools::HTML)
-

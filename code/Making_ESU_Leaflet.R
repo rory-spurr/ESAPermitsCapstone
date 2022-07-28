@@ -23,8 +23,6 @@ server <- function(input, output){
   output$map <- renderLeaflet({
     leaflet(ESU.spatial) %>% 
       addProviderTiles(providers$Stamen.TerrainBackground) %>%
-      setView(lng = -124.072971, lat = 40.887325,
-              zoom = 4) %>%
       addResetMapButton()
   })
   observe({
@@ -47,8 +45,15 @@ server <- function(input, output){
         values = filteredData()$ExpTake,
         title = "Authorized Take (# of fish)",
         position = "bottomleft"
-      ) 
+      ) %>%
+      setView(
+        lng = st_coordinates(st_centroid(st_as_sfc(st_bbox(filteredData()))))[1],
+        lat = st_coordinates(st_centroid(st_as_sfc(st_bbox(filteredData()))))[2],
+        zoom = 6
+      )
   })
 }
 
 shinyApp(ui = ui, server = server)
+
+
