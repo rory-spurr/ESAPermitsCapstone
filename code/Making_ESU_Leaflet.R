@@ -5,7 +5,8 @@ source("code/PreAppCode-1.R")
 
 ui <- fluidPage(
   selectInput(inputId = "DPS", label = "Choose an ESU to View",
-              choices = unique(ESU.spatial$ESU), multiple = F),
+              choices = levels(ESU.spatial$ESU), 
+              multiple = F),
   radioButtons(inputId = "lifestage", label = "Choose a lifestage",
                choices = c("Adult", "Juvenile")),
   # actionButton(inputId = "goButton", label = "Go!"),
@@ -23,12 +24,11 @@ server <- function(input, output){
     leaflet(ESU.spatial) %>% 
       addProviderTiles(providers$Stamen.TerrainBackground) %>%
       setView(lng = -124.072971, lat = 40.887325,
-              zoom = 4.5)
+              zoom = 4)
   })
   observe({
-    pal <- colorBin(palette = "viridis",
-                    domain = filteredData()$ExpTake,
-                    bins = quantile(filteredData()$ExpTake))
+    pal <- colorNumeric(palette = "viridis",
+                    domain = filteredData()$ExpTake)
 
     leafletProxy("map", data = filteredData()) %>%
         clearShapes() %>%
