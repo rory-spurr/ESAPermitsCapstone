@@ -1,7 +1,8 @@
 # Making the ESU Leafelet
 # Rory Spurr
 
-source("code/PreAppCode-1.R")
+source(paste0(getwd(), "/PreAppCode-1.R"))
+#source("code/PreAppCode-1.R")
 
 ui <- fluidPage(
   selectInput(inputId = "DPS", label = "Choose an ESU to View",
