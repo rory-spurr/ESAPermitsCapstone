@@ -39,7 +39,15 @@ wcr <- wcr.init %>%
                             `18040005` = 18040012,
                             `18060001` = 18060015,
                             `18060012` = 18060006)) %>% 
-  mutate(Species = paste(Population, CommonName, sep = " "))
+  mutate(Species = paste(Population, CommonName, sep = " ")) %>% 
+  mutate(Prod = recode(Production, 
+                       "Natural" = "Natural", 
+                       "Listed Hatchery" = "All", 
+                       "Listed Hatchery, Clipped and Intact" = "All",  
+                       "Listed Hatchery Intact Adipose" = "All", 
+                       "Listed Hatchery Adipose Clip" = "All", 
+                       "Listed Hatchery and Natural Origin" = "All", 
+                       "Unlisted Hatchery" = "Unlisted Hatchery"))
 
 wcr_new <- read_csv(paste0(gsub("/code", "", paste(getwd())), "/data/WCRPermitBiOp_Pass report data 4d and S10_22March22.csv"))
 wcr_filt <- wcr_new %>%

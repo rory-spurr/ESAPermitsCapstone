@@ -7,16 +7,6 @@ library(leaflet.extras)
 library(leaflet.providers)
 library(htmlwidgets)
 
-wcr <- wcr %>% 
-  mutate(Prod = recode(Production, 
-                      "Natural" = "Natural", 
-                      "Listed Hatchery" = "All", 
-                      "Listed Hatchery, Clipped and Intact" = "All",  
-                      "Listed Hatchery Intact Adipose" = "All", 
-                      "Listed Hatchery Adipose Clip" = "All", 
-                      "Listed Hatchery and Natural Origin" = "All", 
-                      "Unlisted Hatchery" = "Unlisted Hatchery"))
-
 wcr <- wcr %>%
   rename_population() %>%
   rename_takeaction() %>%
