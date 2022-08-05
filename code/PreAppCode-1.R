@@ -7,6 +7,16 @@ library(leaflet.extras)
 library(leaflet.providers)
 library(htmlwidgets)
 
+wcr <- wcr %>% 
+  mutate(Prod = recode(Production, 
+                      "Natural" = "Natural", 
+                      "Listed Hatchery" = "All", 
+                      "Listed Hatchery, Clipped and Intact" = "All",  
+                      "Listed Hatchery Intact Adipose" = "All", 
+                      "Listed Hatchery Adipose Clip" = "All", 
+                      "Listed Hatchery and Natural Origin" = "All", 
+                      "Unlisted Hatchery" = "Unlisted Hatchery"))
+
 wcr <- wcr %>%
   rename_population() %>%
   rename_takeaction() %>%
@@ -17,9 +27,9 @@ ESUs <- unique(wcr$Species)
 ESUs
 
 ESUdf <- aggregate(wcr$ExpTake, 
-                   by = list(wcr$HUCNumber, wcr$Species, wcr$LifeStage),
+                   by = list(wcr$HUCNumber, wcr$Species, wcr$LifeStage, wcr$Prod),
                    FUN = sum) # aggregate total expected take by HUC
-names(ESUdf) <- c("huc8", "ESU", "Lifestage", "ExpTake") # rename columns
+names(ESUdf) <- c("huc8", "ESU", "Lifestage", "Production", "ExpTake") # rename columns
 ESU.spatial <- right_join(wbd.hucs, ESUdf, by = "huc8") # join with spatial data
 ESU.spatial <- st_transform(ESU.spatial, crs = 4326)
 

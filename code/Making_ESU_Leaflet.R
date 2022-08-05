@@ -10,6 +10,8 @@ ui <- fluidPage(
               multiple = F),
   radioButtons(inputId = "lifestage", label = "Choose a lifestage",
                choices = c("Adult", "Juvenile")),
+  radioButtons(inputId = "Prod", label = "Choose an Origin",
+                            choices = c("Natural", "All", "Unlisted Hatchery")),
   # actionButton(inputId = "goButton", label = "Go!"),
   leafletOutput("map")
 )
@@ -19,7 +21,8 @@ server <- function(input, output){
   filteredData <- reactive({
     ESU.spatial %>% 
       filter(ESU == input$DPS) %>%
-      filter(Lifestage == input$lifestage)
+      filter(Lifestage == input$lifestage) %>% 
+      filter(Production == input$Prod)
   })
   output$map <- renderLeaflet({
     leaflet(ESU.spatial) %>% 
