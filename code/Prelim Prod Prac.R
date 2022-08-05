@@ -5,6 +5,7 @@ library(dplyr)
 library(tidyr)
 library(sf)
 library(shiny)
+library(tidyverse)
 #======================================
 wcr.init <- read_csv("data/WCRpermitBiOp_allregns_all_years__7Jan2022.csv")
 wcr <- wcr.init %>% 
@@ -53,8 +54,6 @@ wcr.bound <- state.bound %>%
 # Puget Sound areas Shapefile
 PS_bound <- read_sf("data/WAPSP_Nearshore_Credits_Marine_Basins/Nearshore_MarineBasins_wm.shp")
 
-HUC8 <- read_sf("data/HUC8_US.shp")
-
 # Joining Permit data and spatial data
 wcr_spatial <- right_join(x = wbd.hucs, y = wcr, by = c("huc8" = "HUCNumber"))
 
@@ -92,8 +91,7 @@ leaflet(wcrm) %>%
     fillOpacity = 0.9, 
     label = ~labels,
     highlight = highlightOptions(color = "white", bringToFront = T)) %>% 
-  addCircleMarkers(lng = , 
-                   lat =, wcrm$)
+  addC
   setView(lng = -124.072971, lat = 43.458,
           zoom = 5) %>% 
   leaflet::addLegend( 
