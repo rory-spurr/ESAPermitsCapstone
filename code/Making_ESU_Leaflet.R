@@ -30,7 +30,7 @@ server <- function(input, output){
       addResetMapButton()
   })
   observe({
-    pal <- colorNumeric(palette = "viridis",
+    pal <- colorNumeric(palette = "YlGnBu",
                     domain = filteredData()$ExpTake)
 
     proxy <- leafletProxy("map", data = filteredData()) %>%
