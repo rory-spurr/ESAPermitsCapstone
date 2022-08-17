@@ -1,5 +1,9 @@
-source("code/Reading and Filtering.R")
-source("code/NOAA Permitting Team Code.R")
+# Rory Spurr
+# Script to be run before the Shiny app
+
+
+source("code/dependencies/Reading and Filtering.R")
+source("code/dependencies/NOAA Permitting Team Code.R")
 
 library(shiny)
 library(leaflet)
