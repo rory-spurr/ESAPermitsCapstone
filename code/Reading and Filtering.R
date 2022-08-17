@@ -7,7 +7,7 @@ library(sf)
 # Permit Data
 # =================================================================================
 # West Coast region read in -> with Alana's filters
-wcr.init <- read_csv(paste0(gsub("/code", "", paste(getwd())), "/data/WCRpermitBiOp_allregns_all_years__7Jan2022.csv"))
+wcr.init <- read_csv("data/WCRpermitBiOp_allregns_all_years__7Jan2022.csv")
 
 
 wcr <- wcr.init %>% 
@@ -49,7 +49,7 @@ wcr <- wcr.init %>%
                        "Listed Hatchery and Natural Origin" = "All", 
                        "Unlisted Hatchery" = "Unlisted Hatchery"))
 
-wcr_new <- read_csv(paste0(gsub("/code", "", paste(getwd())), "/data/WCRPermitBiOp_Pass report data 4d and S10_22March22.csv"))
+wcr_new <- read_csv("data/WCRPermitBiOp_Pass report data 4d and S10_22March22.csv")
 wcr_filt <- wcr_new %>%
   filter(ResultCode == c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d"))
 
@@ -77,17 +77,17 @@ juveniles <- wcr %>%
 # Spatial Data
 # =================================================================================
 # Reading in HUC 8 shape file
-wbd.hucs <- read_sf(paste0(gsub("/code", "", paste(getwd())), "/data/WCR_HUC8/WCR_HUC8.shp"))
+wbd.hucs <- read_sf("data/WCR_HUC8/WCR_HUC8.shp")
 wbd.hucs$huc8 <- as.double(wbd.hucs$huc8)
 
 # state boundary shape files
-state.bound <- read_sf(paste0(gsub("/code", "", paste(getwd())), "/data/cb_2018_us_state_20m/cb_2018_us_state_20m.shp"))
+state.bound <- read_sf("data/cb_2018_us_state_20m/cb_2018_us_state_20m.shp")
 wcr.bound <- state.bound %>%
   filter(NAME == "Washington" | NAME == "Oregon" |
            NAME == "California" | NAME == "Idaho")
 
 # Puget Sound areas Shapefile
-PS_bound <- read_sf(paste0(gsub("/code", "", paste(getwd())), "/data/WAPSP_Nearshore_Credits_Marine_Basins/Nearshore_MarineBasins_wm.shp"))
+PS_bound <- read_sf("data/WAPSP_Nearshore_Credits_Marine_Basins/Nearshore_MarineBasins_wm.shp")
 
 # Joining Permit data and spatial data
 wcr_spatial <- right_join(x = wbd.hucs, y = wcr, by = c("huc8" = "HUCNumber"))
