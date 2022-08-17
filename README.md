@@ -7,5 +7,5 @@ Rory Spurr and Alana Santana (SMEA MMA students) main contributors, Diana Dishma
 Project Goals:
 Improve communication of the research permitting process under the ESA for researchers, co-managers, and the public. This will be accomplished by creating data products and communication tools that summarize ESA-listed fish research for the NOAA West Coast Region (WCR).
 
-## ***Important***
+## ***Important: Please Read***
 Please note that in order to run the scripts within this repository, you must be working within the correct R project in order to have the correct working directory. In the first level of the 'ESA_Permits_Capstone' folder there will be an R project file called 'ESA_Permits_Capstone.Rproj'. It is important that you open the project by clicking on this file, instead of trying to open/run each of the individual scripts themselves. To be certain you are working in the correct project, you can look in the top right of your Rstudio window and you should see 'ESA_Permits_Capstone'.
