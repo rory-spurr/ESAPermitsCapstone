@@ -13,9 +13,9 @@ In order to run the scripts within this repository, you must be working within t
 
 ### Repository Organization:
 1. The R scripts are all located under the 'code' folder, but there are three sub directories that contain scripts of similar types. The sub directories are:
-  - "main_scripts": this folder contains all the scripts that you should be actually running on your computer. Look here for scripts that create the R shiny apps and flex dashboards we have created.
-  - "dependencies": This folder contains all the scripts that read in data, organize the data, and create functions. No scripts from this folder will need to actually be run, because these scripts are run within the 'main_scripts' when they are needed.
-  - "practice_and_notes": This folder contains many of the scripts that were practice when Alana and I were learning, as well as notes about the data that we may need. No scripts in this folder need to be run, but some useful information may be found here.
+   - "main_scripts": this folder contains all the scripts that you should be actually running on your computer. Look here for scripts that create the R shiny apps and flex dashboards we have created.
+   - "dependencies": This folder contains all the scripts that read in data, organize the data, and create functions. No scripts from this folder will need to actually be run, because these scripts are run within the 'main_scripts' when they are needed.
+   - "practice_and_notes": This folder contains many of the scripts that were practice when Alana and I were learning, as well as notes about the data that we may need. No scripts in this folder need to be run, but some useful information may be found here.
 2. The 'data' folder hold all of the data needed to run the scripts.
 3. The 'docs' folder contains documents relevant to the project, including data descriptions, pictures of our apps, excel tables that helped with QA/QC among other things.
 
