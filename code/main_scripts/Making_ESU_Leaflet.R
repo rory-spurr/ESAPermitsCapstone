@@ -25,19 +25,19 @@ server <- function(input, output){
   })
   output$map <- renderLeaflet({
     leaflet(ESU.spatial) %>% 
-      addProviderTiles(providers$Stamen.TerrainBackground) %>%
-      addResetMapButton()
+      addProviderTiles(providers$Stamen.TerrainBackground)
   })
   observe({
-    pal <- colorNumeric(palette = "YlGnBu",
-                    domain = filteredData()$ExpTake)
+    pal <- colorNumeric(palette = "viridis",
+                    domain = filteredData()$ExpTake,
+                    reverse = T)
 
     proxy <- leafletProxy("map", data = filteredData()) %>%
         clearShapes() %>%
         addPolygons(
           fillColor = ~pal(filteredData()$ExpTake),
           color = "transparent",
-          fillOpacity = 0.7,
+          fillOpacity = 0.6,
           popup = ~labels,
           highlight = highlightOptions(color = "white",
                                        bringToFront = T)
