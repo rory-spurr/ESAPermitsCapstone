@@ -4,15 +4,28 @@
 source("code/dependencies/PreAppCode-1.R")
 
 ui <- fluidPage(
-  selectInput(inputId = "DPS", label = "Choose an ESU to View",
-              choices = levels(ESU.spatial$ESU), 
-              multiple = F),
-  radioButtons(inputId = "lifestage", label = "Choose a lifestage",
-               choices = c("Adult", "Juvenile")),
-  radioButtons(inputId = "Prod", label = "Choose an Origin",
-                            choices = c("Natural", "All", "Unlisted Hatchery")),
-  # actionButton(inputId = "goButton", label = "Go!"),
-  leafletOutput("map")
+  titlePanel("Authorized Take of Current, Non-expired Permits"),
+  sidebarLayout(
+    
+    sidebarPanel(
+      radioButtons(inputId = "lifestage", label = "Choose a lifestage",
+                   choices = c("Adult", "Juvenile")),
+      radioButtons(inputId = "Prod", label = "Choose an Origin",
+                   choices = c("Natural", "All", "Unlisted Hatchery")),
+      selectInput(inputId = "DPS", label = "Choose an ESU to View",
+                  choices = levels(ESU.spatial$ESU), 
+                  multiple = F),
+      width = 4
+    ),
+    
+    mainPanel(
+      leafletOutput("map"),
+      width = 8
+    ),
+    
+    position = c("left", "right"),
+    fluid = T
+  )
 )
 
 
