@@ -1,7 +1,7 @@
 # Making the ESU Leafelet
 # Rory Spurr
-
-source("code/dependencies/PreAppCode-1.R")
+setwd("~/GitHub/ESA_Permits_Capstone")
+source(paste(getwd(), "/code/dependencies/PreAppCode-1.R", sep = ""))
 
 ui <- fluidPage(
   titlePanel("Authorized Take of Current, Non-expired Permits"),

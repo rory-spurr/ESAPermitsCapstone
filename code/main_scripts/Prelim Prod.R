@@ -15,6 +15,9 @@ library(leaflet)
 
 #==============================================================
 #Sourcing Script
+setwd("~/GitHub/ESA_Permits_Capstone")
+source(paste(getwd(), "/code/dependencies/Reading and Filtering.R", sep = ""))
+
 #source("code/Reading and Filtering.R") # commented out for Shiny integration
 
 #==============================================================
