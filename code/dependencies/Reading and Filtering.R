@@ -2,7 +2,6 @@
 # Script to read in and filter data
 library(tidyverse)
 library(sf)
-
 # =================================================================================
 # Permit Data
 # =================================================================================
@@ -46,7 +45,7 @@ wcr <- wcr.init %>%
                        "Listed Hatchery, Clipped and Intact" = "Listed Hatchery",  
                        "Listed Hatchery Intact Adipose" = "Listed Hatchery", 
                        "Listed Hatchery Adipose Clip" = "Listed Hatchery", 
-                       "Listed Hatchery and Natural Origin" = "All", # Q: how to deal with this
+                       # "Listed Hatchery and Natural Origin" = "All", # Only applies to abundance data
                        "Unlisted Hatchery" = "Unlisted Hatchery")) %>%
   filter(Prod != "Unlisted Hatchery") %>%
   filter(Prod != "All")

@@ -3,13 +3,15 @@
 
 
 source("code/dependencies/Reading and Filtering.R")
-source("code/dependencies/NOAA Permitting Team Code.R")
 
 library(shiny)
 library(leaflet)
 library(leaflet.extras)
 library(leaflet.providers)
 library(htmlwidgets)
+# library(devtools)
+# devtools::install_github("DianaDishman-NOAA/NMFSResPermits")
+library(NMFSResPermits)
 
 wcr <- wcr %>%
   rename_population() %>%
