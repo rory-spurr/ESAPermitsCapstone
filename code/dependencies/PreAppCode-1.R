@@ -3,7 +3,7 @@
 
 
 source("code/dependencies/Reading and Filtering.R")
-
+source("code/dependencies/NOAA Permitting Team Code.R")
 library(shiny)
 library(leaflet)
 library(leaflet.extras)
@@ -25,7 +25,7 @@ ESUs
 ESUdf <- aggregate(wcr$ExpTake, 
                    by = list(wcr$HUCNumber, wcr$Species, wcr$LifeStage, wcr$Prod),
                    FUN = sum) # aggregate total expected take by HUC
-names(ESUdf) <- c("huc8", "ESU", "Lifestage", "Production", "ExpTake") # rename columns
+names(ESUdf) <- c("huc8", "ESU", "LifeStage", "Production", "ExpTake") # rename columns
 ESU.spatial <- right_join(wbd.hucs, ESUdf, by = "huc8") # join with spatial data
 ESU.spatial <- st_transform(ESU.spatial, crs = 4326)
 
