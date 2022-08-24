@@ -1,8 +1,8 @@
 # Making the ESU Leafelet
 # Rory Spurr
-setwd("~/GitHub/ESA_Permits_Capstone")
-source(paste(getwd(), "/code/dependencies/PreAppCode-1.R", sep = ""))
-#source("code/dependencies/PreAppCode-1.R")
+# setwd("~/GitHub/ESA_Permits_Capstone")
+# source(paste(getwd(), "/code/dependencies/PreAppCode-1.R", sep = ""))
+source("code/dependencies/PreAppCode-1.R")
 
 
 ui <- fluidPage(
@@ -27,7 +27,8 @@ ui <- fluidPage(
     
     position = c("left", "right"),
     fluid = T
-  )
+  ),
+  tableOutput("wcr_table")
 )
 
 
@@ -35,7 +36,13 @@ server <- function(input, output){
   filteredData <- reactive({
     ESU.spatial %>% 
       filter(ESU == input$DPS) %>%
-      filter(Lifestage == input$lifestage) %>% 
+      filter(LifeStage == input$lifestage) %>% 
+      filter(Production == input$Prod)
+  })
+  filteredWCR <- reactive({
+    wcr %>%
+      filter(Species == input$DPS) %>%
+      filter(LifeStage == input$lifestage) %>% 
       filter(Production == input$Prod)
   })
   output$map <- renderLeaflet({
@@ -70,6 +77,7 @@ server <- function(input, output){
                           zoom = 6), 
         proxy %>% setView(map, lng = -124.072971, lat = 40.887325, zoom = 4))
   })
+  output$wcr_table <- renderTable(filteredWCR())
 }
 
 shinyApp(ui = ui, server = server)
