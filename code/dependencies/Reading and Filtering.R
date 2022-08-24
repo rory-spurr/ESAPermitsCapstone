@@ -42,15 +42,17 @@ wcr <- wcr.init %>%
   mutate(Species = paste(Population, CommonName, sep = " ")) %>% 
   mutate(Prod = recode(Production, 
                        "Natural" = "Natural", 
-                       "Listed Hatchery" = "All", 
-                       "Listed Hatchery, Clipped and Intact" = "All",  
-                       "Listed Hatchery Intact Adipose" = "All", 
-                       "Listed Hatchery Adipose Clip" = "All", 
-                       "Listed Hatchery and Natural Origin" = "All", 
-                       "Unlisted Hatchery" = "Unlisted Hatchery"))
+                       "Listed Hatchery" = "Listed Hatchery", 
+                       "Listed Hatchery, Clipped and Intact" = "Listed Hatchery",  
+                       "Listed Hatchery Intact Adipose" = "Listed Hatchery", 
+                       "Listed Hatchery Adipose Clip" = "Listed Hatchery", 
+                       "Listed Hatchery and Natural Origin" = "All", # Q: how to deal with this
+                       "Unlisted Hatchery" = "Unlisted Hatchery")) %>%
+  filter(Prod != "Unlisted Hatchery") %>%
+  filter(Prod != "All")
 
-wcr_new <- read_csv("data/WCRPermitBiOp_Pass report data 4d and S10_22March22.csv")
-wcr_filt <- wcr_new %>%
+wcr_act <- read_csv("data/WCRPermitBiOp_Pass report data 4d and S10_22March22.csv")
+wcr_act <- wcr_act %>%
   filter(ResultCode == c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d"))
 
 # check notes below:

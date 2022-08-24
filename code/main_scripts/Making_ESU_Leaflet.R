@@ -13,7 +13,7 @@ ui <- fluidPage(
       radioButtons(inputId = "lifestage", label = "Choose a lifestage",
                    choices = c("Adult", "Juvenile")),
       radioButtons(inputId = "Prod", label = "Choose an Origin",
-                   choices = c("Natural", "All", "Unlisted Hatchery")),
+                   choices = c("Natural", "Listed Hatchery")),
       selectInput(inputId = "DPS", label = "Choose an ESU to View",
                   choices = levels(ESU.spatial$ESU), 
                   multiple = F),
