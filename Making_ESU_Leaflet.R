@@ -6,7 +6,7 @@ source("code/dependencies/PreAppCode-1.R")
 
 
 ui <- fluidPage(
-  titlePanel("Authorized Take of Current, Non-expired Permits"),
+  titlePanel("Authorized Lethal and Non-Lethal Take of Current, Non-expired Permits"),
   sidebarLayout(
     
     sidebarPanel(
