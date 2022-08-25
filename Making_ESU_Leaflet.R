@@ -43,7 +43,7 @@ server <- function(input, output){
     wcr %>%
       filter(Species == input$DPS) %>%
       filter(LifeStage == input$lifestage) %>% 
-      filter(Production == input$Prod)
+      filter(Prod == input$Prod)
   })
   output$map <- renderLeaflet({
     leaflet(ESU.spatial) %>% 
