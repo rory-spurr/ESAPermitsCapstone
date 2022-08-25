@@ -14,6 +14,8 @@ ui <- fluidPage(
                    choices = c("Adult", "Juvenile")),
       radioButtons(inputId = "Prod", label = "Choose an Origin",
                    choices = c("Natural", "Listed Hatchery")),
+      radioButtons(inputId = "displayData", label = "Choose data to display",
+                   choices = c("Total Take", "Lethal Take")),
       selectInput(inputId = "DPS", label = "Choose an ESU to View",
                   choices = levels(ESU.spatial$ESU), 
                   multiple = F),
@@ -34,6 +36,9 @@ ui <- fluidPage(
 
 server <- function(input, output){
   filteredData <- reactive({
+    ifelse(input$displayData == "Total Take",
+           ESU.spatial <- ESU_spatialTotal,
+           ESU.spatial <- ESU_spatialMort)
     ESU.spatial %>% 
       filter(ESU == input$DPS) %>%
       filter(LifeStage == input$lifestage) %>% 
@@ -47,17 +52,18 @@ server <- function(input, output){
   })
   output$map <- renderLeaflet({
     leaflet(ESU.spatial) %>% 
-      addProviderTiles(providers$Stamen.TerrainBackground)
+      addProviderTiles(providers$Stamen.TerrainBackground) %>%
+      setView(map, lng = -124.072971, lat = 40.887325, zoom = 4)
   })
   observe({
     pal <- colorNumeric(palette = "viridis",
-                    domain = filteredData()$ExpTake,
+                    domain = filteredData()$theData,
                     reverse = T)
 
     proxy <- leafletProxy("map", data = filteredData()) %>%
         clearShapes() %>%
         addPolygons(
-          fillColor = ~pal(filteredData()$ExpTake),
+          fillColor = ~pal(filteredData()$theData),
           color = "transparent",
           fillOpacity = 0.6,
           popup = ~labels,
@@ -67,7 +73,7 @@ server <- function(input, output){
       clearControls() %>%
       addLegend(
         pal = pal,
-        values = filteredData()$ExpTake,
+        values = filteredData()$theData,
         title = "Authorized Take (# of fish)",
         position = "bottomleft"
       )
