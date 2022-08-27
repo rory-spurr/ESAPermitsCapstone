@@ -48,7 +48,21 @@ wcr <- wcr.init %>%
                        # "Listed Hatchery and Natural Origin" = "All", # Only applies to abundance data
                        "Unlisted Hatchery" = "Unlisted Hatchery")) %>%
   filter(Prod != "Unlisted Hatchery") %>%
-  filter(Prod != "All")
+  filter(Prod != "All") %>% 
+  filter(TakeAction == c("Capture/Handle/Release Animal",
+                         "Capture/Mark, Tag, Sample Tissue/Release Live Animal", 
+                         "Intentional (Directed) Mortality", 
+                         "Unknown", 
+                         "Unintentional mortality",
+                         "Collect, Sample, and Transport Live Animal",            
+                         "Captive animals (research, enhancement, public display)",
+                         "Removal from wild (permanent)",                          
+                         "Incidental take",
+                         "Import/export/receive only",                             
+                         "Recondition and release",                                
+                         "Juvenile Releases", #should this be included?                                      
+                         "Broodstock collection",                                  
+                         "Rescue/Salvage"  ))
 
 wcr_act <- read_csv("data/WCRPermitBiOp_Pass report data 4d and S10_22March22.csv")
 wcr_act <- wcr_act %>%
