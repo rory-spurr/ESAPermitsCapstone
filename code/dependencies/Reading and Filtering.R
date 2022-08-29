@@ -52,7 +52,7 @@ wcr <- wcr.init %>%
   filter(TakeAction == c("Capture/Handle/Release Animal",
                          "Capture/Mark, Tag, Sample Tissue/Release Live Animal", 
                          "Intentional (Directed) Mortality", 
-                         "Unknown", 
+                         "Unknown", # what is it
                          "Unintentional mortality",
                          "Collect, Sample, and Transport Live Animal",            
                          "Captive animals (research, enhancement, public display)",

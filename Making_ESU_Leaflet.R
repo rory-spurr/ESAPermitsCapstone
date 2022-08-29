@@ -17,7 +17,7 @@ ui <- fluidPage(
       radioButtons(inputId = "displayData", label = "Choose data to display",
                    choices = c("Total Take", "Lethal Take")),
       selectInput(inputId = "DPS", label = "Choose an ESU to View",
-                  choices = levels(ESUdf$ESU), 
+                  choices = levels(wcr$Species), 
                   multiple = F),
       width = 4
     ),
