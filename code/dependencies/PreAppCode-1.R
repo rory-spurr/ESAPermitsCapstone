@@ -25,17 +25,47 @@ ESUs
 ESUdf <- aggregate(wcr$ExpTake, 
                    by = list(wcr$HUCNumber, wcr$Species, wcr$LifeStage, wcr$Prod),
                    FUN = sum) # aggregate total expected take by HUC
-names(ESUdf) <- c("huc8", "ESU", "LifeStage", "Production", "ExpTake") # rename columns
-ESU.spatial <- right_join(wbd.hucs, ESUdf, by = "huc8") # join with spatial data
-ESU.spatial <- st_transform(ESU.spatial, crs = 4326)
+names(ESUdf) <- c("huc8", "ESU", "LifeStage", "Production", "theData") # rename columns
+ESU_spatialTotal <- right_join(wbd.hucs, ESUdf, by = "huc8") 
+ESU_spatialTotal <- st_transform(ESU_spatialTotal, crs = 4326)
 
-# Make labels for Leaflet map popup
-ESU.spatial$labels <- paste0(
-    "<strong> Name: </strong>",
-    ESU.spatial$name, "<br/> ",
-    "<strong> HUC 8: </strong>",
-    ESU.spatial$huc8, "<br/> ",
-    "<strong> Authorized Take (# of fish): </strong> ",
-    ESU.spatial$ExpTake, "<br/> "
-  ) %>%
-    lapply(htmltools::HTML)
+ESU_spatialTotal$labels <- paste0(
+  "<strong> Name: </strong>",
+  ESU_spatialTotal$name, "<br/> ",
+  "<strong> HUC 8: </strong>",
+  ESU_spatialTotal$huc8, "<br/> ",
+  "<strong> Authorized Take (# of fish): </strong> ",
+  ESU_spatialTotal$theData, "<br/> "
+) %>%
+  lapply(htmltools::HTML)
+
+
+ESUdfMort <- aggregate(wcr$TotalMorts,
+                       by = list(wcr$HUCNumber, wcr$Species, wcr$LifeStage, wcr$Prod),
+                       FUN = sum)
+names(ESUdfMort) <- c("huc8", "ESU", "LifeStage", "Production", "theData") # rename columns
+ESU_spatialMort <- right_join(wbd.hucs, ESUdfMort, by = "huc8") 
+ESU_spatialMort <- st_transform(ESU_spatialMort, crs = 4326)
+
+ESU_spatialMort$labels <- paste0(
+  "<strong> Name: </strong>",
+  ESU_spatialMort$name, "<br/> ",
+  "<strong> HUC 8: </strong>",
+  ESU_spatialMort$huc8, "<br/> ",
+  "<strong> Lethal Take (# of fish): </strong> ",
+  ESU_spatialMort$theData, "<br/> "
+) %>%
+  lapply(htmltools::HTML)
+
+
+# # ESUdf <- cbind(ESUdf, ESUdfMort$TotalMorts) # Add Total morts to dataframe
+# # names(ESUdf)[6] <- c("TotalMorts")# rename column
+# 
+# # join with spatial data
+# ESU.spatial <- right_join(wbd.hucs, ESUdf, by = "huc8") 
+# ESU.spatial <- st_transform(ESU.spatial, crs = 4326)
+# 
+# # Make labels for Leaflet map popup
+
+
+
