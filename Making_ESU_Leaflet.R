@@ -17,7 +17,7 @@ ui <- fluidPage(
       radioButtons(inputId = "displayData", label = "Choose data to display",
                    choices = c("Total Take", "Lethal Take")),
       selectInput(inputId = "DPS", label = "Choose an ESU to View",
-                  choices = levels(ESU.spatial$ESU), 
+                  choices = levels(ESUdf$ESU), 
                   multiple = F),
       width = 4
     ),
@@ -51,7 +51,7 @@ server <- function(input, output){
       filter(Prod == input$Prod)
   })
   output$map <- renderLeaflet({
-    leaflet(ESU.spatial) %>% 
+    leaflet(filteredData()) %>% 
       addProviderTiles(providers$Stamen.TerrainBackground) %>%
       setView(map, lng = -124.072971, lat = 40.887325, zoom = 4)
   })
