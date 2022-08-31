@@ -63,23 +63,68 @@ wcr.v <-wcr.v %>%
 wcr.v <- wcr.v %>% 
   mutate(AuthTake = ExpTake + IndMort)
 #==============================================================
+#Setting up data
+ESU <- wcr.v %>% 
+  filter(Species == "Puget Sound Chinook salmon") %>% 
+  select(Year, Species, Prod, AuthTake, TotalMorts) %>% 
+  group_by(Year) %>% 
+  count(Sp.cnt = Species == "Puget Sound Chinook salmon")
+ESU <- subset(ESU, Sp.cnt != FALSE) 
+ESU1 <- wcr.v %>% 
+  select(Year, Species, Prod, AuthTake, TotalMorts) %>% 
+  group_by(Year, AuthTake, TotalMorts) %>% 
+  count(Sp.cnt = Species == "Puget Sound Chinook salmon")
+ESU1 <- subset(ESU1, Sp.cnt != FALSE)
+#==============================================================
 #Aggregating Authorized Take 
 df <- aggregate(wcr.v$AuthTake, 
                 by = list(wcr.v$CommonName, wcr.v$Species, wcr.v$LifeStage, wcr.v$Prod, 
                           wcr.v$Year, wcr.v$TotalMorts), FUN = sum)
+
 names(df) <- c("CommonName", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "AuthTake")             
 #==============================================================
 #Creating prelim plot
-# ggplot(data = df, aes(x=Year, y= ESU))+
-#   geom_col(fill=I("blue"), 
-#            col=I("red"), 
-#            alpha=I(.2)) +
-#   geom_label(aes(label = scales::comma(AuthTake)),
-#              size = 2)+
-#   theme_minimal() +
-#   theme(panel.grid.major = element_blank(),
-#         panel.grid.minor = element_blank()) +
-#   labs(x = "Year", y = "ESU", 
-#        title = "# of AuthTake per ESU over Time")
+ggplot(data = ESU1, aes(x=Year, y= n))+
+  geom_col(fill=I("blue"),
+           col=I("red"),
+           alpha=I(.2)) +
+  geom_label(aes(label = scales::comma(AuthTake)),
+             size = 2)+
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(x = "Year", y = "Permits per Year",
+       title = "# of AuthTake of Puget Sound Chinook salmon over time")
 #==============================================================
 #Shiny Integration
+ui <- fluidPage(
+  titlePanel("Authorized Take static graphs"),
+  sidebarLayout(
+
+    sidebarPanel(
+      radioButtons(inputId = "lifestage", label = "Choose a lifestage",
+                   choices = c("Adult", "Juvenile")),
+      radioButtons(inputId = "Prod", label = "Choose an Origin",
+                   choices = c("Natural", "Listed Hatchery")),
+      selectInput(inputId = "ESU", label = "Choose an ESU to View",
+                  choices = levels(df$Species),
+                  multiple = F),
+      width = 4
+    ),
+
+    mainPanel(
+      leafletOutput("ggplot"),
+      width = 8
+    ),
+
+    position = c("left", "right"),
+    fluid = T
+  )
+)
+
+server <- function(input, output) {
+  output$ggplot <-renderPlot({
+    title <- "Authorized Take static graphs"
+    ggplot(rnorm(input$df), main = title)
+  })
+}
