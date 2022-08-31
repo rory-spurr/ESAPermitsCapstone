@@ -63,10 +63,23 @@ wcr.v <-wcr.v %>%
 wcr.v <- wcr.v %>% 
   mutate(AuthTake = ExpTake + IndMort)
 #==============================================================
+#Aggregating Authorized Take 
 df <- aggregate(wcr.v$AuthTake, 
                 by = list(wcr.v$CommonName, wcr.v$Species, wcr.v$LifeStage, wcr.v$Prod, 
                           wcr.v$Year, wcr.v$TotalMorts), FUN = sum)
-names(df) <- c("CommonName", "ESU", "LifeStage", "Production", "Year", "TotalMorts")             
-
-  
-
+names(df) <- c("CommonName", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "AuthTake")             
+#==============================================================
+#Creating prelim plot
+# ggplot(data = df, aes(x=Year, y= ESU))+
+#   geom_col(fill=I("blue"), 
+#            col=I("red"), 
+#            alpha=I(.2)) +
+#   geom_label(aes(label = scales::comma(AuthTake)),
+#              size = 2)+
+#   theme_minimal() +
+#   theme(panel.grid.major = element_blank(),
+#         panel.grid.minor = element_blank()) +
+#   labs(x = "Year", y = "ESU", 
+#        title = "# of AuthTake per ESU over Time")
+#==============================================================
+#Shiny Integration
