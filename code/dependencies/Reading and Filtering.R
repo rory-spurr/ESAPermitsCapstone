@@ -6,7 +6,7 @@ library(sf)
 # Permit Data
 # =================================================================================
 # West Coast region read in -> with Alana's filters
-wcr.init <- read_csv("data/WCRpermitBiOp_allregns_all_years__7Jan2022.csv")
+wcr.init <- read_csv("data/WCRpermitBiOp_allregns_all_years_18Aug2022.csv")
 
 
 wcr <- wcr.init %>% 
