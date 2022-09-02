@@ -49,22 +49,10 @@ wcr <- wcr.init %>%
                        "Unlisted Hatchery" = "Unlisted Hatchery")) %>%
   filter(Prod != "Unlisted Hatchery") %>%
   filter(Prod != "All") %>% 
-  filter(TakeAction == c("Capture/Handle/Release Animal",
-                         "Capture/Mark, Tag, Sample Tissue/Release Live Animal", 
-                         "Intentional (Directed) Mortality", 
-                         "Unknown", # what is it
-                         "Unintentional mortality",
-                         "Collect, Sample, and Transport Live Animal",            
-                         "Captive animals (research, enhancement, public display)",
-                         "Removal from wild (permanent)",                          
-                         "Incidental take",
-                         "Import/export/receive only",                             
-                         "Recondition and release",                                
-                         "Juvenile Releases", #should this be included?                                      
-                         "Broodstock collection",                                  
-                         "Rescue/Salvage"  ))
+  filter(TakeAction != c( "Observe/Harass", "Observe/Sample Tissue Dead Animal",
+                          "N/A", "NA"))
 
-wcr_act <- read_csv("WCRPermitBiOp_Pass report data 4d and S10_18Aug2022.csv")
+wcr_act <- read_csv("data/WCRPermitBiOp_Pass report data 4d and S10_18Aug2022.csv")
 wcr_act <- wcr_act %>%
   filter(ResultCode == c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d"))
 
