@@ -64,7 +64,7 @@ wcr <- wcr.init %>%
                          "Broodstock collection",                                  
                          "Rescue/Salvage"  ))
 
-wcr_act <- read_csv("data/WCRPermitBiOp_Pass report data 4d and S10_22March22.csv")
+wcr_act <- read_csv("WCRPermitBiOp_Pass report data 4d and S10_18Aug2022.csv")
 wcr_act <- wcr_act %>%
   filter(ResultCode == c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d"))
 
