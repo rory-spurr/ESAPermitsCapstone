@@ -3,7 +3,7 @@
 # setwd("~/GitHub/ESA_Permits_Capstone")
 # source(paste(getwd(), "/code/dependencies/PreAppCode-1.R", sep = ""))
 source("code/dependencies/PreAppCode-1.R")
-
+source("code/dependencies/PreAppCode-2.R")
 
 ui <- fluidPage(
   titlePanel("Authorized Lethal and Non-Lethal Take of Current, Non-expired Permits"),
@@ -30,7 +30,7 @@ ui <- fluidPage(
     position = c("left", "right"),
     fluid = T
   ),
-  tableOutput("wcr_table")
+  dataTableOutput("wcr_table", width = "100%", height = "auto")
 )
 
 
@@ -45,10 +45,11 @@ server <- function(input, output){
       filter(Production == input$Prod)
   })
   filteredWCR <- reactive({
-    wcr %>%
+    wcr4App %>%
       filter(Species == input$DPS) %>%
       filter(LifeStage == input$lifestage) %>% 
-      filter(Prod == input$Prod)
+      filter(Prod == input$Prod) %>%
+      select(ResultCode:TotalMorts)
   })
   output$map <- renderLeaflet({
     leaflet(filteredData()) %>% 
@@ -83,7 +84,12 @@ server <- function(input, output){
                           zoom = 6), 
         proxy %>% setView(map, lng = -124.072971, lat = 40.887325, zoom = 4))
   })
-  output$wcr_table <- renderTable(filteredWCR())
+  output$wcr_table <- DT::renderDataTable(
+    filteredWCR(),
+    colnames = c("Permit Type", "Organization", "HUC 8", "Take Action",
+                 "Capture Method", "Total Take", "Lethal Take"),
+    options = list(pageLength = 50, autoWidth = T)
+    )
 }
 
 shinyApp(ui = ui, server = server)
