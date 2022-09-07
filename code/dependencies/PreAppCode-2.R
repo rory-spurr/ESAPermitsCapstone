@@ -8,13 +8,41 @@
 
 # =================================================
 library("DT") # package that helps with data table manipulation
+# install.packages("naniar")
+library(naniar) # helps with replacing NA values
 # =================================================
 
+wcr <- wcr %>%
+  replace_with_na(replace = list(WaterbodyName = "N/A",
+                                 BasinName = "N/A"))
+
+Location <- wcr$WaterbodyName
+for (i in 1:nrow(wcr)){
+  if(is.na(Location[i] == T)){
+    Location[i] <- wcr$BasinName[i]
+  }
+}
+for (i in 1:nrow(wcr)){
+  if(is.na(Location[i] == T)){
+    Location[i] <- wcr$StreamName[i]
+  }
+}
+wcr <- cbind(wcr, Location)
+wcr <- wcr %>%
+  replace_with_na(replace = list(Location = "."))
+for (i in 1:nrow(wcr)){
+  if(is.na(wcr$Location[i] == T)){
+    wcr$Location[i] <- wcr$LocationDescription[i]
+  }
+}
+
 wcr4App <- wcr %>%
-  select(ResultCode, 
-         Organization,
-         HUCNumber,
-         TakeAction:ExpTake,
+  select(FileNumber, # File Number
+         ResultCode, # Permit Type
+         Organization, # Organization
+         HUCNumber, # HUC 8
+         Location, # Location
+         TakeAction:ExpTake, 
          TotalMorts,
          LifeStage,
          Species,

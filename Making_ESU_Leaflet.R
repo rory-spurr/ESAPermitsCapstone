@@ -49,7 +49,7 @@ server <- function(input, output){
       filter(Species == input$DPS) %>%
       filter(LifeStage == input$lifestage) %>% 
       filter(Prod == input$Prod) %>%
-      select(ResultCode:TotalMorts)
+      select(FileNumber:TotalMorts)
   })
   output$map <- renderLeaflet({
     leaflet(filteredData()) %>% 
@@ -86,8 +86,8 @@ server <- function(input, output){
   })
   output$wcr_table <- DT::renderDataTable(
     filteredWCR(),
-    colnames = c("Permit Type", "Organization", "HUC 8", "Take Action",
-                 "Capture Method", "Total Take", "Lethal Take"),
+    colnames = c("File Number", "Permit Type", "Organization", "HUC 8", "Location",
+                 "Take Action","Capture Method", "Total Take", "Lethal Take"),
     options = list(pageLength = 50, autoWidth = T)
     )
 }
