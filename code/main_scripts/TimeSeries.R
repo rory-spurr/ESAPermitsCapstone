@@ -46,6 +46,22 @@ ggplot(data = df, aes(x=Year, y= TotalMorts, fill = LifeStage))+
   geom_bar(stat = "identity",
            position = "dodge")
 #==============================================================
+#Creating prelim plot - ESU across all LifeStages/production over time
+ggplot(data = df, aes(x=Year, y= AuthTake, fill = ESU))+
+  geom_bar(stat = "identity",
+           position = "dodge")
+ggplot(data = df, aes(x=Year, y= TotalMorts, fill = ESU))+
+  geom_bar(stat = "identity",
+           position = "dodge")
+#==============================================================
+#Creating prelim plot - Production across all species/lifestages over time
+ggplot(data = df, aes(x=Year, y= AuthTake, fill = Production))+
+  geom_bar(stat = "identity",
+           position = "dodge")
+ggplot(data = df, aes(x=Year, y= TotalMorts, fill = Production))+
+  geom_bar(stat = "identity",
+           position = "dodge")
+#==============================================================
 #Shiny Integration
 ui <-  fluidPage(
   titlePanel("Title"),
