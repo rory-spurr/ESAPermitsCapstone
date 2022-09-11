@@ -40,7 +40,7 @@ names(df) <- c("CommonName", "ESU", "LifeStage", "Production", "Year", "TotalMor
 #Creating prelim plot - LifeStage across all species/production over time
 ggplot(data = df, aes(x=Year, y= AuthTake, fill = LifeStage))+
   geom_bar(stat = "identity",
-           position = "dodge")
+           position = "dodge") # How do I know if it is aggregating correctly?
 
 ggplot(data = df, aes(x=Year, y= TotalMorts, fill = LifeStage))+
   geom_bar(stat = "identity",
