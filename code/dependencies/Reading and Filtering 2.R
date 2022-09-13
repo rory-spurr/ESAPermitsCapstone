@@ -43,3 +43,26 @@ wcr.ts <- wcr_act %>%
   filter(Prod != "Unlisted Hatchery") %>%
   filter(TakeAction != c( "Observe/Harass", "Observe/Sample Tissue Dead Animal",
                           "N/A", "NA"))
+#==============================================================
+#Setting up data - Changing time factor
+a<-as.factor(wcr.ts$AnnualTimeStart)
+b<-strptime(a,format="%Y-%m-%d") 
+Year <- format(as.Date(b, format ="%Y-%m-%d" ), "%Y")
+Year <- as.data.frame(Year)
+wcr.v <- cbind(wcr.ts, Year)
+#==============================================================
+#Setting up data - Creating authtake and totalmorts 
+wcr.v <-wcr.v %>% 
+  create_totalmorts() %>%
+  order_table() %>% 
+  replace_na(list(ExpTake = 0, ActTake = 0, TotalMorts = 0, ActMort = 0))
+wcr.v <- wcr.v %>% 
+  mutate(AuthTake = ExpTake + IndMort)
+#==============================================================
+#Aggregating Authorized Take 
+df <- aggregate(wcr.v$AuthTake, 
+                by = list(wcr.v$CommonName, wcr.v$Species, wcr.v$LifeStage, wcr.v$Prod, 
+                          wcr.v$Year, wcr.v$TotalMorts), FUN = sum) 
+
+names(df) <- c("CommonName", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "AuthTake")
+

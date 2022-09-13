@@ -2,69 +2,23 @@
 # Alana Santana and Rory Spurr
 #=============================================================
 #Reading in packages
+library(shiny)
 library(ggplot2)
 library(sf)
 library(dplyr)
 library(tidyverse)
 library(leaflet)
 library(NMFSResPermits)
+library(RColorBrewer)
 sf_use_s2(FALSE)
 #==============================================================
 #Sourcing Script
 #setwd("~/GitHub/ESA_Permits_Capstone")
 source(paste(getwd(), "/code/dependencies/Reading and Filtering 2.R", sep = ""))
 #==============================================================
-#Setting up data - Changing time factor
-a<-as.factor(wcr.ts$AnnualTimeStart)
-b<-strptime(a,format="%Y-%m-%d") 
-Year <- format(as.Date(b, format ="%Y-%m-%d" ), "%Y")
-Year <- as.data.frame(Year)
-wcr.v <- cbind(wcr.ts, Year)
-#==============================================================
-#Setting up data - Creating authtake and totalmorts 
-wcr.v <-wcr.v %>% 
-  create_totalmorts() %>%
-  order_table() %>% 
-  replace_na(list(ExpTake = 0, ActTake = 0, TotalMorts = 0, ActMort = 0))
-wcr.v <- wcr.v %>% 
-  mutate(AuthTake = ExpTake + IndMort)
-#==============================================================
-#Aggregating Authorized Take 
-df <- aggregate(wcr.v$AuthTake, 
-                by = list(wcr.v$CommonName, wcr.v$Species, wcr.v$LifeStage, wcr.v$Prod, 
-                          wcr.v$Year, wcr.v$TotalMorts), FUN = sum) 
-
-names(df) <- c("CommonName", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "AuthTake")
-  
-#==============================================================
-#Creating prelim plot - LifeStage across all species/production over time
-ggplot(data = df, aes(x=Year, y= AuthTake, fill = LifeStage))+
-  geom_bar(stat = "identity",
-           position = "dodge") # How do I know if it is aggregating correctly?
-
-ggplot(data = df, aes(x=Year, y= TotalMorts, fill = LifeStage))+
-  geom_bar(stat = "identity",
-           position = "dodge")
-#==============================================================
-#Creating prelim plot - ESU across all LifeStages/production over time
-ggplot(data = df, aes(x=Year, y= AuthTake, fill = ESU))+
-  geom_bar(stat = "identity",
-           position = "dodge")
-ggplot(data = df, aes(x=Year, y= TotalMorts, fill = ESU))+
-  geom_bar(stat = "identity",
-           position = "dodge")
-#==============================================================
-#Creating prelim plot - Production across all species/lifestages over time
-ggplot(data = df, aes(x=Year, y= AuthTake, fill = Production))+
-  geom_bar(stat = "identity",
-           position = "dodge")
-ggplot(data = df, aes(x=Year, y= TotalMorts, fill = Production))+
-  geom_bar(stat = "identity",
-           position = "dodge")
-#==============================================================
 #Shiny Integration
 ui <-  fluidPage(
-  titlePanel("Title"),
+  titlePanel("Authorized versus Actual Take Plots"),
   sidebarLayout(
     
     sidebarPanel(
@@ -76,7 +30,8 @@ ui <-  fluidPage(
                   choices = levels(df$ESU), 
                   multiple = F)),
     mainPanel(
-      plotOutput("plot"), fluid = T
+      plotOutput("plot1"), fluid = T,
+      plotOutput("plot2"), fluid = T
     )))
 
 server <- function(input, output, session){
@@ -88,14 +43,16 @@ server <- function(input, output, session){
     filter(ESU %in% input$ESU) %>% 
     group_by(Year)
   })
-output$plot <-renderPlot({
-  ggplot( data = dat(), aes (y = AuthTake, x = Year)) +
-    geom_bar(stat = "identity")
+output$plot1 <-renderPlot({
+  ggplot( data = dat(), aes (y = AuthTake, x = Year, fill = Year)) +
+    geom_bar(stat = "identity")+
+    labs(x = "Year", y = "Total Authorized Take", title = "Total Authorized Take over Time")
 })
-# output$plot <-renderPlot({
-#   ggplot(data = df, aes (y = TotalMorts, x = Year)) +
-#     geom_bar(stat = "identity")
-# })
+output$plot2 <-renderPlot({
+  ggplot(data = dat(), aes (y = TotalMorts, x = Year, fill = Year)) +
+    geom_bar(stat = "identity")+
+    labs(x = "Year", y = "Total Actual Take", title = "Total Actual Take over Time")
+})
 } #sets up server object
 
 shinyApp (ui = ui, server = server) 
