@@ -9,7 +9,6 @@ library(dplyr)
 library(tidyverse)
 library(leaflet)
 library(NMFSResPermits)
-library(RColorBrewer)
 sf_use_s2(FALSE)
 #==============================================================
 #Sourcing Script
