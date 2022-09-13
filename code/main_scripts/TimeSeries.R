@@ -89,7 +89,7 @@ server <- function(input, output, session){
     group_by(Year)
   })
 output$plot <-renderPlot({
-  ggplot( data = df, aes (y = AuthTake, x = Year)) +
+  ggplot( data = dat(), aes (y = AuthTake, x = Year)) +
     geom_bar(stat = "identity")
 })
 # output$plot <-renderPlot({
