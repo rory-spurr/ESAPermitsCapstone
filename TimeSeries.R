@@ -9,15 +9,17 @@ library(dplyr)
 library(tidyverse)
 library(leaflet)
 library(NMFSResPermits)
+library(plotly)
 sf_use_s2(FALSE)
 #==============================================================
 #Sourcing Script
 #setwd("~/GitHub/ESA_Permits_Capstone")
-source(paste(getwd(), "/code/dependencies/Reading and Filtering 2.R", sep = ""))
+source(paste(getwd(), "/code/dependencies/Reading and Filtering.R", sep = ""))
+source(paste(getwd(), "/code/dependencies/TS PreAppCode.R", sep = ""))
 #==============================================================
 #Shiny Integration
 ui <-  fluidPage(
-  titlePanel("Authorized versus Actual Take Plots"),
+  titlePanel("Authorized versus Reported Take Plot"),
   sidebarLayout(
     
     sidebarPanel(
@@ -29,8 +31,8 @@ ui <-  fluidPage(
                   choices = levels(df$ESU), 
                   multiple = F)),
     mainPanel(
-      plotOutput("plot1"), fluid = T,
-      plotOutput("plot2"), fluid = T
+      plotlyOutput("plot1"), fluid = T
+      # ,plotOutput("plot2"), fluid = T
     )))
 
 server <- function(input, output, session){
@@ -42,16 +44,17 @@ server <- function(input, output, session){
     filter(ESU %in% input$ESU) %>% 
     group_by(Year)
   })
-output$plot1 <-renderPlot({
-  ggplot( data = dat(), aes (y = ExpTake, x = Year, fill = Year)) +
-    geom_bar(stat = "identity")+
-    labs(x = "Year", y = "Total Authorized Take", title = "Total Authorized Take over Time")
+output$plot1 <-renderPlotly({
+  ggplot( data = dat(), aes (y = ExpTake, x = Year, fill = TotalMorts, text = paste("Take Action:", TakeAction) )) +
+    geom_bar(stat = "identity", position = "stack")+
+    labs(x = "Year", y = "Authorized Take", title = "Total Authorized Take vs Reported Take over Time", legend = "Reported Take (Lethal/Non-Lethal")
+  ggplotly(tooltip = c("y", "x", "fill", "text"))
 })
-output$plot2 <-renderPlot({
-  ggplot(data = dat(), aes (y = TotalMorts, x = Year, fill = Year)) +
-    geom_bar(stat = "identity")+
-    labs(x = "Year", y = "Total Actual Take", title = "Total Actual Take over Time")
-})
+# output$plot2 <-renderPlot({
+#   ggplot(data = dat(), aes (y = TotalMorts, x = Year, fill = TotalMorts)) +
+#     geom_bar(stat = "identity", position = "stack")+
+#     labs(x = "Year", y = "Reported Take", title = "Total Reported Take over Time")
+# })
 } #sets up server object
 
 shinyApp (ui = ui, server = server) 

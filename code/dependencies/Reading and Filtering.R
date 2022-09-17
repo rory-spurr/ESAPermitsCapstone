@@ -50,12 +50,43 @@ wcr <- wcr.init %>%
   filter(Prod != "Unlisted Hatchery") %>%
   filter(Prod != "All") %>% 
   filter(TakeAction != c( "Observe/Harass", "Observe/Sample Tissue Dead Animal",
-                          "N/A", "NA"))
+                          "N/A", "NA")) #this code does not remove observe/harass
 
 wcr_act <- read_csv("data/WCRPermitBiOp_Pass report data 4d and S10_18Aug2022.csv")
 wcr_act <- wcr_act %>%
-  filter(ResultCode == c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d"))
-
+  filter(ResultCode == c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d")) %>% 
+  mutate(LifeStage = recode(LifeStage,
+                            "Smolt" = "Juvenile",
+                            "Kelt" = "Juvenile",
+                            "Yearling" = "Juvenile",
+                            "Sub-Yearling" = "Juvenile",
+                            "Egg" = "Juvenile",
+                            "Fry" = "Juvenile",
+                            "Larvae" = "Juvenile",
+                            "Subadult" = "Adult",
+                            "Spawned Adult/ Carcass" = "Adult")) %>%
+  mutate(CommonName = recode(CommonName,
+                             "Salmon, coho" = "coho salmon",
+                             "Steelhead" = "steelhead", #steelhead respawn
+                             "Eulachon" = "eulachon",
+                             "Salmon, Chinook" = "Chinook salmon",
+                             "Salmon, chum" = "chum salmon",
+                             "Salmon, sockeye" = "sockeye salmon",
+                             "Sturgeon, green" = "green sturgeon",
+                             "Rockfish, Canary" = "canary rockfish",
+                             "Rockfish, Bocaccio" = "bocaccio",
+                             "Rockfish, Yelloweye" = "yelloweye rockfish")) %>%
+  mutate(Species = paste(Population, CommonName, sep = " ")) %>% 
+  mutate(Prod = recode(Production, 
+                       "Natural" = "Natural", 
+                       "Listed Hatchery" = "Listed Hatchery", 
+                       "Listed Hatchery, Clipped and Intact" = "Listed Hatchery",  
+                       "Listed Hatchery Intact Adipose" = "Listed Hatchery", 
+                       "Listed Hatchery Adipose Clip" = "Listed Hatchery",
+                       "Unlisted Hatchery" = "Unlisted Hatchery")) %>%
+  filter(Prod != "Unlisted Hatchery") %>% 
+  filter(TakeAction != c( "Observe/Harass", "Observe/Sample Tissue Dead Animal",
+                          "N/A", "NA")) #This code does not remove observe/harass
 # check notes below:
 # recoding HUCs to account for HUCs that were altered or moved
 # broken hucs are 18020103, 18020109, 18020112, 18020118,
