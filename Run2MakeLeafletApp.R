@@ -88,10 +88,16 @@ server <- function(input, output){
     filteredWCR(),
     colnames = c("File Number", "Permit Type", "Organization", "HUC 8", "Location",
                  "Take Action","Capture Method", "Total Take", "Lethal Take"),
-    options = list(pageLength = 50, autoWidth = T)
-    )
+    options = list(pageLength = 50, autoWidth = T, columnDefs = list(list(
+       targets = "_all",
+       render = JS(
+         "function(data, type, row, meta) {",
+         "return type === 'display' && data.length > 25 ?",
+         "'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;",
+         "}")
+                   ))),
+    callback = JS('table.page(3).draw(false);')
+  )
 }
 
 shinyApp(ui = ui, server = server)
-
-

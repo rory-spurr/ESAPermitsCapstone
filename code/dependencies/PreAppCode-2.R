@@ -46,4 +46,10 @@ wcr4App <- wcr %>%
          TotalMorts,
          LifeStage,
          Species,
-         Prod)
+         Prod) %>%
+  mutate(HUCNumber = as.character(HUCNumber)) %>%
+  replace_na(list(HUCNumber = "No Data"))
+
+
+
+  
