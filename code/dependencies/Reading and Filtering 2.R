@@ -56,13 +56,11 @@ wcr.v <-wcr.v %>%
   create_totalmorts() %>%
   order_table() %>% 
   replace_na(list(ExpTake = 0, ActTake = 0, TotalMorts = 0, ActMort = 0))
-wcr.v <- wcr.v %>% 
-  mutate(AuthTake = ExpTake + IndMort)
 #==============================================================
 #Aggregating Authorized Take 
-df <- aggregate(wcr.v$AuthTake, 
+df <- aggregate(wcr.v$ExpTake, 
                 by = list(wcr.v$CommonName, wcr.v$Species, wcr.v$LifeStage, wcr.v$Prod, 
                           wcr.v$Year, wcr.v$TotalMorts), FUN = sum) 
 
-names(df) <- c("CommonName", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "AuthTake")
+names(df) <- c("CommonName", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake")
 

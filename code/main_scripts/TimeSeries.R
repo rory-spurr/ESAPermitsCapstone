@@ -43,7 +43,7 @@ server <- function(input, output, session){
     group_by(Year)
   })
 output$plot1 <-renderPlot({
-  ggplot( data = dat(), aes (y = AuthTake, x = Year, fill = Year)) +
+  ggplot( data = dat(), aes (y = ExpTake, x = Year, fill = Year)) +
     geom_bar(stat = "identity")+
     labs(x = "Year", y = "Total Authorized Take", title = "Total Authorized Take over Time")
 })
