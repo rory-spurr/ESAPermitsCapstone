@@ -50,7 +50,8 @@ wcr <- wcr.init %>%
   filter(Prod != "Unlisted Hatchery") %>%
   filter(Prod != "All") %>% 
   filter(TakeAction != "Observe/Harass") %>%
-  filter(TakeAction != "Observe/Sample Tissue Dead Animal")
+  filter(TakeAction != "Observe/Sample Tissue Dead Animal") %>%
+  filter(TakeAction != "Unknown")
 
 
 wcr_act <- read_csv("data/WCRPermitBiOp_Pass report data 4d and S10_18Aug2022.csv")
