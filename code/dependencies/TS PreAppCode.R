@@ -18,8 +18,8 @@ wcr.v <-wcr.v %>%
 #==============================================================
 #Aggregating Authorized Take 
 df <- aggregate(wcr.v$ExpTake, 
-                by = list(wcr.v$CommonName, wcr.v$ResultCode, wcr.v$TakeAction, wcr.v$Species, wcr.v$LifeStage, wcr.v$Prod, 
+                by = list(wcr.v$CommonName, wcr.v$ResultCode, wcr.v$ActMort, wcr.v$ActTake, wcr.v$TakeAction, wcr.v$Species, wcr.v$LifeStage, wcr.v$Prod, 
                           wcr.v$Year, wcr.v$TotalMorts), FUN = sum) 
 
-names(df) <- c("CommonName", "ResultCode", "TakeAction", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake")
+names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake")
 #==============================================================

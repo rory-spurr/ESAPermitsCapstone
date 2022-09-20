@@ -31,8 +31,8 @@ ui <-  fluidPage(
                   choices = levels(df$ESU), 
                   multiple = F)),
     mainPanel(
-      plotlyOutput("plot1"), fluid = T
-      # ,plotOutput("plot2"), fluid = T
+      plotlyOutput("plot1"), fluid = T,
+      plotlyOutput("plot2"), fluid = T
     )))
 
 server <- function(input, output, session){
@@ -45,16 +45,17 @@ server <- function(input, output, session){
     group_by(Year)
   })
 output$plot1 <-renderPlotly({
-  ggplot( data = dat(), aes (y = ExpTake, x = Year, fill = TotalMorts, text = paste("Take Action:", TakeAction) )) +
+  ggplot( data = dat(), aes (y = ExpTake, x = Year, fill = ActTake, text = paste("Take Action:", TakeAction) )) +
     geom_bar(stat = "identity", position = "stack")+
     labs(x = "Year", y = "Authorized Take", title = "Total Authorized Take vs Reported Take over Time", legend = "Reported Take (Lethal/Non-Lethal")
   ggplotly(tooltip = c("y", "x", "fill", "text"))
 })
-# output$plot2 <-renderPlot({
-#   ggplot(data = dat(), aes (y = TotalMorts, x = Year, fill = TotalMorts)) +
-#     geom_bar(stat = "identity", position = "stack")+
-#     labs(x = "Year", y = "Reported Take", title = "Total Reported Take over Time")
-# })
+output$plot2 <-renderPlotly({
+  ggplot(data = dat(), aes (y = TotalMorts, x = Year, fill = ActMort, text = paste("Take Action:", TakeAction) )) +
+    geom_bar(stat = "identity", position = "stack")+
+    labs(x = "Year", y = "Authorized Mortality", title = "Total Authorized Mortality vs Reported Mortality over Time", legend = "Reported Take (Lethal/Non-Lethal")
+  ggplotly(tooltip = c("y", "x", "fill", "text"))
+})
 } #sets up server object
 
 shinyApp (ui = ui, server = server) 
