@@ -49,8 +49,13 @@ wcr <- wcr.init %>%
                        "Unlisted Hatchery" = "Unlisted Hatchery")) %>%
   filter(Prod != "Unlisted Hatchery") %>%
   filter(Prod != "All") %>% 
+<<<<<<< Updated upstream
   filter(TakeAction != c( "Observe/Harass", "Observe/Sample Tissue Dead Animal",
                           "N/A", "NA")) #this code does not remove observe/harass
+=======
+  filter(TakeAction != "Observe/Harass") %>%
+  filter(TakeAction != "Observe/Sample Tissue Dead Animal")
+>>>>>>> Stashed changes
 
 wcr_act <- read_csv("data/WCRPermitBiOp_Pass report data 4d and S10_18Aug2022.csv")
 wcr_act <- wcr_act %>%
