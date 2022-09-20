@@ -49,8 +49,9 @@ wcr <- wcr.init %>%
                        "Unlisted Hatchery" = "Unlisted Hatchery")) %>%
   filter(Prod != "Unlisted Hatchery") %>%
   filter(Prod != "All") %>% 
-  filter(TakeAction != c( "Observe/Harass", "Observe/Sample Tissue Dead Animal",
-                          "N/A", "NA")) #this code does not remove observe/harass
+  filter(TakeAction != "Observe/Harass") %>%
+  filter(TakeAction != "Observe/Sample Tissue Dead Animal")
+
 
 wcr_act <- read_csv("data/WCRPermitBiOp_Pass report data 4d and S10_18Aug2022.csv")
 wcr_act <- wcr_act %>%
@@ -85,8 +86,9 @@ wcr_act <- wcr_act %>%
                        "Listed Hatchery Adipose Clip" = "Listed Hatchery",
                        "Unlisted Hatchery" = "Unlisted Hatchery")) %>%
   filter(Prod != "Unlisted Hatchery") %>% 
-  filter(TakeAction != c( "Observe/Harass", "Observe/Sample Tissue Dead Animal",
-                          "N/A", "NA")) #This code does not remove observe/harass
+  filter(TakeAction != "Observe/Harass") %>%
+  filter(TakeAction != "Observe/Sample Tissue Dead Animal")
+
 # check notes below:
 # recoding HUCs to account for HUCs that were altered or moved
 # broken hucs are 18020103, 18020109, 18020112, 18020118,
