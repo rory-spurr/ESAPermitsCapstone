@@ -1,7 +1,7 @@
 # Alana Santana and Rory Spurr
 # Script to run prior to running time series app
+#install.packages("plotly")
 library(tidyverse)
-library(sf)
 # =================================================================================
 #Setting up data - Changing time factor
 a<-as.factor(wcr_act$AnnualTimeStart)
