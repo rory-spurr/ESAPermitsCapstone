@@ -11,6 +11,8 @@ library(leaflet)
 library(NMFSResPermits)
 library(plotly)
 sf_use_s2(FALSE)
+library(viridis)
+library(hrbrthemes)
 #==============================================================
 #Sourcing Script
 #setwd("~/GitHub/ESA_Permits_Capstone")
@@ -45,15 +47,15 @@ server <- function(input, output, session){
     group_by(Year)
   })
 output$plot1 <-renderPlotly({
-  ggplot( data = dat(), aes (y = order(ExpTake), x = Year, fill = ActTake, text = paste("Take Action:", TakeAction) )) +
-    geom_bar(stat = "identity", position = "stack")+
+  ggplot( data = dat(), aes (y = order(ExpTake), x = Year, group = ActTake, fill = ActTake, text = paste("Take Action:", TakeAction)) ) +
+    geom_area(stat = "identity", position = "stack")+
     scale_fill_viridis(discrete = F) +
     labs(x = "Year", y = "Authorized Take", title = "Total Authorized Take vs Reported Take over Time", legend = "Reported Take (Lethal/Non-Lethal")
   ggplotly(tooltip = c("y", "x", "fill", "text"))
 })
 output$plot2 <-renderPlotly({
-  ggplot(data = dat(), aes (y = order(TotalMorts), x = Year, fill = ActMort, text = paste("Take Action:", TakeAction) )) +
-    geom_bar(stat = "identity", position = "stack")+
+  ggplot(data = dat(), aes (y = TotalMorts, x = Year, group = ActMort, fill = ActMort, text = paste("Take Action:", TakeAction) )) +
+    geom_area(stat = "identity", position = "stack")+
     scale_fill_viridis(discrete = F) +
     labs(x = "Year", y = "Authorized Mortality", title = "Total Authorized Mortality vs Reported Mortality over Time", legend = "Reported Take (Lethal/Non-Lethal")
   ggplotly(tooltip = c("y", "x", "fill", "text"))
