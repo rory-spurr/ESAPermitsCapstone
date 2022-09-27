@@ -10,6 +10,7 @@ library(tidyverse)
 library(leaflet)
 library(NMFSResPermits)
 library(plotly)
+library(viridis)
 sf_use_s2(FALSE)
 #==============================================================
 #Sourcing Script
