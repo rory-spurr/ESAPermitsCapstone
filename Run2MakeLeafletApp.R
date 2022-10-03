@@ -87,7 +87,7 @@ server <- function(input, output){
   output$wcr_table <- DT::renderDataTable(
     filteredWCR(),
     colnames = c("File Number", "Permit Type", "Organization", "HUC 8", "Location",
-                 "Take Action","Capture Method", "Total Take", "Lethal Take"),
+                 "Water Type", "Take Action","Capture Method", "Total Take", "Lethal Take"),
     options = list(pageLength = 50, autoWidth = T, columnDefs = list(list(
        targets = "_all",
        render = JS(
