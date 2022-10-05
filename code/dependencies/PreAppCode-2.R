@@ -43,7 +43,7 @@ SW_strings <- c("Sound", "Bay", "Ocean", "Strait", "Admiralty",
                 "Whidbey", "Canal", "shelf", "Cape", "estuary", 
                 "Estuary","lagoon", "Lagoon", "Delta",
                 "estuarine")
-FW_strings <- c("Lake", "stream", "freshwaters")
+FW_strings <- c("Lake", "stream", "freshwaters", "Columbia")
 
 assignWaterType <- function(x, strings1 = SW_strings, strings2 = FW_strings, strings3 = strict_strings){
   result <- "empty"
@@ -78,8 +78,8 @@ wcr4App <- wcr %>%
   mutate(HUCNumber = as.character(HUCNumber)) %>%
   replace_na(list(HUCNumber = "No Data"))
 
-check <- table(wcr4App$Location, wcr4App$SW_FW)
-write.csv(check, "docs/waterTypeCheck.csv") # table for checking values to ensure the
+# check <- table(wcr4App$Location, wcr4App$SW_FW)
+# write.csv(check, "docs/waterTypeCheck.csv") # table for checking values to ensure the
 # sorting function works
 
 
