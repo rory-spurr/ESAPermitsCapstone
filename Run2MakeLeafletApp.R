@@ -95,7 +95,8 @@ server <- function(input, output){
          "return type === 'display' && data.length > 25 ?",
          "'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;",
          "}")
-                   ))),
+                   ), 
+       list(width = '500px', targets = c(5,7,8)))),
     callback = JS('table.page(3).draw(false);')
   )
 }
