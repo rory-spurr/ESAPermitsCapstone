@@ -84,9 +84,3 @@ wcr4App <- wcr %>%
 
 
 
-
-pattern <- "a.b"
-strings <- c("abb", "a.b")
-str_detect(strings, pattern)
-str_detect(strings, fixed(pattern))
-str_detect(strings, coll(pattern))
