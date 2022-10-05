@@ -87,9 +87,9 @@ server <- function(input, output){
   })
   output$wcr_table <- DT::renderDataTable(
     filteredWCR(),
-    caption = "Table displaying raw data that makes up take values in map above. Note that `Tribal 4d` 
-    permits are not included in the table for privacy concerns, but are included in the take totals displayed 
-    in the map above.",
+    caption = "Table displaying raw data that makes up take values in map above. 
+    Note that `Tribal 4d` permits are not included in the table for privacy concerns, 
+    but are included in the take totals displayed in the map above.",
     colnames = c("File Number", "Permit Type", "Organization", "HUC 8", "Location",
                  "Water Type", "Take Action","Capture Method", "Total Take", "Lethal Take"),
     options = list(pageLength = 50, autoWidth = T, columnDefs = list(list(
