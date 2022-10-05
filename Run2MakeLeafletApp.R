@@ -49,6 +49,7 @@ server <- function(input, output){
       filter(Species == input$DPS) %>%
       filter(LifeStage == input$lifestage) %>% 
       filter(Prod == input$Prod) %>%
+      filter(ResultCode != "Tribal 4d") %>%
       select(FileNumber:TotalMorts)
   })
   output$map <- renderLeaflet({
