@@ -111,6 +111,16 @@ juveniles <- wcr %>%
   filter(LifeStage == "Juvenile")
 
 # =================================================================================
+# Reading in abundance Data
+# =================================================================================
+abund <- read_csv("data/Abundance_2022-03-17.csv")
+abund <- abund %>%
+  mutate(LifeStage = recode(LifeStage,
+                            "Subadult" = "Juvenile")) %>%
+  mutate(Production = recode(Production,
+                             "Listed Hatchery Intact Adipose" = "Listed Hatchery",
+                             "Listed Hatchery Adipose Clip" = "Listed Hatchery"))
+# =================================================================================
 # Spatial Data
 # =================================================================================
 # Reading in HUC 8 shape file
@@ -128,4 +138,9 @@ PS_bound <- read_sf("data/WAPSP_Nearshore_Credits_Marine_Basins/Nearshore_Marine
 
 # Joining Permit data and spatial data
 wcr_spatial <- right_join(x = wbd.hucs, y = wcr, by = c("huc8" = "HUCNumber"))
+
+# ESU spatial Data
+# esuBound <- read_sf("data/esu_boundaries.shp") 
+# commented as we may not use this data, and due to size constraints, 
+# the shapefile is not pushed to github but stored locally on Rory's computer
 
