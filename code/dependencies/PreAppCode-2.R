@@ -36,33 +36,31 @@ for (i in 1:nrow(wcr)){
 }
 
 # ===================================================
-# Creating a FW/SW/Brackish column
+# Creating a FW/SW column
 # ===================================================
 Locations <- wcr$Location
 SW_strings <- c("Sound", "Bay", "Ocean", "Strait", "Admiralty",
-                "Whidbey", "Canal", "shelf", "Cape")
-Brackish_strings <-c("estuary", "Estuary","lagoon", "Lagoon", "Delta",
-                     "estuarine")
-FW_strings <- c("River", "Lake", "stream", "freshwaters")
+                "Whidbey", "Canal", "shelf", "Cape", "estuary", 
+                "Estuary","lagoon", "Lagoon", "Delta",
+                "estuarine")
+FW_strings <- c("Lake", "stream", "freshwaters")
 
-assignWaterType <- function(x, strings1 = SW_strings, strings2 = Brackish_strings, strings3 = FW_strings){
+assignWaterType <- function(x, strings1 = SW_strings, strings2 = FW_strings, strings3 = strict_strings){
   result <- "empty"
-  ifelse(str_detect(x, paste(strings1, collapse = "|")) & str_detect(x, paste(strings3, collapse = "|")),
+    ifelse(str_detect(x, paste(strings1, collapse = "|")) & str_detect(x, paste(strings2, collapse = "|")),
          result <- "SW/FW",
          ifelse(str_detect(x, paste(strings1, collapse = "|")), result <- "SW",
-                ifelse(str_detect(x, paste(strings2, collapse = "|")), result <- "Brackish",
-                       result <- "FW")))
+            result <- "FW"))
   return(result)
 }
-# assignWaterType(x = Locations[41]) # testing the function
+assignWaterType(x = Locations[41]) # testing the function
 
 SW_FW <- sapply(Locations, assignWaterType)
 
-wcr <- cbind(wcr, SW_FW)
-
-# check <- table(wcr4App$Location, wcr4App$SW_FW)
-# write.csv(check, "docs/waterTypeCheck.csv") # table for checking values to ensure the 
-# sorting function works
+if (length(wcr$SW_FW) > 0){
+  wcr <- wcr[,1:31]
+  wcr <- cbind(wcr, SW_FW)
+} else {wcr <- cbind(wcr, SW_FW)}
 
 # Selecting the columns we want for final display in the app
 wcr4App <- wcr %>%
@@ -80,5 +78,15 @@ wcr4App <- wcr %>%
   mutate(HUCNumber = as.character(HUCNumber)) %>%
   replace_na(list(HUCNumber = "No Data"))
 
+check <- table(wcr4App$Location, wcr4App$SW_FW)
+write.csv(check, "docs/waterTypeCheck.csv") # table for checking values to ensure the
+# sorting function works
 
 
+
+
+pattern <- "a.b"
+strings <- c("abb", "a.b")
+str_detect(strings, pattern)
+str_detect(strings, fixed(pattern))
+str_detect(strings, coll(pattern))
