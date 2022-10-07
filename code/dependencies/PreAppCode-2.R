@@ -45,7 +45,7 @@ SW_strings <- c("Sound", "Bay", "Ocean", "Strait", "Admiralty",
                 "estuarine")
 FW_strings <- c("Lake", "stream", "freshwaters", "Columbia")
 
-assignWaterType <- function(x, strings1 = SW_strings, strings2 = FW_strings, strings3 = strict_strings){
+assignWaterType <- function(x, strings1 = SW_strings, strings2 = FW_strings){
   result <- "empty"
     ifelse(str_detect(x, paste(strings1, collapse = "|")) & str_detect(x, paste(strings2, collapse = "|")),
          result <- "SW/FW",
