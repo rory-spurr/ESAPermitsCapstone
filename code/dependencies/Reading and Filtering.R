@@ -1,4 +1,4 @@
-# Rory Spurr
+# Rory Spurr and Alana Santana
 # Script to read in and filter data
 library(tidyverse)
 library(sf)
@@ -13,7 +13,7 @@ wcr <- wcr.init %>%
   filter(PermitStatus == "Issued") %>%
   filter(DateIssued >"2012-01-01") %>%
   filter(DateExpired >= Sys.Date()) %>% #DateField >= Sys.Date() puts it to the date of the system
-  filter(ResultCode == c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d")) %>%
+  filter(ResultCode %in% c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d")) %>%
   mutate(LifeStage = recode(LifeStage,
                             "Smolt" = "Juvenile",
                             "Fry" = "Juvenile",
@@ -56,7 +56,7 @@ wcr <- wcr.init %>%
 
 wcr_act <- read_csv("data/WCRPermitBiOp_Pass report data 4d and S10_18Aug2022.csv")
 wcr_act <- wcr_act %>%
-  filter(ResultCode == c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d")) %>% 
+  filter(ResultCode %in% c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d")) %>% 
   mutate(LifeStage = recode(LifeStage,
                             "Smolt" = "Juvenile",
                             "Kelt" = "Juvenile",
@@ -143,4 +143,14 @@ wcr_spatial <- right_join(x = wbd.hucs, y = wcr, by = c("huc8" = "HUCNumber"))
 # esuBound <- read_sf("data/esu_boundaries.shp") 
 # commented as we may not use this data, and due to size constraints, 
 # the shapefile is not pushed to github but stored locally on Rory's computer
+
+# =================================================================================
+# ESU Species with Basins
+# =================================================================================
+ESUBasins <- read_csv("data/WCRPopulationsWithBasins.csv")
+ESUBasins <- ESUBasins %>%
+  filter(Species %in% c("Eulachon", "Salmon, Chinook", "Salmon, chum",
+                        "Salmon, coho", "Salmon, sockeye", "Steelhead",
+                        "Sturgeon, green"))
+
 
