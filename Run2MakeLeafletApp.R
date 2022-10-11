@@ -68,19 +68,19 @@ server <- function(input, output){
                     reverse = T)
 
     proxy <- leafletProxy("map", data = filteredData()) %>%
-        clearShapes() %>%
-        addPolygons(
+      clearShapes() %>%
+      addPolygons(
+        data = filteredBound(),
+        fillColor = "transparent",
+        color = "black"
+      ) %>%
+      addPolygons(
           fillColor = ~pal(filteredData()$theData),
           color = "transparent",
           fillOpacity = 0.6,
           popup = ~labels,
           highlight = highlightOptions(color = "white",
                                        bringToFront = T)
-          ) %>%
-      addPolygons(
-        data = filteredBound(),
-        fillColor = "transparent",
-        color = "black"
       ) %>%
       clearControls() %>%
       addLegend(
