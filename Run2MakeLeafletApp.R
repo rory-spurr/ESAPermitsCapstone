@@ -4,6 +4,7 @@
 # source(paste(getwd(), "/code/dependencies/PreAppCode-1.R", sep = ""))
 source("code/dependencies/PreAppCode-1.R")
 source("code/dependencies/PreAppCode-2.R")
+source("code/dependencies/PreAppCode-3.R")
 
 ui <- fluidPage(
   titlePanel("Authorized Lethal and Non-Lethal Take of Current, Non-expired Permits"),
@@ -52,6 +53,10 @@ server <- function(input, output){
       filter(ResultCode != "Tribal 4d") %>%
       select(FileNumber:TotalMorts)
   })
+  filteredBound <- reactive({
+    esuBound %>%
+      filter(DPS == input$DPS)
+  })
   output$map <- renderLeaflet({
     leaflet(filteredData()) %>% 
       addProviderTiles(providers$Stamen.TerrainBackground) %>%
@@ -72,6 +77,11 @@ server <- function(input, output){
           highlight = highlightOptions(color = "white",
                                        bringToFront = T)
           ) %>%
+      addPolygons(
+        data = filteredBound(),
+        fillColor = "transparent",
+        color = "black"
+      ) %>%
       clearControls() %>%
       addLegend(
         pal = pal,
