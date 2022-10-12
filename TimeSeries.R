@@ -46,18 +46,18 @@ server <- function(input, output, session){
     group_by(Year)
   })
 output$plot1 <-renderPlotly({
-  ggplot( data = dat(), aes (y = order(ExpTake), x = Year, fill = ActTake, text = paste("Take Action:", TakeAction) )) +
+  ggplot( data = dat(), aes (y = PropT, x = Year, text = paste("Take Action:", TakeAction) )) +
     geom_bar(stat = "identity", position = "stack")+
     scale_fill_viridis(discrete = F) +
     labs(x = "Year", y = "Authorized Take", title = "Total Authorized Take vs Reported Take over Time", legend = "Reported Take (Lethal/Non-Lethal")
-  ggplotly(tooltip = c("y", "x", "fill", "text"))
+  ggplotly(tooltip = c("y", "x", "text"))
 })
 output$plot2 <-renderPlotly({
-  ggplot(data = dat(), aes (y = order(TotalMorts), x = Year, fill = ActMort, text = paste("Take Action:", TakeAction) )) +
+  ggplot(data = dat(), aes (y = PropM, x = Year, text = paste("Take Action:", TakeAction) )) +
     geom_bar(stat = "identity", position = "stack")+
     scale_fill_viridis(discrete = F) +
     labs(x = "Year", y = "Authorized Mortality", title = "Total Authorized Mortality vs Reported Mortality over Time", legend = "Reported Take (Lethal/Non-Lethal")
-  ggplotly(tooltip = c("y", "x", "fill", "text"))
+  ggplotly(tooltip = c("y", "x", "text"))
 })
 } #sets up server object
 

@@ -1,7 +1,15 @@
 # Rory Spurr and Alana Santana
 # Script to read in and filter data
-library(tidyverse)
+library(shiny)
+library(ggplot2)
 library(sf)
+library(dplyr)
+library(tidyverse)
+library(leaflet)
+library(NMFSResPermits)
+library(plotly)
+library(viridis)
+sf_use_s2(FALSE)
 # =================================================================================
 # Permit Data
 # =================================================================================

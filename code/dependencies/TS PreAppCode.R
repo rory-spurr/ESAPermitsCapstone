@@ -1,7 +1,7 @@
 # Alana Santana and Rory Spurr
 # Script to run prior to running time series app
 #install.packages("plotly")
-library(tidyverse)
+source(paste(getwd(), "/code/dependencies/Reading and Filtering.R", sep = ""))
 # =================================================================================
 #Setting up data - Changing time factor
 a<-as.factor(wcr_act$AnnualTimeStart)
@@ -23,3 +23,32 @@ df <- aggregate(wcr.v$ExpTake,
 
 names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake")
 #==============================================================
+#Creating proportion calculations
+YT <-df %>% 
+  group_by(Year, ESU) %>% 
+  summarise(Yearly_Take = sum(ActTake))
+YM <- df %>% 
+  group_by(Year, ESU) %>% 
+  summarise(Yearly_Mort = sum(ActMort)) 
+TM <- df %>% 
+  group_by(Year, ESU) %>% 
+  summarise(Yearly_TM = sum(TotalMorts))
+ET <-df %>% 
+  group_by(Year, ESU) %>% 
+  summarise(Yearly_ET = sum(ExpTake))
+
+Take <- merge(YT, ET, by = c("Year", "ESU"))
+Mort <- merge(YM, TM, by = c("Year", "ESU"))
+
+PropT <- Take %>% 
+  mutate(PropT = Take$Yearly_ET/Take$Yearly_Take)
+
+PropM <- Mort %>% 
+  mutate(PropM = Mort$Yearly_TM/Mort$Yearly_Mort)
+  
+df2 <- merge(PropM, PropT, by = c("Year", "ESU"))
+df <- merge(df, df2, by = c("Year", "ESU"))
+
+
+
+
