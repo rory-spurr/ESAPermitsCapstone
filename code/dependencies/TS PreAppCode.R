@@ -25,29 +25,29 @@ names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "
 #==============================================================
 #Creating proportion calculations
 YT <-df %>% 
-  group_by(Year, ESU) %>% 
+  group_by(Year, ESU, Production, LifeStage) %>% 
   summarise(Yearly_Take = sum(ActTake))
 YM <- df %>% 
-  group_by(Year, ESU) %>% 
+  group_by(Year, ESU, Production, LifeStage) %>% 
   summarise(Yearly_Mort = sum(ActMort)) 
 TM <- df %>% 
-  group_by(Year, ESU) %>% 
+  group_by(Year, ESU, Production, LifeStage) %>% 
   summarise(Yearly_TM = sum(TotalMorts))
 ET <-df %>% 
-  group_by(Year, ESU) %>% 
+  group_by(Year, ESU, Production, LifeStage) %>% 
   summarise(Yearly_ET = sum(ExpTake))
 
-Take <- merge(YT, ET, by = c("Year", "ESU"))
-Mort <- merge(YM, TM, by = c("Year", "ESU"))
+Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage"))
+Mort <- merge(YM, TM, by = c("Year", "ESU", "Production", "LifeStage"))
 
 PropT <- Take %>% 
-  mutate(PropT = Take$Yearly_ET/Take$Yearly_Take)
+  mutate(PropT = Take$Yearly_Take/Take$Yearly_ET)
 
 PropM <- Mort %>% 
-  mutate(PropM = Mort$Yearly_TM/Mort$Yearly_Mort)
+  mutate(PropM = Mort$Yearly_Mort/Mort$Yearly_TM)
   
-df2 <- merge(PropM, PropT, by = c("Year", "ESU"))
-df <- merge(df, df2, by = c("Year", "ESU"))
+df2 <- merge(PropM, PropT, by = c("Year", "ESU", "Production", "LifeStage"))
+df <- merge(df, df2, by = c("Year", "ESU", "Production", "LifeStage"))
 
 
 

@@ -46,7 +46,7 @@ server <- function(input, output, session){
     group_by(Year)
   })
 output$plot1 <-renderPlotly({
-  ggplot( data = dat(), aes (y = PropT, x = Year, text = paste("Take Action:", TakeAction) )) +
+  ggplot( data = dat(), aes (y = ExpTake, x = Year, fill =PropT,  text = paste("Take Action:", TakeAction) )) +
     geom_bar(stat = "identity", position = "stack")+
     scale_fill_viridis(discrete = F) +
     labs(x = "Year", y = "Authorized Take", title = "Total Authorized Take vs Reported Take over Time", legend = "Reported Take (Lethal/Non-Lethal")
