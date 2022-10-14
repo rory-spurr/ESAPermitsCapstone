@@ -45,7 +45,10 @@ ESUdf <- aggregate(wcr$ExpTake,
                    FUN = sum) # aggregate total expected take by HUC
 names(ESUdf) <- c("huc8", "ESU", "LifeStage", "Production", "theData") # rename columns
 ESU_spatialTotal <- right_join(wbd.hucs, ESUdf, by = "huc8") 
-ESU_spatialTotal <- st_transform(ESU_spatialTotal, crs = 4326)
+ESU_spatialTotal <- ESU_spatialTotal %>% 
+  st_transform(crs = 4326) %>%
+  filter(huc8 != 99999999) %>% 
+  filter(!is.na(huc8))
 
 ESU_spatialTotal$labels <- paste0(
   "<strong> Name: </strong>",
@@ -63,7 +66,10 @@ ESUdfMort <- aggregate(wcr$TotalMorts,
                        FUN = sum) # aggregate total lethal take by HUC, species, life stage and production
 names(ESUdfMort) <- c("huc8", "ESU", "LifeStage", "Production", "theData") # rename columns
 ESU_spatialMort <- right_join(wbd.hucs, ESUdfMort, by = "huc8") 
-ESU_spatialMort <- st_transform(ESU_spatialMort, crs = 4326)
+ESU_spatialMort <- 
+  st_transform(ESU_spatialMort, crs = 4326) %>%
+  filter(huc8 != 99999999) %>%
+  filter(!is.na(huc8))
 
 ESU_spatialMort$labels <- paste0(
   "<strong> Name: </strong>",
