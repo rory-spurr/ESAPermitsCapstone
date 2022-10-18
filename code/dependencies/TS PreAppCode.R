@@ -23,7 +23,7 @@ df <- aggregate(wcr.v$ExpTake,
 
 names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake")
 df <- df %>% 
-  filter(LifeStage == "Adult", ESU == "Puget Sound Chinook salmon", Production == "Natural")
+  filter(LifeStage == "Adult", ESU == "Puget Sound Chinook salmon", Production == "Natural") # comment out when Anne is no longer working with the code
 #==============================================================
 #Summing each variable by year
 YT <-df %>%
