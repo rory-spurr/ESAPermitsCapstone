@@ -22,6 +22,8 @@ df <- aggregate(wcr.v$ExpTake,
                           wcr.v$Year, wcr.v$TotalMorts), FUN = sum) 
 
 names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake")
+df <- df %>% 
+  filter(LifeStage == "Adult", ESU == "Puget Sound Chinook salmon", Production == "Natural")
 #==============================================================
 #Summing each variable by year
 YT <-df %>%
@@ -63,3 +65,10 @@ df <- merge(df_M, df_T, by = c("Year", "ESU", "Production", "LifeStage",
 #==============================================================
 #Replacing NaN or NA or Inf with 0
 df[is.na(df)] <- 0
+#==============================================================
+ ggplot(data = df, aes(y = ProportionT, x = Year, fill = Take) ) +
+   geom_bar(stat = "identity", position = "stack")+
+   scale_fill_viridis(discrete = T) +
+   labs(x = "Year", y = "Take", title = "Total Authorized Take vs Reported Take over Time")
+ ggplotly(tooltip = c("y", "x"))
+
