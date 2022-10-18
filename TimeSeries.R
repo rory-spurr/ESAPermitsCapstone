@@ -46,18 +46,17 @@ server <- function(input, output, session){
     group_by(Year)
   })
 output$plot1 <-renderPlotly({
-  ggplot( data = dat(), aes (y = ExpTake, x = Year, fill =PropT,  text = paste("Take Action:", TakeAction) )) +
+  ggplot(data = dat(), aes (y = ProportionT, x = Year, fill = Take) ) +
     geom_bar(stat = "identity", position = "stack")+
-    scale_fill_viridis(discrete = F) +
-    labs(x = "Year", y = "Authorized Take", title = "Total Authorized Take vs Reported Take over Time", legend = "Reported Take (Lethal/Non-Lethal")
-  ggplotly(tooltip = c("y", "x", "text"))
+    scale_fill_viridis(discrete = T) +
+    labs(x = "Year", y = "Take", title = "Total Authorized Take vs Reported Take over Time")
+  ggplotly(tooltip = c("y", "x"))
 })
 output$plot2 <-renderPlotly({
-  ggplot(data = dat(), aes (y = PropM, x = Year, text = paste("Take Action:", TakeAction) )) +
+  ggplot(data = dat(), aes (y = ProportionM, x = Year, fill = Mortality )) +
     geom_bar(stat = "identity", position = "stack")+
-    scale_fill_viridis(discrete = F) +
-    labs(x = "Year", y = "Authorized Mortality", title = "Total Authorized Mortality vs Reported Mortality over Time", legend = "Reported Take (Lethal/Non-Lethal")
-  ggplotly(tooltip = c("y", "x", "text"))
+    scale_fill_viridis(discrete = T) +
+    labs(x = "Year", y = "Mortality", title = "Total Authorized Mortality vs Reported Mortality over Time")
 })
 } #sets up server object
 
