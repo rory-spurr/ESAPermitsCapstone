@@ -102,7 +102,7 @@ server <- function(input, output){
     but are included in the take totals displayed in the map above.",
     colnames = c("File Number", "Permit Type", "Organization", "HUC 8", "Location",
                  "Water Type", "Take Action","Capture Method", "Total Take", "Lethal Take"),
-    options = list(pageLength = 50, autoWidth = T, columnDefs = list(list(
+    options = list(pageLength = 10, autoWidth = T, columnDefs = list(list(
        targets = "_all",
        render = JS(
          "function(data, type, row, meta) {",
