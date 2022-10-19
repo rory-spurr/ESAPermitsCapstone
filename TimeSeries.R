@@ -39,25 +39,25 @@ ui <-  fluidPage(
 server <- function(input, output, session){
   dat <- reactive({
     req(c(input$LifeStage, input$Production, input$ESU))
-    df1 <- df %>% 
+    df1 <- df_TM %>% 
     filter(LifeStage %in% input$LifeStage) %>% 
     filter(Production %in% input$Production) %>%  
     filter(ESU %in% input$ESU) %>% 
     group_by(Year)
   })
 output$plot1 <-renderPlotly({
-  ggplot(data = dat(), aes (y = ProportionT, x = Year, fill = Take) ) +
+  ggplot(data = dat(), aes (y = Proportion, x = Year, fill = Take_Type ) ) +
     geom_bar(stat = "identity", position = "stack")+
     scale_fill_viridis(discrete = T) +
-    labs(x = "Year", y = "Take", title = "Total Authorized Take vs Reported Take over Time")
+    labs(x = "Year", y = "Proportion of Take", title = "Total Authorized Take vs Reported Take over Time")
   ggplotly(tooltip = c("y", "x"))
 })
-output$plot2 <-renderPlotly({
-  ggplot(data = dat(), aes (y = ProportionM, x = Year, fill = Mortality )) +
-    geom_bar(stat = "identity", position = "stack")+
-    scale_fill_viridis(discrete = T) +
-    labs(x = "Year", y = "Mortality", title = "Total Authorized Mortality vs Reported Mortality over Time")
-})
+# output$plot2 <-renderPlotly({
+#   ggplot(data = dat(), aes (y = Proportion, x = Year, fill =  )) +
+#     geom_bar(stat = "identity")+
+#     scale_fill_viridis(discrete = T) +
+#     labs(x = "Year", y = "Mortality", title = "Total Authorized Mortality vs Reported Mortality over Time")
+# })
 } #sets up server object
 
 shinyApp (ui = ui, server = server) 
