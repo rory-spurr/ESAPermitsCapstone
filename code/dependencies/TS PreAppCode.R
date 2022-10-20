@@ -22,8 +22,7 @@ df <- aggregate(wcr.v$ExpTake,
                           wcr.v$Year, wcr.v$TotalMorts), FUN = sum) 
 
 names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake")
-# df <- df %>%
-# filter(LifeStage == "Adult", ESU == "Puget Sound Chinook salmon", Production == "Natural") # comment out when Anne is no longer working with the code
+ df <- df %>%  filter(LifeStage == "Adult", ESU == "Puget Sound Chinook salmon", Production == "Natural") # comment out when Anne is no longer working with the code
 #==============================================================
 #Summing each variable by year
 YT <-df %>%
@@ -71,3 +70,10 @@ df_TM <- pivot_longer(df, Lethal_Take:Take, names_to = "Take_Type", values_to = 
 #==============================================================
 #Replacing NaN or NA or Inf with 0
 df_TM[is.na(df_TM)] <- 0
+
+#==============================================================
+ggplot(data = df_TM, aes (y = Proportion, x = Year, fill = Take_Type ) ) +
+    geom_bar(stat = "identity", position = "stack")+
+    scale_fill_viridis(discrete = T) +
+    labs(x = "Year", y = "Proportion of Take", title = "Total Authorized Take vs Reported Take over Time")
+  ggplotly(tooltip = c("y", "x"))
