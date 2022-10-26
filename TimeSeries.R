@@ -16,7 +16,7 @@ sf_use_s2(FALSE)
 #Sourcing Script
 #setwd("~/GitHub/ESA_Permits_Capstone")
 source(paste(getwd(), "/code/dependencies/Reading and Filtering.R", sep = ""))
-source(paste(getwd(), "/code/dependencies/TS PreAppCode.R", sep = ""))
+source(paste(getwd(), "/code/dependencies/TSPreAppCode.R", sep = ""))
 #==============================================================
 #Shiny Integration
 ui <-  fluidPage(
@@ -39,25 +39,25 @@ ui <-  fluidPage(
 server <- function(input, output, session){
   dat <- reactive({
     req(c(input$LifeStage, input$Production, input$ESU))
-    df1 <- df_TM %>% 
+    df1 <- df_TM2 %>% #df_TM
     filter(LifeStage %in% input$LifeStage) %>% 
     filter(Production %in% input$Production) %>%  
-    filter(ESU %in% input$ESU) %>% 
-    group_by(Year)
+    filter(ESU %in% input$ESU)
   })
 output$plot1 <-renderPlotly({
-  ggplot(data = dat(), aes (y = Proportion, x = Year, fill = Take_Type ) ) +
+  ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type1))+ #Take_Type)) +
     geom_bar(stat = "identity", position = "stack")+
-    scale_fill_viridis(discrete = T) +
-    labs(x = "Year", y = "Proportion of Take", title = "Total Authorized Take vs Reported Take over Time")
-  ggplotly(tooltip = c("y", "x"))
+    scale_fill_viridis(discrete = T, name = "Take Type", labels = c("Unused Authorized Take", "Reported Take")) +
+     labs(x = "Year", y = "Number of fish") #y = "Percent Take"
+  ggplotly(tooltip = c("y", "x", "fill"))
 })
-# output$plot2 <-renderPlotly({
-#   ggplot(data = dat(), aes (y = Proportion, x = Year, fill =  )) +
-#     geom_bar(stat = "identity")+
-#     scale_fill_viridis(discrete = T) +
-#     labs(x = "Year", y = "Mortality", title = "Total Authorized Mortality vs Reported Mortality over Time")
-# })
-} #sets up server object
+output$plot2 <-renderPlotly({
+  ggplot(data = dat(), aes (y = n, x = Year, fill = Take_Type2))+ #Take_Type)) +
+    geom_bar(stat = "identity", position = "stack")+
+    scale_fill_viridis(discrete = T, name = "Take Type", labels = c("Unused Authorized Mortality", "Reported Mortality")) +
+    labs(x = "Year", y = "Number of fish") # y= "Percent Take"
+  ggplotly(tooltip = c("y", "x", "fill"))
+})
+} 
 
 shinyApp (ui = ui, server = server) 

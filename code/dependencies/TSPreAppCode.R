@@ -22,58 +22,48 @@ df <- aggregate(wcr.v$ExpTake,
                           wcr.v$Year, wcr.v$TotalMorts), FUN = sum) 
 
 names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake")
- df <- df %>%  filter(LifeStage == "Adult", ESU == "Puget Sound Chinook salmon", Production == "Natural") # comment out for real app code
+ #df <- df %>%  filter(LifeStage == "Adult", ESU == "Puget Sound Chinook salmon", Production == "Natural") # comment out for real app code
 #==============================================================
 #Summing each variable by year
 YT <-df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Yearly_Take = sum(ActTake))
+  summarise(Total_Take = sum(ActTake))
 YM <- df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Yearly_Mort = sum(ActMort))
+  summarise(Total_Mort = sum(ActMort))
 TM <- df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Yearly_TM = sum(TotalMorts))
+  summarise(Total_TM = sum(TotalMorts))
 ET <-df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Yearly_ET = sum(ExpTake))
+  summarise(Total_ET = sum(ExpTake))
 # #==============================================================
 # #Merging data sets
 Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage"))
 Mort <- merge(YM, TM, by = c("Year", "ESU", "Production", "LifeStage"))
 df2 <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage"))
-#df <- merge(df, df2, by = c("Year", "ESU", "Production", "LifeStage"))
 #==============================================================
-#Creating proportions
-df <- df2 %>%
-  mutate(Take = df2$Yearly_Take/df2$Yearly_ET) %>%
-  mutate(Lethal_Take = df2$Yearly_Mort/df2$Yearly_TM)
-
-# df <- df %>%
-#   mutate(ActualT = (df$ActTake/df$Yearly_Take)*100) %>%
-#   mutate(AuthT = (df$ExpTake/df$Yearly_ET)*100) %>%
-#   mutate(ActualM = (df$ActMort/df$Yearly_Mort)*100) %>%
-#   mutate(AuthM = (df$TotalMorts/df$Yearly_TM)*100)
+#Anne's Code (lines 46-54)
+df2 <- df2 %>%
+  mutate(AuthTakeMinusRepTake = Total_ET - Total_Take) %>%
+  mutate(AuthMortMinusRepMort = Total_TM - Total_Mort) 
 #==============================================================
-#Merging columns
-df_TM <- pivot_longer(df, Lethal_Take:Take, names_to = "Take_Type", values_to = "Proportion")
- #df_T <- pivot_longer(df2, Yearly_Take:Yearly_ET, names_to = "Take", values_to = "ProportionT")
- #df_M <- pivot_longer(df2, Yearly_Mort:Yearly_TM, names_to = "Mortality", values_to = "ProportionM")
- #df_T <- pivot_longer(df, AuthT:ActualT, names_to = "Take", values_to = "ProportionT")
- #df_M <- pivot_longer(df, AuthM:ActualM, names_to = "Mortality", values_to = "ProportionM")
-# #==============================================================
-# #Merging data sets
-#df <- merge(df_M, df_T, by = c("Year", "ESU", "Production", "LifeStage"))
-                              # ,
-                              # "Yearly_Take", "Yearly_ET", "Yearly_Mort",
-                              # "Yearly_TM"))
+df_TM2 <- df2 %>%
+  gather("Take_Type1","N", 5,9) 
+df_TM2 <- df_TM2 %>% 
+  gather("Take_Type2", "n", 6,8)
 #==============================================================
 #Replacing NaN or NA or Inf with 0
-df_TM[is.na(df_TM)] <- 0
-
+df_TM2[is.na(df_TM2)] <- 0
 #==============================================================
-ggplot(data = df_TM, aes (y = Proportion, x = Year, fill = Take_Type ) ) +
-    geom_bar(stat = "identity", position = "stack")+
-    scale_fill_viridis(discrete = T) +
-    labs(x = "Year", y = "Proportion of Take", title = "Total Authorized Take vs Reported Take over Time")
-  ggplotly(tooltip = c("y", "x")) #comment out for real app code
+#Original Code (lines 59-65)
+# df <- df2 %>%
+#   mutate(Take = (df2$Yearly_Take/df2$Yearly_ET)*100) %>%
+#   mutate(Lethal_Take = (df2$Yearly_Mort/df2$Yearly_TM)*100)
+# #==============================================================
+# #Merging columns
+# df_TM <- pivot_longer(df, Lethal_Take:Take, names_to = "Take_Type", values_to = "Proportion")
+# #==============================================================
+# #Replacing NaN or NA or Inf with 0
+# df_TM[is.na(df_TM)] <- 0
+# 
