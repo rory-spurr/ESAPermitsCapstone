@@ -23,7 +23,7 @@ df <- aggregate(wcr.v$ExpTake,
                           wcr.v$Year, wcr.v$TotalMorts), FUN = sum) 
 
 names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake")
- #df <- df %>%  filter(LifeStage == "Adult", ESU == "Puget Sound Chinook salmon", Production == "Natural") # comment out for real app code
+df <- df %>%  filter(LifeStage == "Adult", ESU == "Puget Sound Chinook salmon", Production == "Natural") # comment out for real app code
 #==============================================================
 #Summing each variable by year
 YT <-df %>%
@@ -75,7 +75,7 @@ ggplot(data = df_plot, aes (y = N, x = Year, fill = Take_Type )) +
   geom_bar(stat = "identity", position = "stack")+
   scale_fill_viridis(discrete = T, name = "Take Type", labels = c("Unused Authorized Take", "Reported Take")) +
   labs(x = "Year", y = "Number of fish")
-ggplotly(tooltip = c("y", "x")) 
+#ggplotly(tooltip = c("y", "x")) 
 #==============================================================
 df_TM2 %>%
   filter(Take_Type %in% c("Yearly_Mort","AuthMortMinusRepMort")) -> df_plot2

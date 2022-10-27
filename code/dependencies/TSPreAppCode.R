@@ -49,12 +49,15 @@ df2 <- df2 %>%
   mutate(AuthMortMinusRepMort = Total_TM - Total_Mort) 
 #==============================================================
 df_TM2 <- df2 %>%
-  gather("Take_Type1","N", 5,9) 
-df_TM2 <- df_TM2 %>% 
-  gather("Take_Type2", "n", 6,8)
+  gather("Take_Type","N", 5:10) 
 #==============================================================
 #Replacing NaN or NA or Inf with 0
 df_TM2[is.na(df_TM2)] <- 0
+#==============================================================
+df_TM2 %>%
+  filter(Take_Type %in% c("Total_Take","AuthTakeMinusRepTake")) -> df_plot
+df_TM2 %>%
+  filter(Take_Type %in% c("Total_Mort","AuthMortMinusRepMort")) -> df_plot2
 #==============================================================
 #Original Code (lines 59-65)
 # df <- df2 %>%

@@ -32,33 +32,40 @@ ui <-  fluidPage(
                   choices = levels(df$ESU), 
                   multiple = F)),
     mainPanel(
-      plotlyOutput("plot1"), fluid = T,
-      plotlyOutput("plot2"), fluid = T
+      plotOutput("plot1"), fluid = T,
+      plotOutput("plot2"), fluid = T
     )))
 
 server <- function(input, output, session){
   dat <- reactive({
     req(c(input$LifeStage, input$Production, input$ESU))
-    df1 <- df_TM2 %>% #df_TM
+    df1 <- df_plot %>% 
     filter(LifeStage %in% input$LifeStage) %>% 
     filter(Production %in% input$Production) %>%  
     filter(ESU %in% input$ESU)
   })
-output$plot1 <-renderPlotly({
-  ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type1))+ #Take_Type)) +
+    dat2 <- reactive({
+      req(c(input$LifeStage, input$Production, input$ESU))
+      df1 <- df_plot2 %>% 
+        filter(LifeStage %in% input$LifeStage) %>%
+        filter(Production %in% input$Production) %>%
+        filter(ESU %in% input$ESU)
+  })
+output$plot1 <-renderPlot({
+  ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack")+
     scale_fill_viridis(discrete = T, name = "Take Type", labels = c("Unused Authorized Take", "Reported Take")) +
      labs(x = "Year", y = "Number of fish")+ #y = "Percent Take"
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
-  ggplotly(tooltip = c("y", "x", "fill"))
+  #ggplotly(tooltip = c("y", "x", "fill"))
 })
-output$plot2 <-renderPlotly({
-  ggplot(data = dat(), aes (y = n, x = Year, fill = Take_Type2))+ #Take_Type)) +
+output$plot2 <-renderPlot({
+  ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack")+
     scale_fill_viridis(discrete = T, name = "Take Type", labels = c("Unused Authorized Mortality", "Reported Mortality")) +
     labs(x = "Year", y = "Number of fish")+ # y= "Percent Take"
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
-  ggplotly(tooltip = c("y", "x", "fill"))
+  #ggplotly(tooltip = c("y", "x", "fill"))
 })
 } 
 
