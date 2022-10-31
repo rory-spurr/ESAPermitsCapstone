@@ -6,7 +6,7 @@
 # Table only includes fields that are of interest, while omitting those that aren't 
 
 # =================================================
-library("DT") # package that helps with data table manipulation
+library(DT) # package that helps with data table manipulation
 # install.packages("naniar")
 library(naniar) # helps with replacing NA values
 # =================================================
