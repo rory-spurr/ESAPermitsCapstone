@@ -6,7 +6,7 @@ LocGroup1 <- c("Admiralty Inlet", "North Puget Sound", "South Puget Sound",
 LocGroup2 <- "Hood Canal"
 
 LocGroup3 <- "Strait of Juan de Fuca"
-AllLocs <- c(LocGroup1, LocGroup2, LocGroup3)
+# AllLocs <- c(LocGroup1, LocGroup2, LocGroup3)
 
 N <- length(wcr$Location)
 for (i in 1:N){
