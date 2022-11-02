@@ -1,4 +1,4 @@
-# Making Time Series Infographics
+# Making Time Series Infographics - Calculated Numbers
 # Alana Santana and Rory Spurr
 #=============================================================
 #Reading in packages
