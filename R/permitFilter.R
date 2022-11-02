@@ -1,6 +1,6 @@
 #' @title permitFilter
 #'
-#' @description This function filters the West Coast region permit data
+#' @description Filters the West Coast region permit data
 #'
 #' @export
 permitFilter <- function(data){

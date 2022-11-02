@@ -7,5 +7,5 @@
 reportFilter(data)
 }
 \description{
-This function filters the take/mortality report data
+Filters the take/mortality reported data.
 }

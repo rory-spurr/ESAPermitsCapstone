@@ -1,6 +1,6 @@
 #' @title reportFilter
 #'
-#' @description This function filters the take/mortality report data
+#' @description Filters the take/mortality reported data.
 #'
 #' @export
 reportFilter <- function(data){

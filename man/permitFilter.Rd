@@ -7,5 +7,5 @@
 permitFilter(data)
 }
 \description{
-This function filters the West Coast region permit data
+Filters the West Coast region permit data
 }
