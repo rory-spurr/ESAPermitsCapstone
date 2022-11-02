@@ -62,7 +62,7 @@ server <- function(input, output, session){
   output$plot2 <-renderPlot({
     ggplot(data = dat2(), aes (y = N, x = Year, color = Take, group = Take))+ 
       geom_line()+
-      scale_color_discrete(name = "Take Type", labels = c("Authorized Mortality", "Reported Mortality")) +
+      scale_color_discrete(name = "Take Type", labels = c("Reported Mortality", "Authorized Mortality")) +
       labs(x = "Year", y = "Take")+ 
       theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
     #ggplotly(tooltip = c("y", "x", "fill"))
