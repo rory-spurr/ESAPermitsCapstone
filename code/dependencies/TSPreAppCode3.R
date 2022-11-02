@@ -22,7 +22,7 @@ df <- aggregate(wcr.v$ExpTake,
                           wcr.v$Year, wcr.v$TotalMorts), FUN = sum) 
 
 names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake")
- #df <- df %>%  filter(LifeStage == "Adult", ESU == "Puget Sound Chinook salmon", Production == "Natural") # comment out for real app code
+#df <- df %>%  filter(LifeStage == "Adult", ESU == "Puget Sound Chinook salmon", Production == "Natural") # comment out for real app code
 #==============================================================
 #Summing each variable by year
 YT <-df %>%
@@ -42,20 +42,13 @@ ET <-df %>%
 Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage"))
 Mort <- merge(YM, TM, by = c("Year", "ESU", "Production", "LifeStage"))
 df2 <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage"))
-#==============================================================
-#Anne's Code (lines 46-54)
-df2 <- df2 %>%
-  mutate(AuthTakeMinusRepTake = Total_ET - Total_Take) %>%
-  mutate(AuthMortMinusRepMort = Total_TM - Total_Mort) 
-#==============================================================
-df_TM2 <- df2 %>%
-  gather("Take_Type","N", 5:10) 
-#==============================================================
-#Replacing NaN or NA or Inf with 0
-df_TM2[is.na(df_TM2)] <- 0
-#==============================================================
-df_TM2 %>%
-  filter(Take_Type %in% c("Total_Take","AuthTakeMinusRepTake")) -> df_plot
-df_TM2 %>%
-  filter(Take_Type %in% c("Total_Mort","AuthMortMinusRepMort")) -> df_plot2
-#==============================================================
+# #==============================================================
+df_l <- df2 %>%
+  gather("Take","N", 5:8) 
+# #==============================================================
+df_l %>%
+  filter(Take %in% c("Total_Take", "Total_ET")) -> plot
+df_l %>%
+  filter(Take %in% c("Total_Mort", "Total_TM")) -> plot2
+
+

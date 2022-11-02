@@ -55,7 +55,7 @@ output$plot1 <-renderPlot({
   ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack")+
     scale_fill_viridis(discrete = T, name = "Take Type", labels = c("Unused Authorized Take", "Reported Take")) +
-     labs(x = "Year", y = "Number of fish")+ #y = "Percent Take"
+     labs(x = "Year", y = "Number of fish")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
   #ggplotly(tooltip = c("y", "x", "fill"))
 })
@@ -63,7 +63,7 @@ output$plot2 <-renderPlot({
   ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack")+
     scale_fill_viridis(discrete = T, name = "Take Type", labels = c("Unused Authorized Mortality", "Reported Mortality")) +
-    labs(x = "Year", y = "Number of fish")+ # y= "Percent Take"
+    labs(x = "Year", y = "Number of fish")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
   #ggplotly(tooltip = c("y", "x", "fill"))
 })
