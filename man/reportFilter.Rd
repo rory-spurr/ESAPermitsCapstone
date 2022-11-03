@@ -6,6 +6,14 @@
 \usage{
 reportFilter(data)
 }
+\arguments{
+\item{data}{Data frame from NOAA, with one line describing each permit, species, report \cr
+year and the amount of take/mortality reported for that year}
+}
+\value{
+A data frame that contains only information pertinent to the App. Filters can be \cr
+changed in the code if different filtering criteria need to be met, or priorities change.
+}
 \description{
 Filters the take/mortality reported data.
 }

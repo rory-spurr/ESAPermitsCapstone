@@ -1,10 +1,10 @@
 #' @title reportFilter
 #'
 #' @description Filters the take/mortality reported data.
-#' @param data Data frame from NOAA, with one line describing each permit, species, report \cr
+#' @param data Data frame from NOAA, with one line describing each permit, species, report 
 #' year and the amount of take/mortality reported for that year
-#' @return A data frame that contains only information pertinent to the App. Filters can be \cr
-#' changed in the code if different filtering criteria need to be met, or priorities change.
+#' @return A data frame that contains only information pertinent to the App. Filters can be 
+#' changed in the code if different filtering criteria need to be met.
 #' @export
 reportFilter <- function(data){
   data <- data %>%

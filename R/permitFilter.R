@@ -1,10 +1,10 @@
 #' @title permitFilter
 #'
 #' @description Filters the West Coast region permit data
-#' @param data Data frame from NOAA, with one line describing each separate permit number, \cr
+#' @param data Data frame from NOAA, with one line describing each separate permit number,
 #' type, species, location, amount of authorized take, etc.
-#' @return A data frame that contains only information pertinent to the App. Filters can be \cr
-#' changed in the code if different filtering criteria need to be met, or priorities change.
+#' @return A data frame that contains only information pertinent to the App. Filters can be 
+#' changed in the code if different filtering criteria need to be met.
 #' @export
 permitFilter <- function(data){
   data <- data %>% 

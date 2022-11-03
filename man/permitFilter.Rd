@@ -6,6 +6,14 @@
 \usage{
 permitFilter(data)
 }
+\arguments{
+\item{data}{Data frame from NOAA, with one line describing each separate permit number, \cr
+type, species, location, amount of authorized take, etc.}
+}
+\value{
+A data frame that contains only information pertinent to the App. Filters can be \cr
+changed in the code if different filtering criteria need to be met, or priorities change.
+}
 \description{
 Filters the West Coast region permit data
 }
