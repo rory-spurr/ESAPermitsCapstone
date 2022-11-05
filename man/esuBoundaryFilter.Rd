@@ -10,8 +10,8 @@ esuBoundaryFilter(data)
 \item{data}{Data frame describing the different HUC 8 where ESUs can be found}
 }
 \value{
-A data frame that contains only the relevant species
+A data frame that contains only the relevant species.
 }
 \description{
-Takes only the species we want from the ESU boudary data file.
+Filters to only include species relevant to the app.
 }
