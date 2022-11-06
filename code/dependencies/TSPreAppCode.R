@@ -27,10 +27,10 @@ names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "
 #Summing each variable by year
 YT <-df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Total_Take = sum(ActTake))
+  summarise(Reported_Take = sum(ActTake))
 YM <- df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Total_Mort = sum(ActMort))
+  summarise(Reported_Mortality = sum(ActMort))
 TM <- df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
   summarise(Total_TM = sum(TotalMorts))
@@ -45,8 +45,8 @@ df2 <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage"))
 #==============================================================
 #Anne's Code (lines 46-54)
 df2 <- df2 %>%
-  mutate(AuthTakeMinusRepTake = Total_ET - Total_Take) %>%
-  mutate(AuthMortMinusRepMort = Total_TM - Total_Mort) 
+  mutate(Unused_Authorized_Take = Total_ET - Reported_Take) %>%
+  mutate(Unused_Authorized_Mortality = Total_TM - Reported_Mortality) 
 #==============================================================
 df_TM2 <- df2 %>%
   gather("Take_Type","N", 5:10) 
@@ -55,7 +55,7 @@ df_TM2 <- df2 %>%
 df_TM2[is.na(df_TM2)] <- 0
 #==============================================================
 df_TM2 %>%
-  filter(Take_Type %in% c("Total_Take","AuthTakeMinusRepTake")) -> df_plot
+  filter(Take_Type %in% c("Unused_Authorized_Take","Reported_Take")) -> df_plot
 df_TM2 %>%
-  filter(Take_Type %in% c("Total_Mort","AuthMortMinusRepMort")) -> df_plot2
+  filter(Take_Type %in% c("Unused_Authorized_Mortality","Reported_Mortality")) -> df_plot2
 #==============================================================

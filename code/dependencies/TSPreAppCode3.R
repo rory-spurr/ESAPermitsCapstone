@@ -27,16 +27,16 @@ names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "
 #Summing each variable by year
 YT <-df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Total_Take = sum(ActTake))
+  summarise(Reported_Take = sum(ActTake))
 YM <- df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Total_Mort = sum(ActMort))
+  summarise(Reported_Mortality = sum(ActMort))
 TM <- df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Total_TM = sum(TotalMorts))
+  summarise(Authorized_Mortality = sum(TotalMorts))
 ET <-df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Total_ET = sum(ExpTake))
+  summarise(Authorized_Take = sum(ExpTake))
 # #==============================================================
 # #Merging data sets
 Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage"))
@@ -47,8 +47,8 @@ df_l <- df2 %>%
   gather("Take","N", 5:8) 
 # #==============================================================
 df_l %>%
-  filter(Take %in% c("Total_Take", "Total_ET")) -> plot
+  filter(Take %in% c("Reported_Take", "Authorized_Take")) -> plot
 df_l %>%
-  filter(Take %in% c("Total_Mort", "Total_TM")) -> plot2
+  filter(Take %in% c("Reported_Mortality", "Authorized_Mortality")) -> plot2
 
 

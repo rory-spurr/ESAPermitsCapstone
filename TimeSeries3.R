@@ -20,7 +20,7 @@ source(paste(getwd(), "/code/dependencies/TSPreAppCode3.R", sep = ""))
 #==============================================================
 #Shiny Integration
 ui <-  fluidPage(
-  titlePanel("Authorized versus Reported Take Plot"),
+  titlePanel("Authorized and Reported Take (Lethal/Non-Lethal) per Year"),
   sidebarLayout(
     
     sidebarPanel(
@@ -32,8 +32,8 @@ ui <-  fluidPage(
                   choices = levels(df$ESU), 
                   multiple = F)),
     mainPanel(
-      plotOutput("plot1"), fluid = T,
-      plotOutput("plot2"), fluid = T
+      plotlyOutput("plot1"), fluid = T,
+      plotlyOutput("plot2"), fluid = T
     )))
 
 server <- function(input, output, session){
@@ -51,21 +51,23 @@ server <- function(input, output, session){
       filter(Production %in% input$Production) %>%
       filter(ESU %in% input$ESU)
   })
-  output$plot1 <-renderPlot({
+  output$plot1 <-renderPlotly({
     ggplot(data = dat(), aes (y = N, x = Year, color = Take, group = Take))+ 
       geom_line()+
-      scale_color_discrete(name = "Take Type", labels = c("Authorized Take", "Reported Take")) +
-      labs(x = "Year", y = "Take")+ 
+      geom_point()+
+      scale_color_viridis(discrete = T, name = "Take Type", labels = c("Authorized Take", "Reported Take")) +
+      labs(x = "Year", y = "Number of Fish")+ 
       theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
-    #ggplotly(tooltip = c("y", "x", "fill"))
+    ggplotly(tooltip = c("y", "x", "fill"))
   })
-  output$plot2 <-renderPlot({
+  output$plot2 <-renderPlotly({
     ggplot(data = dat2(), aes (y = N, x = Year, color = Take, group = Take))+ 
       geom_line()+
-      scale_color_discrete(name = "Take Type", labels = c("Reported Mortality", "Authorized Mortality")) +
-      labs(x = "Year", y = "Take")+ 
+      geom_point()+
+      scale_color_viridis(discrete = T, name = "Take Type", labels = c("Reported Mortality", "Authorized Mortality")) +
+      labs(x = "Year", y = "Number of Fish")+ 
       theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
-    #ggplotly(tooltip = c("y", "x", "fill"))
+    ggplotly(tooltip = c("y", "x", "fill"))
   })
 } 
 

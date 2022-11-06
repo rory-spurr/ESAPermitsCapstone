@@ -48,7 +48,7 @@ df <- df2 %>%
      mutate(Lethal_Take = (df2$Total_Mort/df2$Total_TM)*100)
 #==============================================================
  #Merging columns
- df_TM <- pivot_longer(df, Lethal_Take:Take, names_to = "Take_Type", values_to = "Proportion")
+ df_TM <- pivot_longer(df, Lethal_Take:Take, names_to = "Take_Type", values_to = "Percentage")
 #==============================================================
 df_TM %>%
   filter(Take_Type %in% c("Take")) -> dfplot
