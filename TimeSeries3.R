@@ -32,8 +32,9 @@ ui <-  fluidPage(
                   choices = levels(df$ESU), 
                   multiple = F)),
     mainPanel(
-      h6("These charts display the authorized and reported take 
+      h5("These charts display the authorized and reported take 
          (lethal/non-lethal) per year", align = "center"),
+      h6("*Data is only showing what was reported, not complete", align = "center"), 
       plotlyOutput("plot1"), fluid = T,
       plotlyOutput("plot2"), fluid = T
     )))
