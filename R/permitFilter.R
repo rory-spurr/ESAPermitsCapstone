@@ -49,7 +49,8 @@ permitFilter <- function(data){
     dplyr::filter(Prod != "All") %>% 
     dplyr::filter(TakeAction != "Observe/Harass") %>%
     dplyr::filter(TakeAction != "Observe/Sample Tissue Dead Animal") %>%
-    dplyr::filter(TakeAction != "Unknown")
+    dplyr::filter(TakeAction != "Unknown") %>%
+    tidyr::replace_na(replace = list(IndMort = 0))
   return(data)
 }
 
