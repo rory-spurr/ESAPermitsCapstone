@@ -2,17 +2,16 @@
 
 
 x <- createLocations(permitFilter(WestCoastPermitData))
+sp.order <- NMFSResPermits::sp.order # Need data from this package for functions to work
+ls.order <- NMFSResPermits::ls.order
+pr.order <- NMFSResPermits::pr.order
 x <- x %>%
   NMFSResPermits::rename_population() %>%
   NMFSResPermits::create_totalmorts() %>%
   NMFSResPermits::order_table()
 
-
 SW_FW <- sapply(x$Location, assignWaterType)
 x <- cbind(x, SW_FW)
-
-
-
 
 wcr4App <- x %>%
   dplyr::select(FileNumber, # File Number

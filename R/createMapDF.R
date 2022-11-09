@@ -5,10 +5,10 @@
 #' @param spatialData Polygon spatial data for HUC 8's in Washington, Idaho, Oregon and California.
 #' Recommended to use the data that comes with this package from the Watershed Boundary Dataset (Made 
 #' and maintained by the USGS).
-#' @param createTakVar Logical indicating whether total take (sum of lethal and non-lethal take) data 
+#' @param createTakeVar Logical indicating whether total take (sum of lethal and non-lethal take) data 
 #' should be summarized instead of only lethal take data. Defaults to TRUE indicating that total take 
 #' data should be summarized
-#' @return A spatial data frame with the total amount of take or moralities for each unique ESU, huc8, 
+#' @return A spatial data frame with the total amount of take or mortalities for each unique ESU, huc8, 
 #' LifeStage, and Production combination.
 #' @export
 createMapDF <- function(data, spatialData, createTakeVar = T){
