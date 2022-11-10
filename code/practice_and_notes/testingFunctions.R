@@ -38,4 +38,10 @@ x <- assignMarineAreas(x, LocGroup1, LocGroup2, LocGroup3)
 
 takeframe <- createMapDF(x, WestCoastHUC8, T)
 mortframe <- createMapDF(x, WestCoastHUC8, F)
+esuBound <- create_ESUBoundary(data = ESUsWithHUCs, spatialData = WestCoastHUC8)
+ 
 
+  
+  
+  
+  

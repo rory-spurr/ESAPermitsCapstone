@@ -18,7 +18,7 @@ should be summarized instead of only lethal take data. Defaults to TRUE indicati
 data should be summarized}
 }
 \value{
-A spatial data frame with the total amount of take or moralities for each unique ESU, huc8,
+A spatial data frame with the total amount of take or mortalities for each unique ESU, huc8,
 LifeStage, and Production combination.
 }
 \description{
