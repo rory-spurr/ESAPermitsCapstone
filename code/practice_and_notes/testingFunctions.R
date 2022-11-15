@@ -1,5 +1,5 @@
 
-
+library(ESAPermitsCapstone)
 
 x <- createLocations(permitFilter(WestCoastPermitData))
 sp.order <- NMFSResPermits::sp.order # Need data from this package for functions to work
@@ -38,7 +38,7 @@ x <- assignMarineAreas(x, LocGroup1, LocGroup2, LocGroup3)
 
 takeframe <- createMapDF(x, WestCoastHUC8, T)
 mortframe <- createMapDF(x, WestCoastHUC8, F)
-esuBound <- create_ESUBoundary(data = ESUsWithHUCs, spatialData = WestCoastHUC8)
+esuBound <- create_ESUBoundary(data = ESUwithHUC, spatialData = WestCoastHUC8)
  
 
   

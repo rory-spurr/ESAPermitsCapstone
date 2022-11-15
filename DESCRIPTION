@@ -1,17 +1,25 @@
 Package: ESAPermitsCapstone
-Title: Create Shiny Applications for Visualizing ESA-Listed Fish Research on the West Coast
+Title: Create Shiny Applications for Visualizing ESA-Listed Fish Research
+    on the West Coast
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    person(c("Rory", "Spurr"), "rjspurr5@live.com", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
-Imports: dplyr, DT, naniar, NMFSResPermits, magrittr, stringr,
-    htmltools, stats, sf
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
 Depends: 
     R (>= 2.10)
+Imports: 
+    dplyr,
+    DT,
+    htmltools,
+    magrittr,
+    naniar,
+    NMFSResPermits,
+    sf,
+    stats,
+    stringr
+Encoding: UTF-8
 LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
