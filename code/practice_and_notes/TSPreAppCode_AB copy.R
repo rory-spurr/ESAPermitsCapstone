@@ -28,16 +28,16 @@ names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "
 #Summing each variable by year
 YT <-df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Reported_Take = sum(ActTake))
+  summarise(Yearly_Take = sum(ActTake))
 YM <- df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Reported_Mortality = sum(ActMort))
+  summarise(Yearly_Mort = sum(ActMort))
 TM <- df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Total_TM = sum(TotalMorts))
+  summarise(Yearly_TM = sum(TotalMorts))
 ET <-df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Total_ET = sum(ExpTake))
+  summarise(Yearly_ET = sum(ExpTake))
 # #==============================================================
 # #Merging data sets
 Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage"))
@@ -45,17 +45,13 @@ Mort <- merge(YM, TM, by = c("Year", "ESU", "Production", "LifeStage"))
 df2 <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage"))
 #==============================================================
 df2 %>%
-  mutate(Unused_Authorized_Take = Total_ET - Reported_Take) %>%
-  mutate(Unused_Authorized_Mortality = Total_TM - Reported_Mortality) -> df2
+  mutate(AuthTakeMinusRepTake = Yearly_ET - Yearly_Take) %>%
+  mutate(AuthMortMinusRepMort = Yearly_TM - Yearly_Mort) -> df2
 #==============================================================
-df_TM2 <- df2 %>%
-  gather("Take_Type","N", 5:10) 
-#==============================================================
-#Replacing NaN or NA or Inf with 0
-df_TM2[is.na(df_TM2)] <- 0
+df2 %>%
+  gather("Take_Type","N",5:10) -> df_TM2
 #==============================================================
 df_TM2 %>%
-  filter(Take_Type %in% c("Reported_Take","Unused_Authorized_Take")) -> df_plot
+  filter(Take_Type %in% c("Yearly_Take","AuthTakeMinusRepTake")) -> df_plot
 df_TM2 %>%
-  filter(Take_Type %in% c("Reported_Mortality","Unused_Authorized_Mortality")) -> df_plot2
-#==============================================================
+  filter(Take_Type %in% c("Yearly_Mort","AuthMortMinusRepMort")) -> df_plot2

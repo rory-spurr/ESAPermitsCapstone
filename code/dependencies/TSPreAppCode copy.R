@@ -2,7 +2,6 @@
 # Script to run prior to running time series app
 #install.packages("plotly")
 source(paste(getwd(), "/code/dependencies/Reading and Filtering.R", sep = ""))
-
 # =================================================================================
 #Setting up data - Changing time factor
 a<-as.factor(wcr_act$DateReportPeriodEnd)
@@ -23,7 +22,7 @@ df <- aggregate(wcr.v$ExpTake,
                           wcr.v$Year, wcr.v$TotalMorts), FUN = sum) 
 
 names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake")
-#df <- df %>%  filter(LifeStage == "Adult", ESU == "Puget Sound Chinook salmon", Production == "Natural") # comment out for real app code
+ #df <- df %>%  filter(LifeStage == "Adult", ESU == "Puget Sound Chinook salmon", Production == "Natural") # comment out for real app code
 #==============================================================
 #Summing each variable by year
 YT <-df %>%
@@ -44,9 +43,10 @@ Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage"))
 Mort <- merge(YM, TM, by = c("Year", "ESU", "Production", "LifeStage"))
 df2 <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage"))
 #==============================================================
-df2 %>%
+#Anne's Code (lines 46-54)
+df2 <- df2 %>%
   mutate(Unused_Authorized_Take = Total_ET - Reported_Take) %>%
-  mutate(Unused_Authorized_Mortality = Total_TM - Reported_Mortality) -> df2
+  mutate(Unused_Authorized_Mortality = Total_TM - Reported_Mortality) 
 #==============================================================
 df_TM2 <- df2 %>%
   gather("Take_Type","N", 5:10) 
@@ -55,7 +55,7 @@ df_TM2 <- df2 %>%
 df_TM2[is.na(df_TM2)] <- 0
 #==============================================================
 df_TM2 %>%
-  filter(Take_Type %in% c("Reported_Take","Unused_Authorized_Take")) -> df_plot
+  filter(Take_Type %in% c("Unused_Authorized_Take","Reported_Take")) -> df_plot
 df_TM2 %>%
-  filter(Take_Type %in% c("Reported_Mortality","Unused_Authorized_Mortality")) -> df_plot2
+  filter(Take_Type %in% c("Unused_Authorized_Mortality","Reported_Mortality")) -> df_plot2
 #==============================================================

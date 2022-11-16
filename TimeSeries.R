@@ -58,7 +58,7 @@ server <- function(input, output, session){
 output$plot1 <-renderPlotly({
   ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack")+
-    scale_fill_viridis(discrete = T, name = "Take Type") +
+    scale_fill_viridis(discrete = T, name = "Take Type", option = "C") +
      labs(x = "Year", y = "Number of fish", caption = "This chart displays the authorized and reported take per year, 
           total authorized is the cumulation of reported and unused authorized take")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
@@ -67,7 +67,7 @@ output$plot1 <-renderPlotly({
 output$plot2 <-renderPlotly({
   ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack")+
-    scale_fill_viridis(discrete = T, name = "Take Type") +
+    scale_fill_viridis(discrete = T, name = "Take Type", option = "C") +
     labs(x = "Year", y = "Number of fish", caption = "This chart displays the authorized and reported mortality per year, 
           total authorized is the cumulation of reported and unused authorized mortality")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
