@@ -43,5 +43,10 @@ esuBound <- create_ESUBoundary(data = ESUwithHUC, spatialData = WestCoastHUC8)
 
 library(ESAPermitsCapstone)
 MakeLeafletApp(DF = WestCoastPermitData, spatialData = WestCoastHUC8, ESUhucData = ESUwithHUC)
+
+
+# remotes::install_github("Appsilon/shiny.react")
+# remotes::install_github("Appsilon/shiny.fluent")
+
   
   

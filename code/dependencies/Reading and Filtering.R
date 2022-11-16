@@ -15,7 +15,7 @@ sf_use_s2(FALSE)
 # Permit Data
 # =================================================================================
 # West Coast region read in -> with Alana's filters
-wcr.init <- read_csv("data/WCRpermitBiOp_allregns_all_years_18Aug2022.csv")
+wcr.init <- read_csv("data_raw/WCRpermitBiOp_allregns_all_years_18Aug2022.csv")
 
 
 wcr <- wcr.init %>% 
@@ -63,7 +63,7 @@ wcr <- wcr.init %>%
   filter(TakeAction != "Unknown")
 
 
-wcr_act <- read_csv("data/WCRPermitBiOp_Pass report data 4d and S10_18Aug2022.csv")
+wcr_act <- read_csv("data_raw/WCRPermitBiOp_Pass report data 4d and S10_18Aug2022.csv")
 wcr_act <- wcr_act %>%
   filter(ResultCode %in% c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d")) %>% 
   mutate(LifeStage = recode(LifeStage,
@@ -122,7 +122,7 @@ juveniles <- wcr %>%
 # =================================================================================
 # Reading in abundance Data
 # =================================================================================
-abund <- read_csv("data/Abundance_2022-03-17.csv")
+abund <- read_csv("data_raw/Abundance_2022-03-17.csv")
 abund <- abund %>%
   mutate(LifeStage = recode(LifeStage,
                             "Subadult" = "Juvenile")) %>%
@@ -133,17 +133,17 @@ abund <- abund %>%
 # Spatial Data
 # =================================================================================
 # Reading in HUC 8 shape file
-wbd.hucs <- read_sf("data/WCR_HUC8/WCR_HUC8.shp")
+wbd.hucs <- read_sf("data_raw/WCR_HUC8/WCR_HUC8.shp")
 wbd.hucs$huc8 <- as.double(wbd.hucs$huc8)
 
 # state boundary shape files
-state.bound <- read_sf("data/cb_2018_us_state_20m/cb_2018_us_state_20m.shp")
+state.bound <- read_sf("data_raw/cb_2018_us_state_20m/cb_2018_us_state_20m.shp")
 wcr.bound <- state.bound %>%
   filter(NAME == "Washington" | NAME == "Oregon" |
            NAME == "California" | NAME == "Idaho")
 
 # Puget Sound areas Shapefile
-PS_bound <- read_sf("data/WAPSP_Nearshore_Credits_Marine_Basins/Nearshore_MarineBasins_wm.shp")
+PS_bound <- read_sf("data_raw/WAPSP_Nearshore_Credits_Marine_Basins/Nearshore_MarineBasins_wm.shp")
 
 # Joining Permit data and spatial data
 wcr_spatial <- right_join(x = wbd.hucs, y = wcr, by = c("huc8" = "HUCNumber"))
@@ -156,7 +156,7 @@ wcr_spatial <- right_join(x = wbd.hucs, y = wcr, by = c("huc8" = "HUCNumber"))
 # =================================================================================
 # ESU Species with Basins -> for creation of ESU Boundaries
 # =================================================================================
-ESUBasins <- read_csv("data/APPS_HUCassignments_24Oct22.csv")
+ESUBasins <- read_csv("data_raw/APPS_HUCassignments_24Oct22.csv")
 ESUBasins <- ESUBasins %>%
   filter(Species %in% c("Eulachon", "Salmon, Chinook", "Salmon, chum",
                         "Salmon, coho", "Salmon, sockeye", "Steelhead",
