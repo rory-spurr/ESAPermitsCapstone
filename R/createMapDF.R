@@ -20,10 +20,10 @@ createMapDF <- function(data, spatialData, createTakeVar = T){
   names(ESUdf) <- c("huc8", "ESU", "LifeStage", "Production", "theData") # rename columns
   # need generic "theData" name so that we can have Leaflet toggle between data
   # types
+  spatialData <- sf::st_as_sf(spatialData)
+  ESU_spatial <- dplyr::full_join(spatialData, ESUdf, by = "huc8") 
   
-  ESU_spatial <- dplyr::right_join(spatialData, ESUdf, by = "huc8") 
-  
-  ESU_spatial <- ESU_spatial %>% 
+  ESU_spatial <- ESU_spatial %>%
     sf::st_transform(crs = 4326) %>% # need to for Leaflet (WGS 1984)
     dplyr::filter(huc8 != 99999999) %>% 
     dplyr::filter(!is.na(huc8))

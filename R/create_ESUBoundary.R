@@ -27,8 +27,8 @@ create_ESUBoundary <- function(data, spatialData){
                                           "Rockfish, Canary" = "canary rockfish",
                                           "Rockfish, Bocaccio" = "bocaccio",
                                           "Rockfish, Yelloweye" = "yelloweye rockfish")) # naming consistency with permit data
-  
-  ESUBasinsSpatial <- dplyr::left_join(data, spatialData, by = c("HUC8" = "huc8")) %>%
+  spatialData <- sf::st_as_sf(spatialData)
+  ESUBasinsSpatial <- dplyr::full_join(data, spatialData, by = c("HUC8" = "huc8")) %>%
     sf::st_as_sf() %>%
     dplyr::mutate(DPS = paste(Population.Stock, Species, sep = " ")) # create ESU/DPS column (same unique values
   # as permit data)

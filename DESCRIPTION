@@ -3,12 +3,19 @@ Title: Create Shiny Applications for Visualizing ESA-Listed Fish Research
     on the West Coast
 Version: 0.0.0.9000
 Authors@R: 
-    person(c("Rory", "Spurr"), "rjspurr5@live.com", role = c("aut", "cre"))
+    person(given = "Rory",
+           family = "Spurr",
+           role = c("aut", "cre"),
+           email = "rjspurr5@live.com")
 Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Depends: 
-    R (>= 2.10)
+    R (>= 2.10),
+    vctrs (>= 0.5.0),
+    shiny,
+    leaflet,
+    sf
 Imports: 
     dplyr,
     DT,
@@ -16,7 +23,6 @@ Imports:
     magrittr,
     naniar,
     NMFSResPermits,
-    sf,
     stats,
     stringr
 Encoding: UTF-8

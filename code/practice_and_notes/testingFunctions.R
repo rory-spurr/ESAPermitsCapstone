@@ -41,7 +41,7 @@ mortframe <- createMapDF(x, WestCoastHUC8, F)
 esuBound <- create_ESUBoundary(data = ESUwithHUC, spatialData = WestCoastHUC8)
  
 
-  
-  
+library(ESAPermitsCapstone)
+MakeLeafletApp(DF = WestCoastPermitData, spatialData = WestCoastHUC8, ESUhucData = ESUwithHUC)
   
   
