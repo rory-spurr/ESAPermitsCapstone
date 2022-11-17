@@ -32,10 +32,10 @@ ui <-  fluidPage(
                   choices = levels(df$ESU), 
                   multiple = F)),
     mainPanel(
-      h5("These charts display the authorized and reported take (lethal/non-lethal) per year, 
-          total authorized is the cumulation of reported and unused authorized 
-         take (lethal/non-lethal)", align = "center"),
-      h6("*Data is only showing what was reported, not complete", align = "center"),
+      h5("These charts display the authorized take (lethal and non-lethal)\
+        in number of fish per year. Total authorized is broken down into reported take (yellow) 
+         and unused authorized take (blue)."),
+      h6("*Data is only showing what was reported, not complete"),
       plotlyOutput("plot1"), fluid = T,
       plotlyOutput("plot2"), fluid = T
     )))

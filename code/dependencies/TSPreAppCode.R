@@ -45,8 +45,8 @@ Mort <- merge(YM, TM, by = c("Year", "ESU", "Production", "LifeStage"))
 df2 <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage"))
 #==============================================================
 df2 %>%
-  mutate(Unused_Authorized_Take = Total_ET - Reported_Take) %>%
-  mutate(Unused_Authorized_Mortality = Total_TM - Reported_Mortality) -> df2
+  mutate(Authorized_Take_Unused = Total_ET - Reported_Take) %>%
+  mutate(Authorized_Mortality_Unused = Total_TM - Reported_Mortality) -> df2
 #==============================================================
 df_TM2 <- df2 %>%
   gather("Take_Type","N", 5:10) 
@@ -55,7 +55,7 @@ df_TM2 <- df2 %>%
 df_TM2[is.na(df_TM2)] <- 0
 #==============================================================
 df_TM2 %>%
-  filter(Take_Type %in% c("Reported_Take","Unused_Authorized_Take")) -> df_plot
+  filter(Take_Type %in% c("Reported_Take","Authorized_Take_Unused")) -> df_plot
 df_TM2 %>%
-  filter(Take_Type %in% c("Reported_Mortality","Unused_Authorized_Mortality")) -> df_plot2
+  filter(Take_Type %in% c("Reported_Mortality","Authorized_Mortality_Unused")) -> df_plot2
 #==============================================================
