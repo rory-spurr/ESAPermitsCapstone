@@ -41,11 +41,16 @@ mortframe <- createMapDF(x, WestCoastHUC8, F)
 esuBound <- create_ESUBoundary(data = ESUwithHUC, spatialData = WestCoastHUC8)
  
 
+
+install_github("mypcakge name")
 library(ESAPermitsCapstone)
 MakeLeafletApp(DF = WestCoastPermitData, spatialData = WestCoastHUC8, ESUhucData = ESUwithHUC)
 
 
-# remotes::install_github("Appsilon/shiny.react")
+devtools::install_github("rory-spurr/NMFSResPermits")
+
+
+#remotes::install_github("Appsilon/shiny.react")
 # remotes::install_github("Appsilon/shiny.fluent")
 
   

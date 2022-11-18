@@ -11,18 +11,18 @@ Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Depends: 
-    R (>= 2.10),
-    vctrs (>= 0.5.0),
-    shiny,
-    leaflet,
-    sf
+    R (>= 2.10)
 Imports: 
     dplyr,
     DT,
     htmltools,
+    htmlwidgets,
+    leaflet,
     magrittr,
     naniar,
     NMFSResPermits,
+    sf,
+    shiny,
     stats,
     stringr
 Encoding: UTF-8

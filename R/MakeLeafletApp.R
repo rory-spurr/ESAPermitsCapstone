@@ -51,25 +51,25 @@ MakeLeafletApp <- function(DF, spatialData, ESUhucData){
   totalMort <- createMapDF(DF, spatialData, F)
   esuBound <- create_ESUBoundary(ESUhucData, spatialData)
   
-  ui <- fluidPage(
-    titlePanel("Authorized Lethal and Non-Lethal Take of Current, Non-expired Permits"),
-    sidebarLayout(
+  ui <- shiny::fluidPage(
+    shiny::titlePanel("Authorized Lethal and Non-Lethal Take of Current, Non-expired Permits"),
+    shiny::sidebarLayout(
       
-      sidebarPanel(
-        radioButtons(inputId = "lifestage", label = "Choose a lifestage",
+      shiny::sidebarPanel(
+        shiny::radioButtons(inputId = "lifestage", label = "Choose a lifestage",
                      choices = c("Adult", "Juvenile")),
-        radioButtons(inputId = "Prod", label = "Choose an Origin",
+        shiny::radioButtons(inputId = "Prod", label = "Choose an Origin",
                      choices = c("Natural", "Listed Hatchery")),
-        radioButtons(inputId = "displayData", label = "Choose data to display",
+        shiny::radioButtons(inputId = "displayData", label = "Choose data to display",
                      choices = c("Total Take", "Lethal Take")),
-        selectInput(inputId = "DPS", label = "Choose an ESU to View",
+        shiny::selectInput(inputId = "DPS", label = "Choose an ESU to View",
                     choices = levels(DF$Species), 
                     multiple = F),
         width = 4
       ),
       
-      mainPanel(
-        leafletOutput("map"),
+      shiny::mainPanel(
+        leaflet::leafletOutput("map"),
         width = 8
       ),
       
@@ -80,7 +80,7 @@ MakeLeafletApp <- function(DF, spatialData, ESUhucData){
   )
   
   server <- function(input, output){
-    filteredData <- reactive({
+    filteredData <- shiny::reactive({
       ifelse(input$displayData == "Total Take",
              ESU.spatial <- totalTake,
              ESU.spatial <- totalMort)
@@ -90,7 +90,7 @@ MakeLeafletApp <- function(DF, spatialData, ESUhucData){
         dplyr::filter(Production == input$Prod)
     })
     
-    filteredWCR <- reactive({
+    filteredWCR <- shiny::reactive({
       wcr4App %>%
         dplyr::filter(Species == input$DPS) %>%
         dplyr::filter(LifeStage == input$lifestage) %>% 
@@ -99,46 +99,46 @@ MakeLeafletApp <- function(DF, spatialData, ESUhucData){
         dplyr::select(FileNumber:TotalMorts)
     })
     
-    filteredBound <- reactive({
+    filteredBound <- shiny::reactive({
       esuBound %>%
         dplyr::filter(DPS == input$DPS)
     })
     
     output$map <- leaflet::renderLeaflet({
       leaflet::leaflet(filteredData()) %>% 
-        addProviderTiles(providers$Stamen.TerrainBackground) %>%
-        setView(lng = -124.072971, lat = 40.887325, zoom = 4)
+        leaflet::addProviderTiles(leaflet::providers$Stamen.TerrainBackground) %>%
+        leaflet::setView(lng = -124.072971, lat = 40.887325, zoom = 4)
     })
     
-    observe({
-      pal <- colorNumeric(palette = "viridis",
+    shiny::observe({
+      pal <- leaflet::colorNumeric(palette = "viridis",
                           domain = filteredData()$theData,
                           reverse = T)
       
-      proxy <- leafletProxy("map", data = filteredData()) %>%
-        clearShapes() %>%
-        addPolygons(
+      proxy <- leaflet::leafletProxy("map", data = filteredData()) %>%
+        leaflet::clearShapes() %>%
+        leaflet::addPolygons(
           data = filteredBound(),
           fillColor = "transparent",
           color = "black"
         ) %>%
-        addPolygons(
+        leaflet::addPolygons(
           fillColor = ~pal(filteredData()$theData),
           color = "transparent",
           fillOpacity = 0.6,
           popup = ~labels,
-          highlight = highlightOptions(color = "white",
+          highlight = leaflet::highlightOptions(color = "white",
                                        bringToFront = T)
         ) %>%
-        clearControls() %>%
-        addLegend(
+        leaflet::clearControls() %>%
+        leaflet::addLegend(
           pal = pal,
           values = filteredData()$theData,
           title = "Authorized Take (# of fish)",
           position = "bottomleft"
         )
-      ifelse(!is.na(st_bbox(filteredData())[1]) == T,
-             proxy %>% setView(
+      ifelse(!is.na(sf::st_bbox(filteredData())[1]) == T,
+             proxy %>% leaflet::setView(
                lng = sf::st_coordinates(
                  sf::st_centroid(
                    sf::st_as_sfc(
@@ -150,7 +150,7 @@ MakeLeafletApp <- function(DF, spatialData, ESUhucData){
                      sf::st_bbox(
                        filteredData()))))[2],
                zoom = 6), 
-             proxy %>% setView(lng = -124.072971, lat = 40.887325, zoom = 4))
+             proxy %>% leaflet::setView(lng = -124.072971, lat = 40.887325, zoom = 4))
     })
     
     output$wcr_table <- DT::renderDataTable(
@@ -162,16 +162,16 @@ MakeLeafletApp <- function(DF, spatialData, ESUhucData){
                    "Water Type", "Take Action","Capture Method", "Total Take", "Lethal Take"),
       options = list(pageLength = 10, autoWidth = T, columnDefs = list(list(
         targets = "_all",
-        render = JS(
+        render = htmlwidgets::JS(
           "function(data, type, row, meta) {",
           "return type === 'display' && data.length > 25 ?",
           "'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;",
           "}")
       ), 
       list(width = '500px', targets = c(5,7,8)))),
-      callback = JS('table.page(3).draw(false);')
+      callback = htmlwidgets::JS('table.page(3).draw(false);')
     )
   }
   
-  shinyApp(ui = ui, server = server)
+  shiny::shinyApp(ui = ui, server = server)
 }
