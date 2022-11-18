@@ -4,7 +4,7 @@
 \alias{MakeLeafletApp}
 \title{MakeLeafletApp}
 \usage{
-MakeLeafletApp(DF, spatialData, ESUhucData)
+MakeLeafletApp(DF, spatialData, esuBound)
 }
 \arguments{
 \item{DF}{Data frame describing the different HUC 8 where ESUs can be found. One row per unique
@@ -15,9 +15,8 @@ rows, one for each DPS where they can be found.}
 Recommended to use the data that comes with this package from the Watershed Boundary Dataset (Made
 and maintained by the USGS).}
 
-\item{ESUhucData}{Data frame describing the different HUC 8 where ESUs can be found. One row per unique
-DPS/huc8 combination. Therefore species that are found in multiple DPSs wil be lsted in multiple
-rows, one for each DPS where they can be found.}
+\item{esuBound}{spatial data showing the boundaries of where each ESU/DPs can be found. Data is
+made using the create_ESUBoundary function, and then supplied to this function to create the app.}
 }
 \value{
 A Shiny application that displays take data in a Leaflet map, as well as a data table showing

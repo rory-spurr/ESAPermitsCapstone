@@ -53,5 +53,5 @@ devtools::install_github("rory-spurr/NMFSResPermits")
 #remotes::install_github("Appsilon/shiny.react")
 # remotes::install_github("Appsilon/shiny.fluent")
 
-  
+esuBound <- create_ESUBoundary(data = ESUwithHUC, spatialData = WestCoastHUC8)
   

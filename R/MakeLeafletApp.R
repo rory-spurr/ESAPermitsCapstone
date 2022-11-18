@@ -7,13 +7,12 @@
 #' @param spatialData Polygon spatial data for HUC 8's in Washington, Idaho, Oregon and California.
 #' Recommended to use the data that comes with this package from the Watershed Boundary Dataset (Made 
 #' and maintained by the USGS).
-#' @param ESUhucData Data frame describing the different HUC 8 where ESUs can be found. One row per unique
-#' DPS/huc8 combination. Therefore species that are found in multiple DPSs wil be lsted in multiple 
-#' rows, one for each DPS where they can be found.
+#' @param esuBound spatial data showing the boundaries of where each ESU/DPs can be found. Data is 
+#' made using the create_ESUBoundary function, and then supplied to this function to create the app.
 #' @return A Shiny application that displays take data in a Leaflet map, as well as a data table showing
 #' what makes up the take values.
 #' @export
-MakeLeafletApp <- function(DF, spatialData, ESUhucData){
+MakeLeafletApp <- function(DF, spatialData, esuBound){
   
   DF <- createLocations(permitFilter(DF))
   
@@ -49,7 +48,6 @@ MakeLeafletApp <- function(DF, spatialData, ESUhucData){
   
   totalTake <- createMapDF(DF, spatialData, T)
   totalMort <- createMapDF(DF, spatialData, F)
-  esuBound <- create_ESUBoundary(ESUhucData, spatialData)
   
   ui <- shiny::fluidPage(
     shiny::titlePanel("Authorized Lethal and Non-Lethal Take of Current, Non-expired Permits"),
