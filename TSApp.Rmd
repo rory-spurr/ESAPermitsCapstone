@@ -3,25 +3,22 @@ title: "Time Series"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
-    vertical_layout: fill
+    vertical_layout: fit
 runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
-library(flexdashboard)
 #Reading in packages
+library(flexdashboard)
 library(shiny)
 library(ggplot2)
-library(sf)
 library(dplyr)
 library(tidyverse)
-library(leaflet)
 library(NMFSResPermits)
 library(plotly)
 library(viridis)
 library(DT)
 library(shinyjqui)
-sf_use_s2(FALSE)
 #==============================================================
 #Sourcing Script
 #setwd("~/GitHub/ESA_Permits_Capstone")
@@ -33,8 +30,6 @@ source(paste(getwd(), "/code/dependencies/TSPreAppCodeT.R", sep = ""))
 # Stacked Bar Plots
 Column {data-width=650}
 -----------------------------------------------------------------------
-
-
 
 ```{r}
 shinyApp(
@@ -120,7 +115,7 @@ options= list (height = 800, width = "98%")
 ```
 
 # Percentage Plots
-Column {data-width=350}
+Column {data-width=650}
 -----------------------------------------------------------------------
 
 
@@ -182,6 +177,8 @@ server <- function(input, output, session){
 ```
 
 # Line Graphs
+Column {data-width=650}
+-----------------------------------------------------------------------
 
 ```{r}
 shinyApp(
