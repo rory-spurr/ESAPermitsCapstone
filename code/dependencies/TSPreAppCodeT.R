@@ -36,10 +36,10 @@ YM <- dt %>%
   summarise(Reported_Mortality = sum(ActMort))
 TM <- dt %>%
   group_by(Year, ESU, Production, LifeStage, FileNumber, CaptureMethod, ReportID, ResultCode) %>%
-  summarise(Total_TM = sum(TotalMorts))
+  summarise(Authorized_Mortality = sum(TotalMorts))
 ET <-dt %>%
   group_by(Year, ESU, Production, LifeStage, FileNumber, CaptureMethod, ReportID, ResultCode) %>% 
-  summarise(Total_ET = sum(ExpTake))
+  summarise(Authorized_Take = sum(ExpTake))
 # #==============================================================
 # #Merging data sets
 Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage", "FileNumber", "CaptureMethod", "ReportID", "ResultCode"))
@@ -47,5 +47,11 @@ Mort <- merge(YM, TM, by = c("Year", "ESU", "Production", "LifeStage", "FileNumb
 dt <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage", "FileNumber", "CaptureMethod", "ReportID", "ResultCode"))
 #==============================================================
 dt %>%
-  mutate(Authorized_Take_Unused = Total_ET - Reported_Take) %>%
-  mutate(Authorized_Mortality_Unused = Total_TM - Reported_Mortality) -> dt
+  mutate(Authorized_Take_Unused = Authorized_Take - Reported_Take) %>%
+  mutate(Authorized_Mortality_Unused = Authorized_Mortality - Reported_Mortality) -> dt
+#==============================================================
+#Reordering columns
+#dt <- colReorder(c("FileNumber", "ResultCode", "ReportID","Year", "ESU", 
+                  # "Production", "LifeStage", "CaptureMethod", "Authorized_Take", "Reported_Take", 
+                  # "Authoprized_Mortality", "Reported_Mortality", 
+                  # "Authorized_Take_Unused", "Authorized_Mortality_Unused"))

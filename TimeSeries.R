@@ -12,6 +12,7 @@ library(NMFSResPermits)
 library(plotly)
 library(viridis)
 library(DT)
+library(shinyjqui)
 sf_use_s2(FALSE)
 #==============================================================
 #Sourcing Script
@@ -40,7 +41,7 @@ ui <-  fluidPage(
       h6("*Data is only showing what was reported, not complete"),
       plotlyOutput("plot1"), fluid = T,
       plotlyOutput("plot2"), fluid = T,
-    width = 9, height = 7),
+    width = 8, height = 7),
     position = c("left", "right"),
     fluid = T
   ),
@@ -76,8 +77,7 @@ output$plot1 <-renderPlotly({
   ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack")+
     scale_fill_viridis(discrete = T, name = "Take Type", option = "C") +
-     labs(x = "Year", y = "Number of fish", caption = "This chart displays the authorized and reported take per year, 
-          total authorized is the cumulation of reported and unused authorized take")+ 
+     labs(x = "Year", y = "Number of fish")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
   ggplotly(tooltip = c("y", "x", "fill"))
 })
@@ -85,11 +85,19 @@ output$plot2 <-renderPlotly({
   ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack")+
     scale_fill_viridis(discrete = T, name = "Take Type", option = "C") +
-    labs(x = "Year", y = "Number of fish", caption = "This chart displays the authorized and reported mortality per year, 
-          total authorized is the cumulation of reported and unused authorized mortality")+ 
+    labs(x = "Year", y = "Number of fish")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
   ggplotly(tooltip = c("y", "x", "fill"))
 })
-output$table <- DT::renderDataTable({dat3()})}
+output$table <- DT::renderDataTable(dat3(),
+                caption = "Note : table excludes 'Tribal 4d' permits for privacy concerns, 
+                but are included in the take totals", 
+                colnames = c("Year", "ESU", "Production", "Life Stage",
+                             "Permit Code", "Gear Type", "Report ID", "Permit Type", 
+                             "Reported Take", "Authorized Take", "Reported Mortality",
+                             "Authorized Mortality", "Unused Take", "Unused Mortality"),
+                options = list(pageLength = 10, autoWidth = T)
+)
+jqui_sortable("#table thead tr")}
 
 shinyApp (ui = ui, server = server) 
