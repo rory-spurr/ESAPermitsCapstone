@@ -16,7 +16,7 @@ sf_use_s2(FALSE)
 #Sourcing Script
 #setwd("~/GitHub/ESA_Permits_Capstone")
 source(paste(getwd(), "/code/dependencies/Reading and Filtering.R", sep = ""))
-source(paste(getwd(), "/code/dependencies/TSPreAppCode3.R", sep = ""))
+source(paste(getwd(), "/code/dependencies/TSPreAppCode.R", sep = ""))
 #==============================================================
 #Shiny Integration
 ui <-  fluidPage(
@@ -33,8 +33,8 @@ ui <-  fluidPage(
                   multiple = F)),
     mainPanel(
       h5("These charts display the authorized and reported take 
-         (lethal/non-lethal) per year", align = "center"),
-      h6("*Data is only showing what was reported, not complete", align = "center"), 
+         (lethal/non-lethal) per year"),
+      h6("*Data is only showing what was reported, not complete"), 
       plotlyOutput("plot1"), fluid = T,
       plotlyOutput("plot2"), fluid = T
     )))
@@ -58,18 +58,20 @@ server <- function(input, output, session){
     ggplot(data = dat(), aes (y = N, x = Year, color = Take, group = Take))+ 
       geom_line()+
       geom_point()+
-      scale_color_viridis(discrete = T, name = "Take Type", labels = c("Authorized Take", "Reported Take")) +
+      scale_color_viridis(discrete = T, name = "Take Type", option = "C") +
       labs(x = "Year", y = "Number of Fish")+ 
-      theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
+      theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5),
+               panel.background = element_rect(fill = "#A5A3A3" ))
     ggplotly(tooltip = c("y", "x", "fill"))
   })
   output$plot2 <-renderPlotly({
     ggplot(data = dat2(), aes (y = N, x = Year, color = Take, group = Take))+ 
       geom_line()+
       geom_point()+
-      scale_color_viridis(discrete = T, name = "Take Type", labels = c("Reported Mortality", "Authorized Mortality")) +
+      scale_color_viridis(discrete = T, name = "Take Type", option = "C") +
       labs(x = "Year", y = "Number of Fish")+ 
-      theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
+      theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5),
+            panel.background = element_rect(fill = "#A5A3A3") )
     ggplotly(tooltip = c("y", "x", "fill"))
   })
 } 

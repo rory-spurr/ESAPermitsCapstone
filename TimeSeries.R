@@ -11,12 +11,14 @@ library(leaflet)
 library(NMFSResPermits)
 library(plotly)
 library(viridis)
+library(DT)
 sf_use_s2(FALSE)
 #==============================================================
 #Sourcing Script
 #setwd("~/GitHub/ESA_Permits_Capstone")
 source(paste(getwd(), "/code/dependencies/Reading and Filtering.R", sep = ""))
 source(paste(getwd(), "/code/dependencies/TSPreAppCode.R", sep = ""))
+source(paste(getwd(), "/code/dependencies/TSPreAppCodeT.R", sep = ""))
 #==============================================================
 #Shiny Integration
 ui <-  fluidPage(
@@ -30,15 +32,22 @@ ui <-  fluidPage(
                    choices = c("Natural", "Listed Hatchery")),
       selectInput(inputId = "ESU", label = "Choose an ESU to View",
                   choices = levels(df$ESU), 
-                  multiple = F)),
+                  multiple = F), width = 4), 
     mainPanel(
       h5("These charts display the authorized take (lethal and non-lethal)\
         in number of fish per year. Total authorized is broken down into reported take (yellow) 
          and unused authorized take (blue)."),
       h6("*Data is only showing what was reported, not complete"),
       plotlyOutput("plot1"), fluid = T,
-      plotlyOutput("plot2"), fluid = T
-    )))
+      plotlyOutput("plot2"), fluid = T,
+    width = 9, height = 7),
+    position = c("left", "right"),
+    fluid = T
+  ),
+    
+    DT::dataTableOutput("table", width = "100%", height = "auto")
+)
+
 
 server <- function(input, output, session){
   dat <- reactive({
@@ -55,6 +64,14 @@ server <- function(input, output, session){
         filter(Production %in% input$Production) %>%
         filter(ESU %in% input$ESU)
   })
+    dat3 <- reactive({
+      dt %>%
+        filter(ESU == input$ESU) %>%
+        filter(LifeStage == input$LifeStage) %>% 
+        filter(Production == input$Production) %>%
+        filter(ResultCode != "Tribal 4d") %>%
+        select(Year:Authorized_Mortality_Unused)
+    })
 output$plot1 <-renderPlotly({
   ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack")+
@@ -73,6 +90,6 @@ output$plot2 <-renderPlotly({
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
   ggplotly(tooltip = c("y", "x", "fill"))
 })
-} 
+output$table <- DT::renderDataTable({dat3()})}
 
 shinyApp (ui = ui, server = server) 

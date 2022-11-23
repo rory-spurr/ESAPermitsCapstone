@@ -1,8 +1,7 @@
 # Alana Santana and Rory Spurr
-# Script to run prior to running time series app
+# Script to run prior to running time series app - plot codes 
 #install.packages("plotly")
 source(paste(getwd(), "/code/dependencies/Reading and Filtering.R", sep = ""))
-
 # =================================================================================
 #Setting up data - Changing time factor
 a<-as.factor(wcr_act$DateReportPeriodEnd)
@@ -34,28 +33,58 @@ YM <- df %>%
   summarise(Reported_Mortality = sum(ActMort))
 TM <- df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Total_TM = sum(TotalMorts))
+  summarise(Authorized_Mortality = sum(TotalMorts))
 ET <-df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Total_ET = sum(ExpTake))
+  summarise(Authorized_Take = sum(ExpTake))
 # #==============================================================
 # #Merging data sets
 Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage"))
 Mort <- merge(YM, TM, by = c("Year", "ESU", "Production", "LifeStage"))
-df2 <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage"))
-#==============================================================
-df2 %>%
-  mutate(Authorized_Take_Unused = Total_ET - Reported_Take) %>%
-  mutate(Authorized_Mortality_Unused = Total_TM - Reported_Mortality) -> df2
-#==============================================================
-df_TM2 <- df2 %>%
-  gather("Take_Type","N", 5:10) 
+df1 <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage"))
 #==============================================================
 #Replacing NaN or NA or Inf with 0
-df_TM2[is.na(df_TM2)] <- 0
+df1[is.na(df1)] <- 0
 #==============================================================
-df_TM2 %>%
+
+
+#==================================================================================
+############################### Stacked bar plot code ##############################
+# =================================================================================
+df1 %>%
+  mutate(Authorized_Take_Unused = Authorized_Take - Reported_Take) %>%
+  mutate(Authorized_Mortality_Unused = Authorized_Mortality - Reported_Mortality) -> df2
+
+df_TM <- df2 %>%
+  gather("Take_Type","N", 5:10) 
+#==============================================================
+df_TM %>%
   filter(Take_Type %in% c("Reported_Take","Authorized_Take_Unused")) -> df_plot
-df_TM2 %>%
+df_TM %>%
   filter(Take_Type %in% c("Reported_Mortality","Authorized_Mortality_Unused")) -> df_plot2
 #==============================================================
+
+# =================================================================================
+############################ Percentage bar plot code ##################################
+# =================================================================================
+dp <- df1 %>%
+  mutate(Take = (df1$Reported_Take/df1$Authorized_Take)*100) %>%
+  mutate(Lethal_Take = (df1$Reported_Mortality/df1$Authorized_Mortality)*100)
+#==============================================================
+#Merging columns
+df_TM1 <- pivot_longer(dp, Lethal_Take:Take, names_to = "Take_Type", values_to = "Percentage")
+#==============================================================
+df_TM1 %>%
+  filter(Take_Type %in% c("Take")) -> dfplot
+df_TM1 %>%
+  filter(Take_Type %in% "Lethal_Take") -> dfplot2
+# =================================================================================
+############################ Line graph code #####################################
+# =================================================================================
+df_l <- df1 %>%
+  gather("Take","N", 5:8) 
+# #==============================================================
+df_l %>%
+  filter(Take %in% c("Reported_Take", "Authorized_Take")) -> plot
+df_l %>%
+  filter(Take %in% c("Reported_Mortality", "Authorized_Mortality")) -> plot2
