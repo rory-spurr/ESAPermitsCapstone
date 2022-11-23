@@ -91,8 +91,8 @@ server <- function(input, output){
       )
       ifelse(!is.na(st_bbox(filteredData())[1]) == T,
         proxy %>% setView(lng = st_coordinates(st_centroid(st_as_sfc(st_bbox(filteredData()))))[1],
-                          lat = st_coordinates(st_centroid(st_as_sfc(st_bbox(filteredData()))))[2],
-                          zoom = 6), 
+                               lat = st_coordinates(st_centroid(st_as_sfc(st_bbox(filteredData()))))[2],
+                               zoom = 6), 
         proxy %>% setView(map, lng = -124.072971, lat = 40.887325, zoom = 4))
   })
   output$wcr_table <- DT::renderDataTable(
