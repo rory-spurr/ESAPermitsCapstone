@@ -53,5 +53,5 @@ dt %>%
 #Reordering columns
 #dt <- colReorder(c("FileNumber", "ResultCode", "ReportID","Year", "ESU", 
                   # "Production", "LifeStage", "CaptureMethod", "Authorized_Take", "Reported_Take", 
-                  # "Authoprized_Mortality", "Reported_Mortality", 
+                  # "Authorized_Mortality", "Reported_Mortality", 
                   # "Authorized_Take_Unused", "Authorized_Mortality_Unused"))

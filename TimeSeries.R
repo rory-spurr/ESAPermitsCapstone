@@ -35,8 +35,7 @@ ui <-  fluidPage(
                   choices = levels(df$ESU), 
                   multiple = F), width = 4), 
     mainPanel(
-      h5("These charts display the authorized take (lethal and non-lethal)\
-        in number of fish per year. Total authorized is broken down into reported take (yellow) 
+      h5("These charts display the authorized take (lethal and non-lethal) in number of fish per year. Total authorized is broken down into reported take (yellow) 
          and unused authorized take (blue)."),
       h6("*Data is only showing what was reported, not complete"),
       plotlyOutput("plot1"), fluid = T,
@@ -75,7 +74,7 @@ server <- function(input, output, session){
     })
 output$plot1 <-renderPlotly({
   ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
-    geom_bar(stat = "identity", position = "stack")+
+    geom_bar(stat = "identity", position = "stack", color = "black")+
     scale_fill_viridis(discrete = T, name = "Take Type", option = "C") +
      labs(x = "Year", y = "Number of fish")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
@@ -83,10 +82,11 @@ output$plot1 <-renderPlotly({
 })
 output$plot2 <-renderPlotly({
   ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
-    geom_bar(stat = "identity", position = "stack")+
+    geom_bar(stat = "identity", position = "stack", color = "black")+
     scale_fill_viridis(discrete = T, name = "Take Type", option = "C") +
     labs(x = "Year", y = "Number of fish")+ 
-    theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
+    theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
+          panel.background = element_rect(fill = "#A5A3A3" ))
   ggplotly(tooltip = c("y", "x", "fill"))
 })
 output$table <- DT::renderDataTable(dat3(),

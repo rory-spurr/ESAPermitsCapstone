@@ -3,7 +3,7 @@ title: "Time Series"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
-    vertical_layout: fit
+    vertical_layout: fill
 runtime: shiny
 ---
 
@@ -87,7 +87,7 @@ server <- function(input, output, session){
 output$plot1 <-renderPlotly({
   ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack")+
-    scale_fill_viridis(discrete = T, name = "Take Type", option = "C") +
+    scale_fill_viridis(discrete = T, name = "Take Type") +
      labs(x = "Year", y = "Number of fish")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
   ggplotly(tooltip = c("y", "x", "fill"))
@@ -95,7 +95,7 @@ output$plot1 <-renderPlotly({
 output$plot2 <-renderPlotly({
   ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack")+
-    scale_fill_viridis(discrete = T, name = "Take Type", option = "C") +
+    scale_fill_viridis(discrete = T, name = "Take Type") +
     labs(x = "Year", y = "Number of fish")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
   ggplotly(tooltip = c("y", "x", "fill"))
