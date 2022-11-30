@@ -73,7 +73,7 @@ output$plot1 <-renderPlotly({
   ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack", color = "black")+
     scale_fill_manual(values = mycols, name = "Take Type") +
-     labs(x = "Year", y = "Number of fish", title = "Non-Lethal Take Plot")+ 
+     labs(x = "Year", y = "Total Take (Number of fish)", title = "Non-Lethal Take Plot")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
           panel.background = element_rect(fill = "#D0D3D4" ))
   ggplotly(tooltip = c("y", "x", "fill"))
@@ -82,7 +82,7 @@ output$plot2 <-renderPlotly({
   ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack", color = "black")+
     scale_fill_manual(values = mycols, name = "Take Type") +
-    labs(x = "Year", y = "Number of fish", title = "Lethal Take Plot")+ 
+    labs(x = "Year", y = "Total Take (Number of fish)", title = "Lethal Take Plot")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
           panel.background = element_rect(fill = "#D0D3D4" ))
   ggplotly(tooltip = c("y", "x", "fill"))
