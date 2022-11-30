@@ -15,7 +15,7 @@ sf_use_s2(FALSE)
 # Permit Data
 # =================================================================================
 # West Coast region read in -> with Alana's filters
-wcr.init <- read_csv("data_raw/WCRpermitBiOp_allregns_all_years_18Aug2022.csv")
+wcr.init <- read_csv("data_raw/WCRpermits_demo_20221129.csv")
 
 
 wcr <- wcr.init %>% 
@@ -63,7 +63,7 @@ wcr <- wcr.init %>%
   filter(TakeAction != "Unknown")
 
 
-wcr_act <- read_csv("data_raw/WCRPermitBiOp_Pass report data 4d and S10_18Aug2022.csv")
+wcr_act <- read_csv("data_raw/WCRpermit_reports_demo_20221129.csv")
 wcr_act <- wcr_act %>%
   filter(ResultCode %in% c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d")) %>% 
   mutate(LifeStage = recode(LifeStage,
@@ -122,7 +122,7 @@ juveniles <- wcr %>%
 # =================================================================================
 # Reading in abundance Data
 # =================================================================================
-abund <- read_csv("data_raw/Abundance_2022-03-17.csv")
+abund <- read_csv("data_raw/abundance/Abundance_2022-03-17.csv")
 abund <- abund %>%
   mutate(LifeStage = recode(LifeStage,
                             "Subadult" = "Juvenile")) %>%

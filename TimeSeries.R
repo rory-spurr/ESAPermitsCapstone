@@ -81,8 +81,7 @@ output$plot1 <-renderPlotly({
 output$plot2 <-renderPlotly({
   ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack", color = "black")+
-    scale_fill_manual(labels = c("Unused Authorized Take", "Reported Take"), 
-                      values = mycols, name = "Take Type") +
+    scale_fill_manual(values = mycols, name = "Take Type") +
     labs(x = "Year", y = "Number of fish", title = "Lethal Take Plot")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
           panel.background = element_rect(fill = "#D0D3D4" ))
