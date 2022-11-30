@@ -55,6 +55,7 @@ server <- function(input, output) {
   output$tabset1Selected <- renderText({
   input$tabset1
   })
+  # Filter for take data within HUC 8's
   filteredData <- reactive({
     ifelse(input$displayData == "Total Take",
            ESU.spatial <- ESU_spatialTotal,
@@ -64,6 +65,7 @@ server <- function(input, output) {
       filter(LifeStage == input$lifestage) %>% 
       filter(Production == input$Prod)
   })
+  # Filter for data table data
   filteredWCR <- reactive({
     wcr4App %>%
       filter(Species == input$DPS) %>%
@@ -72,15 +74,18 @@ server <- function(input, output) {
       filter(ResultCode != "Tribal 4d") %>%
       select(FileNumber:TotalMorts)
   })
+  # Filter for boundary data
   filteredBound <- reactive({
     esuBound %>%
       filter(DPS == input$DPS)
   })
+  # Base map output (does not change)
   output$map <- renderLeaflet({
     leaflet(filteredData()) %>% 
       addProviderTiles(providers$Stamen.TerrainBackground) %>%
       setView(map, lng = -124.072971, lat = 40.887325, zoom = 4)
   })
+  # Observer to render parts of map that change based on user inputs
   observe({
     pal <- colorNumeric(palette = "viridis",
                         domain = filteredData()$theData,
@@ -116,6 +121,7 @@ server <- function(input, output) {
                              zoom = 6), 
            proxy %>% setView(map, lng = -124.072971, lat = 40.887325, zoom = 4))
   })
+  # Data table processing and rendering
   output$wcr_table <- DT::renderDataTable({
     filteredWCR()},
     caption = "Table displaying raw data that makes up take values in map above. 
@@ -137,6 +143,5 @@ server <- function(input, output) {
     callback = JS('table.page(3).draw(false);')
   )
 }
-
 
 shinyApp(ui, server)
