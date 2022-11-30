@@ -105,7 +105,9 @@ server <- function(input, output) {
       addLegend(
         pal = pal,
         values = filteredData()$theData,
-        title = "Authorized Take (# of fish)",
+        title = ifelse(input$displayData == "Total Take", 
+                       "Total Take (# of fish)",
+                       "Lethal Take (# of fish)"),
         position = "bottomleft"
       )
     ifelse(!is.na(st_bbox(filteredData())[1]) == T,
