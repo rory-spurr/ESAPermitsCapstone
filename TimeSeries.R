@@ -17,11 +17,10 @@ library(RColorBrewer)
 #setwd("~/GitHub/ESA_Permits_Capstone")
 source(paste(getwd(), "/code/dependencies/Reading and Filtering.R", sep = ""))
 source(paste(getwd(), "/code/dependencies/TSPreAppCode.R", sep = ""))
-source(paste(getwd(), "/code/dependencies/TSPreAppCodeT.R", sep = ""))
 #==============================================================
 #Shiny Integration
 ui <-  fluidPage(
-  titlePanel("Authorized and Reported Take (Lethal/Non-Lethal) per Year"),
+  titlePanel("Authorized and Reported Take (Lethal and Non-Lethal) per Year"),
   sidebarLayout(
     
     sidebarPanel(
@@ -73,8 +72,8 @@ server <- function(input, output, session){
 output$plot1 <-renderPlotly({
   ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack", color = "black")+
-    scale_fill_manual(values = mycols) +
-     labs(x = "Year", y = "Number of fish")+ 
+    scale_fill_manual(values = mycols, name = "Take Type") +
+     labs(x = "Year", y = "Number of fish", title = "Non-Lethal Take Plot")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
           panel.background = element_rect(fill = "#D0D3D4" ))
   ggplotly(tooltip = c("y", "x", "fill"))
@@ -82,11 +81,13 @@ output$plot1 <-renderPlotly({
 output$plot2 <-renderPlotly({
   ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack", color = "black")+
-    scale_fill_manual(values = mycols) +
-    labs(x = "Year", y = "Number of fish")+ 
+    scale_fill_manual(labels = c("Unused Authorized Take", "Reported Take"), 
+                      values = mycols, name = "Take Type") +
+    labs(x = "Year", y = "Number of fish", title = "Lethal Take Plot")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
           panel.background = element_rect(fill = "#D0D3D4" ))
   ggplotly(tooltip = c("y", "x", "fill"))
+          
 })
 output$table <- DT::renderDataTable(dat3(),
                 caption = "Note : table excludes 'Tribal 4d' permits for privacy concerns, 
