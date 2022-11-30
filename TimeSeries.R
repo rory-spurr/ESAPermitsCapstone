@@ -4,16 +4,14 @@
 #Reading in packages
 library(shiny)
 library(ggplot2)
-library(sf)
 library(dplyr)
 library(tidyverse)
-library(leaflet)
 library(NMFSResPermits)
 library(plotly)
 library(viridis)
 library(DT)
 library(shinyjqui)
-sf_use_s2(FALSE)
+library(RColorBrewer)
 #==============================================================
 #Sourcing Script
 #setwd("~/GitHub/ESA_Permits_Capstone")
@@ -75,18 +73,19 @@ server <- function(input, output, session){
 output$plot1 <-renderPlotly({
   ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack", color = "black")+
-    scale_fill_viridis(discrete = T, name = "Take Type", option = "C") +
+    scale_fill_manual(values = mycols) +
      labs(x = "Year", y = "Number of fish")+ 
-    theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5))
+    theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
+          panel.background = element_rect(fill = "#D0D3D4" ))
   ggplotly(tooltip = c("y", "x", "fill"))
 })
 output$plot2 <-renderPlotly({
   ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
     geom_bar(stat = "identity", position = "stack", color = "black")+
-    scale_fill_viridis(discrete = T, name = "Take Type", option = "C") +
+    scale_fill_manual(values = mycols) +
     labs(x = "Year", y = "Number of fish")+ 
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
-          panel.background = element_rect(fill = "#A5A3A3" ))
+          panel.background = element_rect(fill = "#D0D3D4" ))
   ggplotly(tooltip = c("y", "x", "fill"))
 })
 output$table <- DT::renderDataTable(dat3(),

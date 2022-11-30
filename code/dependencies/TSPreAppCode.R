@@ -46,7 +46,8 @@ df1 <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage"))
 #Replacing NaN or NA or Inf with 0
 df1[is.na(df1)] <- 0
 #==============================================================
-
+#Creating custom color palette 
+mycols <- colors()[c(461, 142, 525, 87)]
 
 #==================================================================================
 ############################### Stacked bar plot code #############################
