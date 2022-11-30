@@ -35,14 +35,14 @@ ui <- dashboardPage(
               choices = levels(wcr$Species), multiple = F)
           ),
           box(
-            title = "Raw Data Table",
+            title = "Authorized Take Map",
             width = 8,
-            dataTableOutput("wcr_table")
+            leafletOutput("map")
           ),
           box(
-            title = "Authorized Take Map",
+            title = "Raw Data Table",
             width = 12,
-            leafletOutput("map")
+            dataTableOutput("wcr_table")
           ),
         )
       ),
@@ -114,23 +114,25 @@ server <- function(input, output) {
                              zoom = 6), 
            proxy %>% setView(map, lng = -124.072971, lat = 40.887325, zoom = 4))
   })
-  output$wcr_table <- DT::renderDataTable(
-    filteredWCR(),
+  output$wcr_table <- DT::renderDataTable({
+    filteredWCR()},
     caption = "Table displaying raw data that makes up take values in map above. 
     Note that `Tribal 4d` permits are not included in the table for privacy concerns, 
     but are included in the take totals displayed in the map above.",
     colnames = c("File Number", "Permit Type", "Organization", "HUC 8", "Location",
                  "Water Type", "Take Action","Capture Method", "Total Take", "Lethal Take"),
-    options = list(pageLength = 5, autoWidth = T, columnDefs = list(list(
+    options = list(pageLength = 10, autoWidth = T,
+      dom = "ft",
+      columnDefs = list(list(
       targets = "_all",
       render = JS(
         "function(data, type, row, meta) {",
         "return type === 'display' && data.length > 25 ?",
         "'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;",
         "}")
-    ), 
-    list(width = '500px', targets = c(5,7,8)))),
-    callback = JS('table.page(3).draw(false);'),
+      ), 
+      list(width = '500px', targets = c(5,7,8)))),
+    callback = JS('table.page(3).draw(false);')
   )
 }
 
