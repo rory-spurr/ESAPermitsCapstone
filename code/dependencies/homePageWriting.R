@@ -38,4 +38,15 @@ backgroundText <- list(
   in a database where data can be publicly accessed for individual issued permits, although currently there exists 
   no easily digestible central hub to view, interpret, and use this information. Thus, the purpose of this project 
   is to provide a readily available and informational framework that summarizes this critical information and puts 
-  it into context for researchers, NMFS personnel, and other interested parties."))
+  it into context for researchers, NMFS personnel, and other interested parties."),
+  
+  p(strong("References:"),
+    br(),
+    "Endangered Species Act. 16 U.S.C. 1531-1544 (1973).",
+    br(),
+    "National Marine Fisheries Service (NMFS). (2019). Chapter 3:  NMFS Pacific Marine/Anadromous Fish and 
+    Invertebrates Scientific Research Authorizations and Oregon Scientific Take Permits. National Marine 
+    Fisheries Service. 1315 East-West Highway Silver Spring, MD 20910."))
+
+
+
