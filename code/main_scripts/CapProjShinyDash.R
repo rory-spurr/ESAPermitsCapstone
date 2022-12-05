@@ -27,12 +27,13 @@ ui <- dashboardPage(
             width = 4,
             radioButtons(inputId = "lifestage", label = "Choose a lifestage",
               choices = c("Adult", "Juvenile")),
-            radioButtons(inputId = "Prod", label = "Choose an Origin",
+            radioButtons(inputId = "Prod", label = "Choose an origin",
               choices = c("Natural", "Listed Hatchery")),
             radioButtons(inputId = "displayData", label = "Choose data to display",
               choices = c("Total Take", "Lethal Take")),
-            selectInput(inputId = "DPS", label = "Choose an ESU to View",
-              choices = levels(wcr$Species), multiple = F)
+            selectInput(inputId = "DPS", label = "Choose an ESU to view",
+              choices = levels(wcr$Species), multiple = F),
+            background = "light-blue"
           ),
           box(
             title = "Authorized Take Map",
