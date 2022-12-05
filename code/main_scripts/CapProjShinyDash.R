@@ -16,7 +16,7 @@ ui <- dashboardPage(
       tabItem(tabName = "home",
         tabBox(title = "Getting Started",
         id = "tabset1", height = "1000px", width = "auto",
-        tabPanel("Background", "Here we will put backghround on WCR/Permits/ESA"),
+        tabPanel("Background", backgroundText),
         tabPanel("How it works", "Here we will display a video on how it works"),
         tabPanel("Disclaimer", "Here we will discuss limitations/caveats of app")),   
       ),
