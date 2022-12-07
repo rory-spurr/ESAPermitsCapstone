@@ -1,6 +1,9 @@
 # Alana Santana and Rory Spurr
 # Script to run prior to running time series app - plot codes 
 #install.packages("plotly")
+library(DT)
+library(shinyjqui)
+library(RColorBrewer)
 source(paste(getwd(), "/code/dependencies/Reading and Filtering.R", sep = ""))
 # =================================================================================
 #Setting up data - Changing time factor
