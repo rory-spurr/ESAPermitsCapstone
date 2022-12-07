@@ -47,7 +47,33 @@ ui <- dashboardPage(
           ),
         )
       ),
-      tabItem(tabName = "timeSeries")
+      tabItem(tabName = "timeSeries", 
+              fluidRow(
+                box(
+                  title = "Controls",
+                  width = 4,
+                  radioButtons(inputId = "LifeStage", label = "Choose a lifestage",
+                               choices = c("Adult", "Juvenile")),
+                  radioButtons(inputId = "Production", label = "Choose an Origin",
+                               choices = c("Natural", "Listed Hatchery")),
+                  selectInput(inputId = "ESU", label = "Choose an ESU to View",
+                              choices = levels(df$ESU), 
+                              multiple = F), 
+                  background = "light-blue"
+                ),
+                box(
+                  title = "Time Series",
+                  width = 8,
+                  plotlyOutput("plot1"),
+                  plotlyOutput("plot2")
+                ),
+                box(
+                  title = "Raw Data Table",
+                  width = 12,
+                  dataTableOutput("table")
+                ),
+              )
+      )
     )
   )
 )
@@ -56,6 +82,10 @@ server <- function(input, output) {
   output$tabset1Selected <- renderText({
   input$tabset1
   })
+  { 
+    output$tabset2Selected <- renderText({
+      input$tabset2
+    })}
   # Filter for take data within HUC 8's
   filteredData <- reactive({
     ifelse(input$displayData == "Total Take",
@@ -80,6 +110,29 @@ server <- function(input, output) {
     esuBound %>%
       filter(DPS == input$DPS)
   })
+  dat <- reactive({
+    req(c(input$LifeStage, input$Production, input$ESU))
+    df1 <- df_plot %>% 
+      filter(LifeStage %in% input$LifeStage) %>% 
+      filter(Production %in% input$Production) %>%  
+      filter(ESU %in% input$ESU)
+  })
+  dat2 <- reactive({
+    req(c(input$LifeStage, input$Production, input$ESU))
+    df1 <- df_plot2 %>% 
+      filter(LifeStage %in% input$LifeStage) %>%
+      filter(Production %in% input$Production) %>%
+      filter(ESU %in% input$ESU)
+  })
+  dat3 <- reactive({
+    dt %>%
+      filter(ESU == input$ESU) %>%
+      filter(LifeStage == input$LifeStage) %>% 
+      filter(Production == input$Production) %>%
+      filter(ResultCode != "Tribal 4d") %>%
+      select(Year:Authorized_Mortality_Unused)
+  })
+  
   # Base map output (does not change)
   output$map <- renderLeaflet({
     leaflet(filteredData()) %>% 
@@ -143,6 +196,34 @@ server <- function(input, output) {
       list(width = '500px', targets = c(5,7,8)))),
     callback = JS('table.page(3).draw(false);')
   )
-}
+output$plot1 <-renderPlotly({
+  ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
+    geom_bar(stat = "identity", position = "stack", color = "black")+
+    scale_fill_manual(values = mycols, name = "Take Type") +
+    labs(x = "Year", y = "Total Take (Number of fish)", title = "Non-Lethal Take Plot")+ 
+    theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
+          panel.background = element_rect(fill = "#D0D3D4" ))
+  ggplotly(tooltip = c("y", "x", "fill"))
+})
+output$plot2 <-renderPlotly({
+  ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
+    geom_bar(stat = "identity", position = "stack", color = "black")+
+    scale_fill_manual(values = mycols, name = "Take Type") +
+    labs(x = "Year", y = "Total Take (Number of fish)", title = "Lethal Take Plot")+ 
+    theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
+          panel.background = element_rect(fill = "#D0D3D4" ))
+  ggplotly(tooltip = c("y", "x", "fill"))
+  
+})
+output$table <- DT::renderDataTable({dat3()},
+                                    caption = "Note : table excludes 'Tribal 4d' permits for privacy concerns, 
+                but are included in the take totals", 
+                                    colnames = c("Year", "ESU", "Production", "Life Stage",
+                                                 "Permit Code", "Gear Type", "Report ID", "Permit Type", 
+                                                 "Reported Take", "Authorized Take", "Reported Mortality",
+                                                 "Authorized Mortality", "Unused Take", "Unused Mortality"),
+                                    options = list(pageLength = 10, autoWidth = T)
+)
+jqui_sortable("#table thead tr")}
 
-shinyApp(ui, server)
+shinyApp(ui = ui, server = server)
