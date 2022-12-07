@@ -188,7 +188,6 @@ server <- function(input, output) {
     colnames = c("File Number", "Permit Type", "Organization", "HUC 8", "Location",
                  "Water Type", "Take Action","Capture Method", "Total Take", "Lethal Take"),
     options = list(pageLength = 10, autoWidth = T,
-      dom = "ft",
       columnDefs = list(list(
       targets = "_all",
       render = JS(
