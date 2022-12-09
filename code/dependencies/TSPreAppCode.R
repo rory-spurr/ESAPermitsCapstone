@@ -31,10 +31,10 @@ names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "
 #Summing each variable by year
 YT <-df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Reported_Take = sum(ActTake))
+  summarise(Used = sum(ActTake))
 YM <- df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Reported_Mortality = sum(ActMort))
+  summarise(Used = sum(ActMort))
 TM <- df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
   summarise(Authorized_Mortality = sum(TotalMorts))
@@ -45,25 +45,26 @@ ET <-df %>%
 #Merging data sets
 Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage"))
 Mort <- merge(YM, TM, by = c("Year", "ESU", "Production", "LifeStage"))
-df1 <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage"))
+#df1 <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage"))
 #==============================================================
 #Replacing NaN or NA or Inf with 0
-df1[is.na(df1)] <- 0
+Take[is.na(Take)] <- 0
+Mort[is.na(Mort)] <- 0
 #==============================================================
-#Creating custom color palette 
-mycols <- colors()[c(461, 142, 525, 87)]
+Take %>%
+  mutate(Unused = Authorized_Take - Used) -> t
+Mort %>% 
+  mutate(Unused = Authorized_Mortality - Used) -> m
+
+df1 <- t %>%
+  gather("Take_Type","N", 5:7) 
+df2 <- m %>% 
+  gather("Take_Type","N", 5:7) 
 #==============================================================
 df1 %>%
-  mutate(Authorized_Take_Unused = Authorized_Take - Reported_Take) %>%
-  mutate(Authorized_Mortality_Unused = Authorized_Mortality - Reported_Mortality) -> df2
-
-df_TM <- df2 %>%
-  gather("Take_Type","N", 5:10) 
-#==============================================================
-df_TM %>%
-  filter(Take_Type %in% c("Reported_Take","Authorized_Take_Unused")) -> df_plot
-df_TM %>%
-  filter(Take_Type %in% c("Reported_Mortality","Authorized_Mortality_Unused")) -> df_plot2
+  filter(Take_Type %in% c("Used","Unused")) -> df_plot
+df2 %>%
+  filter(Take_Type %in% c("Used","Unused")) -> df_plot2
 #==============================================================
 # df_plot <- df_plot %>% add_trace(fill = ~Authorized_Take_Unused, name = 'Unused Authorized Take')
 # df_plot <- df_plot %>% add_trace(fill = ~Reported_Take, name = 'Reported Take')
@@ -106,3 +107,6 @@ dt %>%
   mutate(Authorized_Mortality_Unused = Authorized_Mortality - Reported_Mortality) -> dt
 #==============================================================
 #labels = c("Unused Authorized Take", "Reported Take")
+#==============================================================
+#Creating custom color palette 
+mycols <- colors()[c(461, 142, 525, 87)]

@@ -76,7 +76,7 @@ ui <- dashboardPage(
                   title = "Raw Data Table",
                   width = 12,
                   dataTableOutput("table")),
-        )
+              )
       )
     )
   )
@@ -84,7 +84,7 @@ ui <- dashboardPage(
 
 server <- function(input, output) { 
   output$tabset1Selected <- renderText({
-  input$tabset1
+    input$tabset1
   })
   { 
     output$tabset2Selected <- renderText({
@@ -199,25 +199,25 @@ server <- function(input, output) {
       list(width = '500px', targets = c(5,7,8)))),
     callback = JS('table.page(3).draw(false);')
   )
-output$plot1 <-renderPlotly({
-  ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
-    geom_bar(stat = "identity", position = "stack", color = "black")+
-    scale_fill_manual(values = mycols, name = "Take Type") +
-    labs(x = "Year", y = "Total Take (Number of fish)", title = "Non-Lethal Take Plot")+ 
-    theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
-          panel.background = element_rect(fill = "#D0D3D4" ))
-  ggplotly(tooltip = c("y", "x", "fill"))
-})
-output$plot2 <-renderPlotly({
-  ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
-    geom_bar(stat = "identity", position = "stack", color = "black")+
-    scale_fill_manual(values = mycols, name = "Take Type") +
-    labs(x = "Year", y = "Total Take (Number of fish)", title = "Lethal Take Plot")+ 
-    theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
-          panel.background = element_rect(fill = "#D0D3D4" ))
-  ggplotly(tooltip = c("y", "x", "fill"))
-  
-})
+  output$plot1 <-renderPlotly({
+    ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
+      geom_bar(stat = "identity", position = "stack", color = "black")+
+      scale_fill_manual(values = mycols, name = "Take Type") +
+      labs(x = "Year", y = "Total Take (Number of fish)", title = "Total Fish Authorized To Be Touched")+ 
+      theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
+            panel.background = element_rect(fill = "#D0D3D4" ))
+    ggplotly(tooltip = c("y", "x", "fill"))
+  })
+  output$plot2 <-renderPlotly({
+    ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
+      geom_bar(stat = "identity", position = "stack", color = "black")+
+      scale_fill_manual(values = mycols, name = "Take Type") +
+      labs(x = "Year", y = "Total Take (Number of fish)", title = "Fish Authorized To Be Killed")+ 
+      theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
+            panel.background = element_rect(fill = "#D0D3D4" ))
+    ggplotly(tooltip = c("y", "x", "fill"))
+    
+  })
 output$table <- DT::renderDataTable({dat3()},
                                     caption = "Note : table excludes 'Tribal 4d' permits for privacy concerns, 
                 but are included in the take totals", 
