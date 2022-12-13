@@ -1,5 +1,5 @@
-# ESA_Permits_Capstone
-Project repository for the Capstone entitled "Tracking ESA-listed Fish Species Research on the West Coast". Completed as part of the Master of Marine Affairs (MMA) Degree for the School of Marine and Environmental Affairs (SMEA) at the University of Washington (UW)
+# ESAPermitsCapstone
+Project repository for the Capstone entitled "Tracking ESA-listed Fish Species Research on the West Coast". Completed as part of the Master of Marine Affairs (MMA) Degree for the School of Marine and Environmental Affairs (SMEA) at the University of Washington (UW).
 
 Contributors:
 Rory Spurr and Alana Santana (SMEA MMA students) main contributors, Diana Dishman NOAA client and Anne Beaudreau SMEA advisor.
