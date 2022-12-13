@@ -6,6 +6,7 @@ source(paste(getwd(),"/code/dependencies/PreAppCode-1.R", sep = ""))
 source(paste(getwd(),"/code/dependencies/PreAppCode-2.R", sep = ""))
 source(paste(getwd(),"/code/dependencies/PreAppCode-3.R", sep = ""))
 source(paste(getwd(),"/code/dependencies/homePageWriting.R", sep = ""))
+
 ui <- dashboardPage(
   dashboardHeader(title = "Visualizing ESA-Listed Fish Research",
                   titleWidth = 350),
@@ -21,7 +22,7 @@ ui <- dashboardPage(
       tabItem(tabName = "home",
         tabBox(title = "Getting Started",
         id = "tabset1", height = "950px", width = "auto",
-        tabPanel("Background", backgroundText),
+        tabPanel("Background and Purpose", backgroundText),
         tabPanel("How it works", "Here we will display a video on how it works"),
         tabPanel("Disclaimer", "Here we will discuss limitations/caveats of app")),   
       ),
