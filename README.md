@@ -17,7 +17,7 @@ In order to run the scripts within this repository, you must be working within t
    - "dependencies": This folder contains all the scripts that read in data, organize the data, and create functions. No scripts from this folder will need to actually be run, because these scripts are run within the 'main_scripts' when they are needed.
    - "practice_and_notes": This folder contains many of the scripts that were practice when Alana and I were learning, as well as notes about the data that we may need. No scripts in this folder need to be run, but some useful information may be found here.
 3. The 'data_raw' folder hold all of the data needed to run the scripts.
-4. The 'docs' folder contains documents relevant to the project, including project managment documents, data descriptions, pictures of our apps, 
+4. The 'docs' folder contains documents relevant to the project, including project management documents, data descriptions, pictures of our apps, 
 excel tables that helped with QA/QC among other things.
 
 
