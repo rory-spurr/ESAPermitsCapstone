@@ -14,13 +14,13 @@ ui <- dashboardPage(
     sidebarMenu(
       menuItem("Home", tabName = "home", icon = icon("home")), #info-sign can be another option
       menuItem("Authorized Take Map", tabName = "takeMap", icon = icon("globe", lib = "glyphicon")), #globe can be another option
-      menuItem("Time Series", tabName = "timeSeries", icon = icon("time", lib = "glyphicon"))
+      menuItem("Time Series Plots", tabName = "timeSeries", icon = icon("time", lib = "glyphicon"))
     )
   ), 
   dashboardBody(
     tabItems(
       tabItem(tabName = "home",
-        tabBox(title = "Getting Started",
+        tabBox(title = "Welcome to the Permit Vizualization App!",
         id = "tabset1", height = "950px", width = "auto",
         tabPanel("Background and Purpose", backgroundText),
         tabPanel("How it works", "Here we will display a video on how it works"),
@@ -31,13 +31,13 @@ ui <- dashboardPage(
           box(
             title = "Controls",
             width = 4,
-            radioButtons(inputId = "lifestage", label = "Choose a lifestage",
+            radioButtons(inputId = "lifestage", label = "Choose a Life Stage",
               choices = c("Adult", "Juvenile")),
-            radioButtons(inputId = "Prod", label = "Choose an origin",
+            radioButtons(inputId = "Prod", label = "Choose an Origin",
               choices = c("Natural", "Listed Hatchery")),
-            radioButtons(inputId = "displayData", label = "Choose data to display",
+            radioButtons(inputId = "displayData", label = "Choose Data to Display",
               choices = c("Total Take", "Lethal Take")),
-            selectInput(inputId = "DPS", label = "Choose an ESU to view",
+            selectInput(inputId = "DPS", label = "Choose an ESU to View",
               choices = levels(wcr$Species), multiple = F),
             background = "light-blue"
           ),
@@ -56,25 +56,41 @@ ui <- dashboardPage(
       tabItem(tabName = "timeSeries", 
               fluidRow(
                 box(
+                  title = "Getting Started",
+                  width = 12, height = 180, solidHeader = T, status = "primary", 
+                  background = "light-blue", 
+                  "Here we are showing how the number of authorized take 
+                  (how many fish we think we might interact with and/or lethally remove) 
+                  and reported take (how many fish we actually interacted with and/or 
+                  lethally removed) has changed over time. Total Take (number of fish) 
+                  is broken down into reported take or what was actually used (yellow) 
+                  and authorized take that was unused (blue). Used and Unused take 
+                  culminates to what was authorized for that specific year. Note that 
+                  the data is only showing what was reported through APPs and is not complete."
+                ),
+                box(
                   title = "Controls",
-                  width = 4,
-                  radioButtons(inputId = "LifeStage", label = "Choose a lifestage",
+                  width = 4, height = 900,
+                  radioButtons(inputId = "LifeStage", label = "Choose a Life Stage",
                                choices = c("Adult", "Juvenile")),
                   radioButtons(inputId = "Production", label = "Choose an Origin",
                                choices = c("Natural", "Listed Hatchery")),
                   selectInput(inputId = "ESU", label = "Choose an ESU to View",
-                              choices = levels(df$ESU), 
+                              choices = levels(df$ESU),  
                               multiple = F), 
-                  background = "light-blue"
+                  background = "light-blue", solidHeader = T
                 ),
                 box(
                   title = "Time Series",
-                  width = 8,
+                  solidHeader = T,
+                  width = 8, height = 900, 
                   plotlyOutput("plot1"),
                   plotlyOutput("plot2")
                 ),
+                
                 box(
                   title = "Raw Data Table",
+                  solidHeader = T, 
                   width = 12,
                   dataTableOutput("table")),
               )
@@ -115,6 +131,7 @@ server <- function(input, output) {
     esuBound %>%
       filter(DPS == input$DPS)
   })
+  #Timeseries plot total take
   dat <- reactive({
     req(c(input$LifeStage, input$Production, input$ESU))
     df1 <- df_plot %>% 
@@ -122,6 +139,7 @@ server <- function(input, output) {
       filter(Production %in% input$Production) %>%  
       filter(ESU %in% input$ESU)
   })
+  #Timeseries plot total mort
   dat2 <- reactive({
     req(c(input$LifeStage, input$Production, input$ESU))
     df1 <- df_plot2 %>% 
@@ -129,13 +147,16 @@ server <- function(input, output) {
       filter(Production %in% input$Production) %>%
       filter(ESU %in% input$ESU)
   })
+  #Timeseries table 
   dat3 <- reactive({
     dt %>%
       filter(ESU == input$ESU) %>%
       filter(LifeStage == input$LifeStage) %>% 
       filter(Production == input$Production) %>%
       filter(ResultCode != "Tribal 4d") %>%
-      select(Year:Authorized_Mortality_Unused)
+      select(c(Year, FileNumber, ReportID, ResultCode, CaptureMethod, 
+               Authorized_Take, Reported_Take, Authorized_Take_Unused, 
+               Authorized_Mortality, Reported_Mortality, Authorized_Mortality_Unused))
   })
   
   # Base map output (does not change)
@@ -188,7 +209,7 @@ server <- function(input, output) {
     but are included in the take totals displayed in the map above.",
     colnames = c("File Number", "Permit Type", "Organization", "HUC 8", "Location",
                  "Water Type", "Take Action","Capture Method", "Total Take", "Lethal Take"),
-    options = list(pageLength = 10, autoWidth = T,
+    options = list(pageLength = 10, autoWidth = F, scrollX = T, 
       columnDefs = list(list(
       targets = "_all",
       render = JS(
@@ -220,13 +241,12 @@ server <- function(input, output) {
     
   })
 output$table <- DT::renderDataTable({dat3()},
-                                    caption = "Note : table excludes 'Tribal 4d' permits for privacy concerns, 
+                                    caption = "Note: Table excludes 'Tribal 4d' permits for privacy concerns, 
                 but are included in the take totals", 
-                                    colnames = c("Year", "ESU", "Production", "Life Stage",
-                                                 "Permit Code", "Gear Type", "Report ID", "Permit Type", 
-                                                 "Reported Take", "Authorized Take", "Reported Mortality",
-                                                 "Authorized Mortality", "Unused Take", "Unused Mortality"),
-                                    options = list(pageLength = 10, autoWidth = T)
+                                    colnames = c("Year", "Permit Code","Report ID","Permit Type","Gear Type",
+                                                 "Authorized Take", "Reported Take", "Unused Take",
+                                                  "Authorized Mortality", "Reported Mortality", "Unused Mortality"),
+                                    options = list(pageLength = 10, autoWidth = F, scrollX = T)
 )
 jqui_sortable("#table thead tr")}
 
