@@ -12,7 +12,9 @@ ui <- dashboardPage(
                   titleWidth = 350),
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Home", tabName = "home", icon = icon("home")), #info-sign can be another option
+      menuItem("Home", tabName = "home", icon = icon("home"),
+       menuSubItem("Background and Purpose", tabName = "background"),
+       menuSubItem("Disclaimer", tabName = "disclaimer")), #info-sign can be another option
       menuItem("Authorized Take Map", tabName = "takeMap", icon = icon("globe", lib = "glyphicon")), #globe can be another option
       menuItem("Time Series Plots", tabName = "timeSeries", icon = icon("time", lib = "glyphicon"))
     )
@@ -20,11 +22,13 @@ ui <- dashboardPage(
   dashboardBody(
     tabItems(
       tabItem(tabName = "home",
-        tabBox(title = "Welcome to the Permit Vizualization App!",
-        id = "tabset1", height = "950px", width = "auto",
-        tabPanel("Background and Purpose", backgroundText),
-        tabPanel("How it works", "Here we will display a video on how it works"),
-        tabPanel("Disclaimer", "Here we will discuss limitations/caveats of app")),   
+        box(title = "Welcome to the Permit Vizualization App!")   
+      ),
+      tabItem(tabName = "background", 
+        box(uiOutput("backText"))
+      ),
+      tabItem(tabName = "disclaimer",
+        box(uiOutput("discText"))
       ),
       tabItem(tabName = "takeMap",
         fluidRow(
@@ -100,13 +104,12 @@ ui <- dashboardPage(
 )
 
 server <- function(input, output) { 
-  output$tabset1Selected <- renderText({
-    input$tabset1
+  output$backText <- renderUI({
+    backgroundText
   })
-  { 
-    output$tabset2Selected <- renderText({
-      input$tabset2
-    })}
+  output$discText <- renderUI({
+    disclaimerText
+  })
   # Filter for take data within HUC 8's
   filteredData <- reactive({
     ifelse(input$displayData == "Total Take",

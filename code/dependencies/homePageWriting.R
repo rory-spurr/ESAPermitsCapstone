@@ -3,7 +3,7 @@
 
 
 
-backgroundText <- list(
+backgroundText <- tagList(
   tags$p(strong("Background")),
   tags$p("The Endangered Species Act (ESA) was created in 1973 to provide a policy 
       framework for the protection and conservation of threatened and endangered species:"),
@@ -50,6 +50,10 @@ backgroundText <- list(
     "National Marine Fisheries Service (NMFS). (2019). Chapter 3:  NMFS Pacific Marine/Anadromous Fish and 
     Invertebrates Scientific Research Authorizations and Oregon Scientific Take Permits. National Marine 
     Fisheries Service. 1315 East-West Highway Silver Spring, MD 20910."))
+
+disclaimerText <- tagList(
+  tags$p("Hello")
+  )
 
 
 
