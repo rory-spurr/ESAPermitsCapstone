@@ -12,18 +12,21 @@ ui <- dashboardPage(
                   titleWidth = 350),
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Home", tabName = "home", icon = icon("home"),
-       menuSubItem("Background and Purpose", tabName = "background"),
-       menuSubItem("Disclaimer", tabName = "disclaimer")), #info-sign can be another option
+      menuItem("Home", tabName = "home", icon = icon("home"), #info-sign can be another option
+        menuSubItem("Welcome", tabName = "welcome"),
+        menuSubItem("Background and Purpose", tabName = "background"),
+        menuSubItem("Disclaimer", tabName = "disclaimer")), 
       menuItem("Authorized Take Map", tabName = "takeMap", icon = icon("globe", lib = "glyphicon")), #globe can be another option
       menuItem("Time Series Plots", tabName = "timeSeries", icon = icon("time", lib = "glyphicon"))
     )
   ), 
   dashboardBody(
     tabItems(
-      tabItem(tabName = "home",
-        box(title = "Welcome to the Permit Vizualization App!")   
+      tabItem(tabName = "welcome",
+        box(title = "Welcome to the ESA-Listed Fish Research App for West Coast Permits!",
+            uiOutput("welcomeUI"))
       ),
+      # use uiOutput for HTML (can also use htmlOutput)
       tabItem(tabName = "background", 
         box(uiOutput("backText"))
       ),
@@ -43,6 +46,7 @@ ui <- dashboardPage(
               choices = c("Total Take", "Lethal Take")),
             selectInput(inputId = "DPS", label = "Choose an ESU to View",
               choices = levels(wcr$Species), multiple = F),
+            actionButton(inputId = "update", label = "Update Map and Table"), # action button to control when map updates
             background = "light-blue"
           ),
           box(
@@ -104,13 +108,18 @@ ui <- dashboardPage(
 )
 
 server <- function(input, output) { 
+  # have to use renderUI to render HTML correctly
   output$backText <- renderUI({
     backgroundText
   })
+  
   output$discText <- renderUI({
     disclaimerText
   })
+  
   # Filter for take data within HUC 8's
+  # for the following three "filteredXXX" chunks, the 'input$update' 
+  # ensures the data only changes after the action button is hit
   filteredData <- reactive({
     ifelse(input$displayData == "Total Take",
            ESU.spatial <- ESU_spatialTotal,
@@ -119,8 +128,10 @@ server <- function(input, output) {
       filter(ESU == input$DPS) %>%
       filter(LifeStage == input$lifestage) %>% 
       filter(Production == input$Prod)
-  })
-  # Filter for data table data
+  }) %>%
+  bindEvent(input$update)
+  
+  # Filter for data table data (below take map)
   filteredWCR <- reactive({
     wcr4App %>%
       filter(Species == input$DPS) %>%
@@ -128,12 +139,16 @@ server <- function(input, output) {
       filter(Prod == input$Prod) %>%
       filter(ResultCode != "Tribal 4d") %>%
       select(FileNumber:TotalMorts)
-  })
+  }) %>%
+  bindEvent(input$update)
+  
   # Filter for boundary data
   filteredBound <- reactive({
     esuBound %>%
       filter(DPS == input$DPS)
-  })
+  }) %>%
+  bindEvent(input$update)
+  
   #Timeseries plot total take
   dat <- reactive({
     req(c(input$LifeStage, input$Production, input$ESU))
@@ -142,6 +157,7 @@ server <- function(input, output) {
       filter(Production %in% input$Production) %>%  
       filter(ESU %in% input$ESU)
   })
+  
   #Timeseries plot total mort
   dat2 <- reactive({
     req(c(input$LifeStage, input$Production, input$ESU))
@@ -150,6 +166,7 @@ server <- function(input, output) {
       filter(Production %in% input$Production) %>%
       filter(ESU %in% input$ESU)
   })
+  
   #Timeseries table 
   dat3 <- reactive({
     dt %>%
@@ -168,6 +185,7 @@ server <- function(input, output) {
       addProviderTiles(providers$Stamen.TerrainBackground) %>%
       setView(map, lng = -124.072971, lat = 40.887325, zoom = 4)
   })
+  
   # Observer to render parts of map that change based on user inputs
   observe({
     pal <- colorNumeric(palette = "viridis",
@@ -203,7 +221,9 @@ server <- function(input, output) {
                              lat = st_coordinates(st_centroid(st_as_sfc(st_bbox(filteredData()))))[2],
                              zoom = 6), 
            proxy %>% setView(map, lng = -124.072971, lat = 40.887325, zoom = 4))
-  })
+  }) %>%
+  bindEvent(input$update)
+  
   # Data table processing and rendering
   output$wcr_table <- DT::renderDataTable({
     filteredWCR()},
@@ -224,6 +244,7 @@ server <- function(input, output) {
       list(width = '500px', targets = c(5,7,8)))),
     callback = JS('table.page(3).draw(false);')
   )
+  
   output$plot1 <-renderPlotly({
     ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
       geom_bar(stat = "identity", position = "stack", color = "black")+
@@ -233,6 +254,7 @@ server <- function(input, output) {
             panel.background = element_rect(fill = "#D0D3D4" ))
     ggplotly(tooltip = c("y", "x", "fill"))
   })
+  
   output$plot2 <-renderPlotly({
     ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
       geom_bar(stat = "identity", position = "stack", color = "black")+
@@ -243,7 +265,8 @@ server <- function(input, output) {
     ggplotly(tooltip = c("y", "x", "fill"))
     
   })
-output$table <- DT::renderDataTable({dat3()},
+  
+  output$table <- DT::renderDataTable({dat3()},
                                     caption = "Note: Table excludes 'Tribal 4d' permits for privacy concerns, 
                 but are included in the take totals", 
                                     colnames = c("Year", "Permit Code","Report ID","Permit Type","Gear Type",
