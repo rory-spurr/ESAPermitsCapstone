@@ -3,6 +3,18 @@
 
 
 
+welcomeText <- tagList(
+  tags$p("This platform displays and summarizes data collected by the National Marine 
+         Fisheries Service (NMFS) on the permits they issue for scientific research that 
+         may impact threatened or endangered salmon, steelhead, eulachon, rockfish, or 
+         sturgeon."),
+  tags$image(src = "image/fishJumping.png")
+)
+
+
+
+
+
 backgroundText <- tagList(
   tags$p(strong("Background")),
   tags$p("The Endangered Species Act (ESA) was created in 1973 to provide a policy 

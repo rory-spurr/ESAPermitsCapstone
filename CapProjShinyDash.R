@@ -8,7 +8,7 @@ source(paste(getwd(),"/code/dependencies/PreAppCode-3.R", sep = ""))
 source(paste(getwd(),"/code/dependencies/homePageWriting.R", sep = ""))
 
 ui <- dashboardPage(
-  dashboardHeader(title = "Visualizing ESA-Listed Fish Research",
+  dashboardHeader(title = "Visualizing ESA-Listed Fish Research on the West Coast",
                   titleWidth = 350),
   dashboardSidebar(
     sidebarMenu(
@@ -24,14 +24,14 @@ ui <- dashboardPage(
     tabItems(
       tabItem(tabName = "welcome",
         box(title = "Welcome to the ESA-Listed Fish Research App for West Coast Permits!",
-            uiOutput("welcomeUI"))
+            uiOutput("welcomeUI"), width = 8)
       ),
       # use uiOutput for HTML (can also use htmlOutput)
       tabItem(tabName = "background", 
-        box(uiOutput("backText"))
+        box(uiOutput("backUI"), width = 8)
       ),
       tabItem(tabName = "disclaimer",
-        box(uiOutput("discText"))
+        box(uiOutput("discUI"), width = 8)
       ),
       tabItem(tabName = "takeMap",
         fluidRow(
@@ -109,16 +109,20 @@ ui <- dashboardPage(
 
 server <- function(input, output) { 
   # have to use renderUI to render HTML correctly
-  output$backText <- renderUI({
+  output$welcomeUI <- renderUI({
+    welcomeText
+  })
+  
+  output$backUI <- renderUI({
     backgroundText
   })
   
-  output$discText <- renderUI({
+  output$discUI <- renderUI({
     disclaimerText
   })
   
   # Filter for take data within HUC 8's
-  # for the following three "filteredXXX" chunks, the 'input$update' 
+  # for the following three "filteredXXX" chunks, the bindEvent(input$update)
   # ensures the data only changes after the action button is hit
   filteredData <- reactive({
     ifelse(input$displayData == "Total Take",
@@ -158,7 +162,7 @@ server <- function(input, output) {
       filter(ESU %in% input$ESU)
   })
   
-  #Timeseries plot total mort
+  #Timeseries plot total mortality
   dat2 <- reactive({
     req(c(input$LifeStage, input$Production, input$ESU))
     df1 <- df_plot2 %>% 
@@ -167,7 +171,7 @@ server <- function(input, output) {
       filter(ESU %in% input$ESU)
   })
   
-  #Timeseries table 
+  #Timeseries data table 
   dat3 <- reactive({
     dt %>%
       filter(ESU == input$ESU) %>%
