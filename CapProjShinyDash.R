@@ -20,7 +20,9 @@ ui <- dashboardPage(
       menuItem("Time Series Plots", tabName = "timeSeries", icon = icon("time", lib = "glyphicon"))
     )
   ), 
+  
   dashboardBody(
+    # includeCSS("www/appTheme.css"),
     tabItems(
       tabItem(tabName = "welcome",
         box(title = "Welcome to the ESA-Listed Fish Research App for West Coast Permits!",

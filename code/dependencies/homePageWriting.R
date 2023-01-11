@@ -8,7 +8,20 @@ welcomeText <- tagList(
          Fisheries Service (NMFS) on the permits they issue for scientific research that 
          may impact threatened or endangered salmon, steelhead, eulachon, rockfish, or 
          sturgeon."),
-  tags$image(src = "image/fishJumping.png")
+  tags$br(),
+  tags$image(src = "image/fishJumping.png", width = "75%", height = "75%"),
+  tags$br(),
+  tags$p("The app displays totals as to how much impact is occurring, on what species, 
+         and where it is occurring. Users can choose what data to display to answer 
+         specific questions, or learn about a species or region of interest."),
+  tags$div(class = "row",
+    tags$div(class = "column",
+      tags$image(src = "image/map.png", width = "50%", height = "50%")      
+    ),
+    tags$div(class = "column",
+      tags$image(src = "image/graph.png", width = "50%", height = "50%")
+    )
+  )
 )
 
 
@@ -61,11 +74,12 @@ backgroundText <- tagList(
     tags$br(),
     "National Marine Fisheries Service (NMFS). (2019). Chapter 3:  NMFS Pacific Marine/Anadromous Fish and 
     Invertebrates Scientific Research Authorizations and Oregon Scientific Take Permits. National Marine 
-    Fisheries Service. 1315 East-West Highway Silver Spring, MD 20910."))
+    Fisheries Service. 1315 East-West Highway Silver Spring, MD 20910.")
+)
 
 disclaimerText <- tagList(
   tags$p("Hello")
-  )
+)
 
 
 
