@@ -1,5 +1,6 @@
 library(shiny)
 library(shinydashboard)
+library(shinydashboardPlus)
 source(paste(getwd(), "/code/dependencies/Reading and Filtering.R", sep = ""))
 source(paste(getwd(), "/code/dependencies/TSPreAppCode.R", sep = ""))
 source(paste(getwd(),"/code/dependencies/PreAppCode-1.R", sep = ""))
@@ -13,9 +14,9 @@ ui <- dashboardPage(
   dashboardSidebar(
     sidebarMenu(
       menuItem("Home", tabName = "home", icon = icon("home"), #info-sign can be another option
-        menuSubItem("Welcome", tabName = "welcome"),
-        menuSubItem("Background and Purpose", tabName = "background"),
-        menuSubItem("Terms of Use", tabName = "disclaimer")), 
+               menuSubItem("Welcome", tabName = "welcome"),
+               menuSubItem("Background and Purpose", tabName = "background"),
+               menuSubItem("Terms of Use", tabName = "disclaimer")), 
       menuItem("Authorized Take Map", tabName = "takeMap", icon = icon("globe", lib = "glyphicon")), #globe can be another option
       menuItem("Time Series Plots", tabName = "timeSeries", icon = icon("time", lib = "glyphicon"))
     )
@@ -25,43 +26,43 @@ ui <- dashboardPage(
     # includeCSS("www/appTheme.css"),
     tabItems(
       tabItem(tabName = "welcome",
-        box(title = "Welcome to the ESA-Listed Fish Research App for West Coast Permits!",
-            uiOutput("welcomeUI"), width = 12)
+              box(title = "Welcome to the ESA-Listed Fish Research App for West Coast Permits!",
+                  uiOutput("welcomeUI"), width = 12)
       ),
       # use uiOutput for HTML (can also use htmlOutput)
       tabItem(tabName = "background", 
-        box(uiOutput("backUI"), width = 12)
+              box(title = "What is the ESA? Why does it matter?", uiOutput("backUI"), width = 12)
       ),
       tabItem(tabName = "disclaimer",
-        box(uiOutput("discUI"), width = 12)
+              box(title= "Terms of Use", uiOutput("discUI"), width = 12, height = 900)
       ),
       tabItem(tabName = "takeMap",
-        fluidRow(
-          box(
-            title = "Build Your Map",
-            width = 4,
-            radioButtons(inputId = "lifestage", label = "Choose a Life Stage",
-              choices = c("Adult", "Juvenile")),
-            radioButtons(inputId = "Prod", label = "Choose an Origin",
-              choices = c("Natural", "Hatchery")),
-            radioButtons(inputId = "displayData", label = "Choose Data to Display",
-              choices = c("Total Take", "Lethal Take")),
-            selectInput(inputId = "DPS", label = "Choose an ESU/DPS* to View",
-              choices = levels(wcr$Species), multiple = F),
-            actionButton(inputId = "update", label = "Update Map and Table"), # action button to control when map updates
-            background = "light-blue"
-          ),
-          box(
-            title = "Authorized Take Map",
-            width = 8,
-            leafletOutput("map")
-          ),
-          box(
-            title = "Raw Data Table",
-            width = 12,
-            dataTableOutput("wcr_table")
-          ),
-        )
+              fluidRow(
+                box(
+                  title = "Build Your Map",
+                  width = 4,
+                  radioButtons(inputId = "lifestage", label = "Choose a Life Stage",
+                               choices = c("Adult", "Juvenile")),
+                  radioButtons(inputId = "Prod", label = "Choose an Origin",
+                               choices = c("Natural", "Hatchery")),
+                  radioButtons(inputId = "displayData", label = "Choose Data to Display",
+                               choices = c("Total Take", "Lethal Take")),
+                  selectInput(inputId = "DPS", label = "Choose an ESU/DPS* to View",
+                              choices = levels(wcr$Species), multiple = F),
+                  actionButton(inputId = "update", label = "Update Map and Table"), # action button to control when map updates
+                  background = "light-blue"
+                ),
+                box(
+                  title = "Authorized Take Map",
+                  width = 8,
+                  leafletOutput("map")
+                ),
+                box(
+                  title = "Raw Data Table",
+                  width = 12,
+                  dataTableOutput("wcr_table")
+                ),
+              )
       ),
       tabItem(tabName = "timeSeries", 
               fluidRow(
@@ -109,6 +110,23 @@ ui <- dashboardPage(
                   width = 12,
                   dataTableOutput("table")),
               )
+      
+      ),
+      tabItem(tabName = "About",
+              userBox(
+                title = userDescription(
+                  title = "Alana Santana",
+                  subtitle = "Lead Developer",
+                  type = 2,
+                  image = "https://avatars.githubusercontent.com/u/103059893?v=4",
+                )),
+              userBox(
+                title = userDescription(
+                  title = "Rory Spurr",
+                  subtitle = "Lead Developer",
+                  type = 2,
+                  image = "https://avatars.githubusercontent.com/u/104161019?v=4",
+                ))
       )
     )
   )
@@ -131,9 +149,8 @@ server <- function(input, output) {
     
     list(src = "www/image/take_type.png",
          width = "100%",
-         height = 200)
-    
-  }, deleteFile = F) #code used from https://algoritmaonline.com/advancing-your-shinyapp/#:~:text=To%20add%20an%20image%20in,by%20using%20renderImage()%20function.
+         height = 400)}, deleteFile = F) #code used from https://algoritmaonline.com/advancing-your-shinyapp/#:~:text=To%20add%20an%20image%20in,by%20using%20renderImage()%20function.
+  
   # Filter for take data within HUC 8's
   # for the following three "filteredXXX" chunks, the bindEvent(input$update)
   # ensures the data only changes after the action button is hit
@@ -146,7 +163,7 @@ server <- function(input, output) {
       filter(LifeStage == input$lifestage) %>% 
       filter(Production == input$Prod)
   }) %>%
-  bindEvent(input$update)
+    bindEvent(input$update)
   
   # Filter for data table data (below take map)
   filteredWCR <- reactive({
@@ -157,14 +174,14 @@ server <- function(input, output) {
       filter(ResultCode != "Tribal 4d") %>%
       select(FileNumber:TotalMorts)
   }) %>%
-  bindEvent(input$update)
+    bindEvent(input$update)
   
   # Filter for boundary data
   filteredBound <- reactive({
     esuBound %>%
       filter(DPS == input$DPS)
   }) %>%
-  bindEvent(input$update)
+    bindEvent(input$update)
   
   #Timeseries plot total take
   dat <- reactive({
@@ -239,7 +256,7 @@ server <- function(input, output) {
                              zoom = 6), 
            proxy %>% setView(map, lng = -124.072971, lat = 40.887325, zoom = 4))
   }) %>%
-  bindEvent(input$update)
+    bindEvent(input$update)
   
   # Data table processing and rendering
   output$wcr_table <- DT::renderDataTable({
@@ -251,15 +268,15 @@ server <- function(input, output) {
     colnames = c("File Number", "Permit Type", "Organization", "HUC 8", "Location",
                  "Water Type", "Take Action","Capture Method", "Total Take", "Lethal Take"),
     options = list(pageLength = 10, autoWidth = F, scrollX = T, 
-      columnDefs = list(list(
-      targets = "_all",
-      render = JS(
-        "function(data, type, row, meta) {",
-        "return type === 'display' && data.length > 25 ?",
-        "'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;",
-        "}")
-      ), 
-      list(width = '500px', targets = c(5,7,8)))),
+                   columnDefs = list(list(
+                     targets = "_all",
+                     render = JS(
+                       "function(data, type, row, meta) {",
+                       "return type === 'display' && data.length > 25 ?",
+                       "'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;",
+                       "}")
+                   ), 
+                   list(width = '500px', targets = c(5,7,8)))),
     callback = JS('table.page(3).draw(false);')
   )
   
@@ -281,19 +298,17 @@ server <- function(input, output) {
       theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
             panel.background = element_rect(fill = "#D0D3D4" ))
     ggplotly(tooltip = c("y", "x", "fill"))
-    
-  })
-  
+ })
   output$table <- DT::renderDataTable({dat3()},
-                                    caption = "Note: permits issued under the ESA 4(d) authority specific to 
-                                    Tribal Resource Management are not individually listed in the table because 
-                                    they are not considered public, but those data are included in the totals 
-                                    displayed in the map above.", 
-                                    colnames = c("Year", "Permit Code","Report ID","Permit Type","Gear Type",
-                                                 "Authorized Take", "Reported Take", "Unused Take",
-                                                  "Authorized Mortality", "Reported Mortality", "Unused Mortality"),
-                                    options = list(pageLength = 10, autoWidth = F, scrollX = T)
-)
-jqui_sortable("#table thead tr")}
+                                      caption = "Note: permits issued under the ESA 4(d) authority specific 
+                                      to Tribal Resource Management are not individually listed in the table 
+                                      because they are not considered public, but those data are included in 
+                                      the totals displayed in the map above.", 
+                                      colnames = c("Year", "Permit Code","Report ID","Permit Type","Gear Type",
+                                                   "Authorized Take", "Reported Take", "Unused Take",
+                                                   "Authorized Mortality", "Reported Mortality", "Unused Mortality"),
+                                      options = list(pageLength = 10, autoWidth = F, scrollX = T)
+  )
+  jqui_sortable("#table thead tr")}
 
 shinyApp(ui = ui, server = server)

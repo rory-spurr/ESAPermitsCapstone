@@ -78,7 +78,51 @@ backgroundText <- tagList(
 )
 
 disclaimerText <- tagList(
-  tags$p("Hello")
+  tags$p(strong("Terms of Use")),
+  tags$p("Within our study, there are several limitations and assumptions we are using to develop our analyses. Below we will
+         detail these limitations and assuptions for transparency and to allow the user to understand how we obtained
+         our results"),
+  tags$br(),
+  tags$p(strong("Limitations and Assumptions")),
+  tags$ul(
+  tags$li("Data inputs - The permit application process has changed greatly since the database was created in 1994. 
+          Therefore, there are data attributes that lack consistency and missing information. For example, early permit 
+          applications were not required to enter specific information regarding location, HUC number, take action, and so on. 
+          As we are aware of this, we will either provide a quality check to fill in gaps based on provided information or will 
+          not include these values/permits into our project as they are not complete/missing necessary information. Additionally, 
+          in the StreamName section, NOAA allowed permit applicants to provide the name of the waterbody they planned to work with. 
+          As this is a textbox entry rather than a drop down with provided names, information on the same waterbody can be unnecessarily
+          duplicated with alternative names or descriptions. Therefore, we manually adjusted the waterbody entries to ensure no duplication 
+          occurred for waterbody names and to provide more consistency across the nomenclature. "),
+  tags$li("Non-reported take - Under the data file WCRPermitBiOp_Pass report data 4d and S10_22March22.csv, researchers are 
+          asked to report the actual take and mortality that occurred to ESA-listed species during the duration of their study. 
+          However, some organizations or projects can opt out or neglect to report on the actual take and mortality. As a result, 
+          these projects are not included in our analyses due to lack of data. Thus, a limitation of this unreported data is we 
+          are missing total take and mortality data and therefore complicates further abundance data analysis."),
+  tags$li("Changed HUC numbers - Over time, HUC 8 codes have been rearranged and their boundaries redrawn. 
+          Many permits use old or outdated HUC 8 codes, causing issues when trying to map our permit data 
+          using the Watershed Boundary Dataset (USGS et al. 2022). Therefore, HUC 8 codes had to be updated 
+          to reflect any changes to their boundaries. Decisions were made using an unpublished document that 
+          summarizes HUC 8 code changes up until 2018 (Hanson et al. 2018). Some of these changes ran on 
+          assumptions using other fields (such as WaterbodyName or LocationDescription) and are detailed below:"),
+  tags$br(),
+        tags$pre(" \t \t# 18020103 = 18020156 # very certain"),
+        tags$pre(" \t \t# 18020109 = 18020163 # very certain"),
+        tags$pre(" \t \t# 18020112 = 18020154 # very certain based on location descriptions"),
+        tags$pre(" \t \t# 18020118 = 18020154 # very certain based on location descriptions"),
+        tags$pre(" \t \t# 18040005 = 18040012 # very certain based on location descriptions"),
+        tags$pre(" \t \t# 18060001 = 18060015 # split between 18050006 as well, arbitrarily picked"),
+        tags$pre(" \t \t# 18060012 = 18060006 # chose this over Monterey Bay as population is South-Central Cal Coast")),
+  tags$br(),
+  tags$p(strong("References:"),
+         tags$br(),
+         tags$li("U.S. Geological Survey (USGS), U.S. Department of Agriculture – Natural Resource Conservation Service 
+         (NRCS), U.S. Environmental Protection Agency (EPA) (2022). USGS National Watershed Boundary Dataset 
+         in FileGDB 10.1 format (published 20220526). Accessed May 15, 2022 at URL",
+         tags$a("https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Hydrography/WBD/National/GDB/",
+                href = "https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Hydrography/WBD/National/GDB/")),
+         tags$br(),
+         tags$li("Hanson, K., Daw, S., Davenport, L., Jones, K., Niknami, L., & Buto, S. (2018). Criteria for Legacy Name and Code Changes. [Unpublished]"))
 )
 
 
