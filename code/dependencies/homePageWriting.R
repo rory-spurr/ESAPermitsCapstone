@@ -4,24 +4,19 @@
 
 
 welcomeText <- tagList(
-  tags$p("This platform displays and summarizes data collected by the National Marine 
+  tags$p("This platform summarizes and displays data collected by the National Marine 
          Fisheries Service (NMFS) on the permits they issue for scientific research that 
-         may impact threatened or endangered salmon, steelhead, eulachon, rockfish, or 
-         sturgeon."),
+         may impact U.S. West Coast salmon, steelhead, eulachon, rockfish, or 
+         sturgeon that are listed for protection under the Endangered Species Act (ESA)."),
   tags$br(),
-  tags$image(src = "image/fishJumping.png", width = "75%", height = "75%"),
+  tags$image(src = "image/fishJumping.png", width = "50%", height = "50%"),
   tags$br(),
-  tags$p("The app displays totals as to how much impact is occurring, on what species, 
-         and where it is occurring. Users can choose what data to display to answer 
+  tags$br(),
+  tags$p("The app summarizes how much impact is occurring on ESA-listed fishes in particular
+         areas. Users can choose what data to display to answer 
          specific questions, or learn about a species or region of interest."),
-  tags$div(class = "row",
-    tags$div(class = "column",
-      tags$image(src = "image/map.png", width = "50%", height = "50%")      
-    ),
-    tags$div(class = "column",
-      tags$image(src = "image/graph.png", width = "50%", height = "50%")
-    )
-  )
+  tags$br(),
+  tags$image(src = "image/mapGraph.png", width = "80%", height = "65%")      
 )
 
 
@@ -29,42 +24,44 @@ welcomeText <- tagList(
 
 
 backgroundText <- tagList(
-  tags$p(strong("Background")),
-  tags$p("The Endangered Species Act (ESA) was created in 1973 to provide a policy 
+  tags$p(strong("What is the ESA and how does it affect scientific research?")),
+  tags$p("The Endangered Species Act (ESA) was enacted in 1973 to provide a policy 
       framework for the protection and conservation of threatened and endangered species:"),
   tags$ul(
     tags$li("Endangered species are species that are at risk of extinction throughout all or a 
         significant portion of its range."),
-    tags$li("Threatened species are those which are likely to become an endangered species within 
+    tags$li("Threatened species are those that are likely to become an endangered species within 
         the foreseeable future throughout all or a significant portion of its range.")
     ),
-    tags$p("The ESA then protects threatened and endangered species from “take” which essentially 
-      means harm or harassment to the species."),
+    tags$p("The ESA prohibits take, which means to harass, harm, pursue, hunt, shoot, wound, kill, 
+      trap, capture, or collect, or to attempt to engage in any such conduct (16 U.S.C. 1531-1544)."),
     tags$br(),
-    tags$p("Research on ESA-listed species is important to understand their biology, population size, 
-      etc. Since take is likely to occur during research, the ESA outlined exceptions to the no-take policy 
-      where researchers can apply for permits to do research on ESA-listed species:"),
+    tags$p("Research on ESA-listed species is important to understand their current extinction risk and 
+      threats to recovery. The ESA therefore outlined exceptions to the prohibitions on take where 
+      researchers can apply for permits to conduct studies on ESA-listed species:"),
     tags$ul(
-      tags$li("Under section 10(a)(1)(A), NMFS authorizes scientific research permits for studies with a 
-         bona fide scientific purpose."),
-      tags$li("Under section 4(d) NMFS has created a streamlined procedure for research permits on 
-         threatened species being conducted by state or tribal government agencies.")
+      tags$li("Under section 10(a)(1)(A) of the ESA, for studies conducted by any entity that have a 
+         bona fide scientific purpose and meet other key",
+         tags$a("criteria", href = "https://www.govinfo.gov/app/details/CFR-2010-title50-vol7/CFR-2010-title50-vol7-sec222-308"),
+         ", such as limiting harm or justifying the data need; or"),
+      tags$li("Under section 4(d) of the ESA, for research that may take threatened species being conducted 
+              by state agencies or tribes.")
     ),
     tags$p("Researchers apply for permits through the Authorizations and Permits for Protected Species", 
        tags$a("(APPS)", href = "https://apps.nmfs.noaa.gov/index.cfm"), # adds a hyperlink to APPS 
        " application, and NMFS personnel view this information and make permitting decisions based on the 
-       expected harm the research will do to the species."),
+       expected harm the research will do to the species realtive to the value of the information that would be collected."),
   tags$br(),
-  tags$p(strong("Purpose")),
-  tags$p("Currently NMFS does not have an easily digestable way to view their permitting information.
-         Therefore, the primary purpose of this project was to create an application through R shiny using 
-         NMFS permitting information, with the hopes that this application will:"),
+  tags$p(strong("Why was this app developed?")),
+  tags$p("Currently NMFS' West Coast Region does not have an easy way to map and visually summarize their research
+         permitting information for internal use, or to share with applicants and co-managers.
+         Therefore, the primary purpose of this project was to create an application that will:"),
   tags$ul(
-    tags$li("Help aid in the decision-making process for scientific research permits in the West
-            Coast region"),
+    tags$li("Support the decision-making process for scientific research permits in NMFS' West
+            Coast Region,"),
     tags$li("Provide more transparency to researchers as well as state and tribal governement employees
-            about the permitting process."),
-    tags$li("Educate the public about the importance of the ESA and conducting research to inform
+            about the permitting process, and"),
+    tags$li("Educate the public about the role of research to inform
             the mangement of ESA-listed species.")
   ),
   tags$br(),
