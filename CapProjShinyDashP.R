@@ -18,7 +18,8 @@ ui <- dashboardPage(
                menuSubItem("Background and Purpose", tabName = "background"),
                menuSubItem("Terms of Use", tabName = "disclaimer")), 
       menuItem("Authorized Take Map", tabName = "takeMap", icon = icon("globe", lib = "glyphicon")), #globe can be another option
-      menuItem("Time Series Plots", tabName = "timeSeries", icon = icon("time", lib = "glyphicon"))
+      menuItem("Time Series Plots", tabName = "timeSeries", icon = icon("time", lib = "glyphicon")),
+      menuItem("About", tabName = "About", icon = icon("info-sign", lib = "glyphicon"))
     )
   ), 
   
@@ -70,14 +71,12 @@ ui <- dashboardPage(
                   title = "Getting Started",
                   width = 12, height = 180, solidHeader = T, status = "primary", 
                   background = "light-blue", 
-                  "Here we are showing how the number of authorized take 
-                  (how many fish we think we might interact with and/or lethally remove) 
-                  and reported take (how many fish we actually interacted with and/or 
-                  lethally removed) has changed over time. Total Take (number of fish) 
-                  is broken down into reported take or what was actually used (yellow) 
-                  and authorized take that was unused (blue). Used and Unused take 
-                  culminates to what was authorized for that specific year. Note that 
-                  the data is only showing what was reported through APPs and is not complete."
+                  "These plots display the authorized take and reported take of 
+                  fish per year. Total take (number of fish) is the sum of reported 
+                  take or what was actually used (yellow) and the remaining authorized 
+                  take that was unused (blue). Note that the data is only showing what 
+                  was reported through APPs and is not complete due to unreported take 
+                  by researchers and the current year is incomplete."
                 ),
                 box(
                   title = "Build Your Plot",
@@ -208,7 +207,7 @@ server <- function(input, output) {
       filter(LifeStage == input$LifeStage) %>% 
       filter(Production == input$Production) %>%
       filter(ResultCode != "Tribal 4d") %>%
-      select(c(Year, FileNumber, ReportID, ResultCode, CaptureMethod, 
+      select(c(Year,ReportID, FileNumber,  ResultCode, CaptureMethod, 
                Authorized_Take, Reported_Take, Authorized_Take_Unused, 
                Authorized_Mortality, Reported_Mortality, Authorized_Mortality_Unused))
   }) %>% bindEvent(input$updat)
@@ -284,7 +283,7 @@ server <- function(input, output) {
     ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
       geom_bar(stat = "identity", position = "stack", color = "black")+
       scale_fill_manual(values = mycols, name = "Take Type") +
-      labs(x = "Year", y = "Total Take (Number of fish)", title = "Total Fish Authorized To Be Touched")+ 
+      labs(x = "Year", y = "Total Take (Number of fish)", title = "Total Fish Authorized To Be Handled")+ 
       theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
             panel.background = element_rect(fill = "#D0D3D4" ))
     ggplotly(tooltip = c("y", "x", "fill"))
@@ -304,7 +303,7 @@ server <- function(input, output) {
                                       to Tribal Resource Management are not individually listed in the table 
                                       because they are not considered public, but those data are included in 
                                       the totals displayed in the map above.", 
-                                      colnames = c("Year", "Permit Code","Report ID","Permit Type","Gear Type",
+                                      colnames = c("Year","Report ID", "Permit Code","Permit Type","Gear Type",
                                                    "Authorized Take", "Reported Take", "Unused Take",
                                                    "Authorized Mortality", "Reported Mortality", "Unused Mortality"),
                                       options = list(pageLength = 10, autoWidth = F, scrollX = T)

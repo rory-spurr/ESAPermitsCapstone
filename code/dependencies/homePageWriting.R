@@ -118,7 +118,6 @@ disclaimerText <- tagList(
          in FileGDB 10.1 format (published 20220526). Accessed May 15, 2022 at URL",
          tags$a("https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Hydrography/WBD/National/GDB/",
                 href = "https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Hydrography/WBD/National/GDB/")),
-         tags$br(),
          tags$li("Hanson, K., Daw, S., Davenport, L., Jones, K., Niknami, L., & Buto, S. (2018). Criteria for Legacy Name and Code Changes. [Unpublished]"))
 )
 
