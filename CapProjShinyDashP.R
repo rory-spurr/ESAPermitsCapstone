@@ -10,16 +10,18 @@ source(paste(getwd(),"/code/dependencies/homePageWriting.R", sep = ""))
 
 ui <- dashboardPage(
   dashboardHeader(title = "Visualizing ESA-Listed Fish Research on the West Coast",
-                  titleWidth = 350),
+                  titleWidth = 500),
   dashboardSidebar(
     sidebarMenu(
       menuItem("Home", tabName = "home", icon = icon("home"), #info-sign can be another option
                menuSubItem("Welcome", tabName = "welcome"),
+               menuSubItem("How it works", tabName = "how2"),
                menuSubItem("Background and Purpose", tabName = "background"),
-               menuSubItem("Terms of Use", tabName = "disclaimer")), 
+               menuSubItem("Glossary", tabName = "gloss"),
+               menuSubItem("Use Statement", tabName = "disclaimer")), 
       menuItem("Authorized Take Map", tabName = "takeMap", icon = icon("globe", lib = "glyphicon")), #globe can be another option
       menuItem("Time Series Plots", tabName = "timeSeries", icon = icon("time", lib = "glyphicon")),
-      menuItem("About", tabName = "About", icon = icon("info-sign", lib = "glyphicon"))
+      menuItem("About Us", tabName = "About", icon = icon("info-sign", lib = "glyphicon"))
     )
   ), 
   
@@ -31,11 +33,17 @@ ui <- dashboardPage(
                   uiOutput("welcomeUI"), width = 12)
       ),
       # use uiOutput for HTML (can also use htmlOutput)
+      tabItem(tabName = "how2", 
+              box(title = "How to work the app", uiOutput("vidUI"), width = 12)
+      ),
       tabItem(tabName = "background", 
-              box(title = "What is the ESA? Why does it matter?", uiOutput("backUI"), width = 12)
+              box(title = "What is the ESA and how does it affect scientific research?", uiOutput("backUI"), width = 12)
+      ),
+      tabItem(tabName = "gloss", 
+              box(title = "Acronyms and Definitions", uiOutput("glossUI"), width = 12)
       ),
       tabItem(tabName = "disclaimer",
-              box(title= "Terms of Use", uiOutput("discUI"), width = 12, height = 900)
+              box(title= "Assumptions, Limitations, and Delimitations", uiOutput("discUI"), width = 12, height = 900)
       ),
       tabItem(tabName = "takeMap",
               fluidRow(
@@ -68,17 +76,6 @@ ui <- dashboardPage(
       tabItem(tabName = "timeSeries", 
               fluidRow(
                 box(
-                  title = "Getting Started",
-                  width = 12, height = 180, solidHeader = T, status = "primary", 
-                  background = "light-blue", 
-                  "These plots display the authorized take and reported take of 
-                  fish per year. Total take (number of fish) is the sum of reported 
-                  take or what was actually used (yellow) and the remaining authorized 
-                  take that was unused (blue). Note that the data is only showing what 
-                  was reported through APPs and is not complete due to unreported take 
-                  by researchers and the current year is incomplete."
-                ),
-                box(
                   title = "Build Your Plot",
                   width = 4, height = 900,
                   radioButtons(inputId = "LifeStage", label = "Choose a Life Stage",
@@ -89,11 +86,17 @@ ui <- dashboardPage(
                               choices = levels(df$ESU),  
                               multiple = F), 
                   background = "light-blue", solidHeader = T,
-                  actionButton(inputId = "updat", label = "Update Plots and Table"),
-                  br(),
-                  br(),
-                  br(),
-                  imageOutput("take_type")
+                  actionButton(inputId = "updat", label = "Update Plots and Table")),
+                box(
+                  title = "Glossary",
+                  background = "light-blue"
+                  
+                
+                  #,
+                  # br(),
+                  # br(),
+                  # br() ,
+                  #imageOutput("take_type")
                 ),
                 box(
                   title = "Time Series",
@@ -102,7 +105,16 @@ ui <- dashboardPage(
                   plotlyOutput("plot1"),
                   plotlyOutput("plot2")
                 ),
-                
+                box(title = "About the plots",
+                  width = 12, height = 180, solidHeader = T, status = "primary", 
+                  background = "light-blue", 
+                  "These plots display the authorized take and reported take of 
+                  fish per year. Total take (number of fish) is the sum of reported 
+                  take or what was actually used (yellow) and the remaining authorized 
+                  take that was unused (blue). Note that the data is only showing what 
+                  was reported through APPs and is not complete due to unreported take 
+                  by researchers and the current year is incomplete."
+                ),
                 box(
                   title = "Raw Data Table",
                   solidHeader = T, 
@@ -136,7 +148,8 @@ server <- function(input, output) {
   output$welcomeUI <- renderUI({
     welcomeText
   })
-  
+  output$vidUI <- renderUI({how2Text
+  })
   output$backUI <- renderUI({
     backgroundText
   })
@@ -144,11 +157,14 @@ server <- function(input, output) {
   output$discUI <- renderUI({
     disclaimerText
   })
-  output$take_type <- renderImage({
+  output$glossUI <- renderUI({
+    glossText
+  })
+  #output$take_type <- renderImage({
     
-    list(src = "www/image/take_type.png",
-         width = "100%",
-         height = 400)}, deleteFile = F) #code used from https://algoritmaonline.com/advancing-your-shinyapp/#:~:text=To%20add%20an%20image%20in,by%20using%20renderImage()%20function.
+    #list(src = "www/image/take_type.png",
+         #width = "100%",
+         #height = 400)}, deleteFile = F) #code used from https://algoritmaonline.com/advancing-your-shinyapp/#:~:text=To%20add%20an%20image%20in,by%20using%20renderImage()%20function.
   
   # Filter for take data within HUC 8's
   # for the following three "filteredXXX" chunks, the bindEvent(input$update)

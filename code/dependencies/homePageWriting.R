@@ -13,18 +13,22 @@ welcomeText <- tagList(
   tags$br(),
   tags$br(),
   tags$p("The app summarizes how much impact is occurring on ESA-listed fishes in particular
-         areas. Users can choose what data to display to answer 
-         specific questions, or learn about a species or region of interest."),
+  areas due to research. Users can choose what data to display to learn about projects on a 
+  particular species or in a region of interest, or look at trends over time. It was created 
+  to help NOAA staff see the ‘big picture’ view of research on the landscape, let researchers 
+  learn about each other’s work, and make permitting decisions more transparent."),
   tags$br(),
-  tags$image(src = "image/mapGraph.png", width = "80%", height = "65%")      
+  tags$image(src = "image/mapGraph.png", width = "80%", height = "65%")
+)
+
+how2Text <- tagList(
+  tags$video(id="videoID", type = "video/mp4", src = "image/how2.mov", controls = "controls")
 )
 
 
 
-
-
 backgroundText <- tagList(
-  tags$p(strong("What is the ESA and how does it affect scientific research?")),
+  tags$p(strong("What is the ESA?")),
   tags$p("The Endangered Species Act (ESA) was enacted in 1973 to provide a policy 
       framework for the protection and conservation of threatened and endangered species:"),
   tags$ul(
@@ -34,8 +38,11 @@ backgroundText <- tagList(
         the foreseeable future throughout all or a significant portion of its range.")
     ),
     tags$p("The ESA prohibits take, which means to harass, harm, pursue, hunt, shoot, wound, kill, 
-      trap, capture, or collect, or to attempt to engage in any such conduct (16 U.S.C. 1531-1544)."),
+      trap, capture, or collect, or to attempt to engage in any such conduct (16 U.S.C. 1531-1544). 
+           For more information, click",
+    tags$a("here.", href = "https://www.fisheries.noaa.gov/national/endangered-species-conservation/endangered-species-act#section-4.-determination-of-endangered-species-and-threatened-species")),
     tags$br(),
+    tags$p(strong("How does it affect scientific research?")),
     tags$p("Research on ESA-listed species is important to understand their current extinction risk and 
       threats to recovery. The ESA therefore outlined exceptions to the prohibitions on take where 
       researchers can apply for permits to conduct studies on ESA-listed species:"),
@@ -49,13 +56,16 @@ backgroundText <- tagList(
     ),
     tags$p("Researchers apply for permits through the Authorizations and Permits for Protected Species", 
        tags$a("(APPS)", href = "https://apps.nmfs.noaa.gov/index.cfm"), # adds a hyperlink to APPS 
-       " application, and NMFS personnel view this information and make permitting decisions based on the 
-       expected harm the research will do to the species realtive to the value of the information that would be collected."),
+       " application, and National Marine Fisheries Service (NMFS) personnel view this information and make permitting decisions based on the 
+       expected harm the research will do to the species realtive to the value of the information that would be collected.
+       For more information on permits and authorizations under section 10(a)(1)(A) and section 4(d), see ",
+  tags$a("here.", href = "https://www.fisheries.noaa.gov/west-coast/endangered-species-conservation/endangered-species-act-permits-and-authorizations-west")),
   tags$br(),
   tags$p(strong("Why was this app developed?")),
   tags$p("Currently NMFS' West Coast Region does not have an easy way to map and visually summarize their research
          permitting information for internal use, or to share with applicants and co-managers.
-         Therefore, the primary purpose of this project was to create an application that will:"),
+         Therefore, students from the School of Marine and Environmental Affairs (SMEA) at the University of Washington (UW)
+         were contracted with the primary purpose of developing an application that will:"),
   tags$ul(
     tags$li("Support the decision-making process for scientific research permits in NMFS' West
             Coast Region,"),
@@ -74,52 +84,80 @@ backgroundText <- tagList(
     Fisheries Service. 1315 East-West Highway Silver Spring, MD 20910.")
 )
 
-disclaimerText <- tagList(
-  tags$p(strong("Terms of Use")),
-  tags$p("Within our study, there are several limitations and assumptions we are using to develop our analyses. Below we will
-         detail these limitations and assuptions for transparency and to allow the user to understand how we obtained
-         our results"),
+glossText <- tagList(
+  tags$p(strong("Acronyms")),
+    tags$li("Evolutionarily significant unit (ESU): a population of organisms that is considered distinct for purposes of conservation."),
+    tags$li("Distinct Population Segment (DPS): the smallest division of a taxonomic species permitted to be protected under the U.S. Endangered Species Act."),
+    tags$li("Hydrologic Unit Code (HUC): A HUC is a hierarchical land area classification system created by the United States Geological Survey (USGS)."),
   tags$br(),
-  tags$p(strong("Limitations and Assumptions")),
-  tags$ul(
-  tags$li("Data inputs - The permit application process has changed greatly since the database was created in 1994. 
-          Therefore, there are data attributes that lack consistency and missing information. For example, early permit 
-          applications were not required to enter specific information regarding location, HUC number, take action, and so on. 
-          As we are aware of this, we will either provide a quality check to fill in gaps based on provided information or will 
-          not include these values/permits into our project as they are not complete/missing necessary information. Additionally, 
-          in the StreamName section, NOAA allowed permit applicants to provide the name of the waterbody they planned to work with. 
-          As this is a textbox entry rather than a drop down with provided names, information on the same waterbody can be unnecessarily
-          duplicated with alternative names or descriptions. Therefore, we manually adjusted the waterbody entries to ensure no duplication 
-          occurred for waterbody names and to provide more consistency across the nomenclature. "),
-  tags$li("Non-reported take - Under the data file WCRPermitBiOp_Pass report data 4d and S10_22March22.csv, researchers are 
-          asked to report the actual take and mortality that occurred to ESA-listed species during the duration of their study. 
-          However, some organizations or projects can opt out or neglect to report on the actual take and mortality. As a result, 
-          these projects are not included in our analyses due to lack of data. Thus, a limitation of this unreported data is we 
-          are missing total take and mortality data and therefore complicates further abundance data analysis."),
-  tags$li("Changed HUC numbers - Over time, HUC 8 codes have been rearranged and their boundaries redrawn. 
-          Many permits use old or outdated HUC 8 codes, causing issues when trying to map our permit data 
-          using the Watershed Boundary Dataset (USGS et al. 2022). Therefore, HUC 8 codes had to be updated 
-          to reflect any changes to their boundaries. Decisions were made using an unpublished document that 
-          summarizes HUC 8 code changes up until 2018 (Hanson et al. 2018). Some of these changes ran on 
-          assumptions using other fields (such as WaterbodyName or LocationDescription) and are detailed below:"),
+  tags$p(strong("Terms and Definitions")),
+    tags$li("Take: Defined as any action that harasses, harms, pursues, hunts, shoots, wounds, kills, traps, captures, or collects, or attempts to engage in any such conduct."),
   tags$br(),
-        tags$pre(" \t \t# 18020103 = 18020156 # very certain"),
-        tags$pre(" \t \t# 18020109 = 18020163 # very certain"),
-        tags$pre(" \t \t# 18020112 = 18020154 # very certain based on location descriptions"),
-        tags$pre(" \t \t# 18020118 = 18020154 # very certain based on location descriptions"),
-        tags$pre(" \t \t# 18040005 = 18040012 # very certain based on location descriptions"),
-        tags$pre(" \t \t# 18060001 = 18060015 # split between 18050006 as well, arbitrarily picked"),
-        tags$pre(" \t \t# 18060012 = 18060006 # chose this over Monterey Bay as population is South-Central Cal Coast")),
-  tags$br(),
-  tags$p(strong("References:"),
-         tags$br(),
-         tags$li("U.S. Geological Survey (USGS), U.S. Department of Agriculture – Natural Resource Conservation Service 
-         (NRCS), U.S. Environmental Protection Agency (EPA) (2022). USGS National Watershed Boundary Dataset 
-         in FileGDB 10.1 format (published 20220526). Accessed May 15, 2022 at URL",
-         tags$a("https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Hydrography/WBD/National/GDB/",
-                href = "https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Hydrography/WBD/National/GDB/")),
-         tags$li("Hanson, K., Daw, S., Davenport, L., Jones, K., Niknami, L., & Buto, S. (2018). Criteria for Legacy Name and Code Changes. [Unpublished]"))
+  tags$p(strong("Fish Glossary")),
+    tags$p("Below are the names of the fish species that are included within this app. Clicking on the species will take you 
+           to a link of the fish and ESA-status:"),
+           tags$li(
+             tags$a("Chinook Salmon", href = "https://www.fisheries.noaa.gov/species/chinook-salmon-protected")
+           )
 )
 
+
+
+
+
+disclaimerText <- tagList(
+  tags$p("Users of this app should be aware of the following assumptions, limitations, and delimitations
+            regarding the raw data and data summaries:"),
+  tags$p(strong("Assumptions")),
+    tags$p("Note: These data are provisional, and are subject to change at any time. Additionally, 
+            this app is specifically for ESA-listed fish species in the west coast region under NOAA
+            juridisction. Therefore, ESA-listed fish species under the jurisdiction of DFW
+            or other federal and international organizations are not represented here."),
+  tags$br(),
+  tags$p("For the purpose of this project, some fields and data entries were modified to 
+          simplify analyses and provide consistency across the nomenclature. These fields include:"),
+  tags$li("Adjusting HUC 8 codes to encompass redrawn boundaries, specifically:"),
+  tags$br(),
+    tags$pre(" \t \t# 18020103 = 18020156 # very certain"),
+    tags$pre(" \t \t# 18020109 = 18020163 # very certain"),
+    tags$pre(" \t \t# 18020112 = 18020154 # very certain based on location descriptions"),
+    tags$pre(" \t \t# 18020118 = 18020154 # very certain based on location descriptions"),
+    tags$pre(" \t \t# 18040005 = 18040012 # very certain based on location descriptions"),
+    tags$pre(" \t \t# 18060001 = 18060015 # split between 18050006 as well, arbitrarily picked"),
+    tags$pre(" \t \t# 18060012 = 18060006 # chose this over Monterey Bay as population is South-Central Cal Coast"),
+  tags$br(),
+  tags$li("Renaming and classifying waterbodies in the 'WaterbodyName' field to allow for consistent
+          nomenclature and inform users about the type of waterbodies (saltwater or freshwater) these species exist in. 
+          Renaming practices were performed using best available data provided by the 'LocationDescription' field."),
+  tags$li("Reclassifying 'Lifestage' and 'Production' fields to reduce the amount of unique entries."),
+  tags$br(),
+    tags$pre(" \t \t Ex. 'Smolt' = 'Juvenile'"),
+    tags$pre(" \t \t Ex. 'Listed Hatchery, Clipped and Intact' = 'Listed Hatchery'"),
+  tags$br(),
+  tags$p(strong("Limitations")),
+    tags$p("This encountered a few limitations in which the developers had no control over. These limitations include:"),
+      tags$li("Unreported take from researchers failing to complete exit reports."),
+  tags$br(),
+  tags$p(strong("Delimitations")),
+    tags$p("To maintain scope and presentation of the data within this project, the following was either excluded or modified:"),
+      tags$li("Unlisted hatchery, observe/harass, observe/sample dead tissues, unknown take action, permits with ocean polygons, tribal 4d, etc."),
+  tags$br(),
+  tags$p(strong("Metadata")),
+    tags$p("For further information regarding the data source, data attributes, 
+         coding, and general metadata for this project, please visit our Github ",
+    tags$a("here.", href = "https://github.com/rory-spurr/ESAPermitsCapstone")), # this will/can be edited with true metadata or be linked to our git with the metadata page
+  tags$br(),
+  tags$p(strong("How to Cite")), #no idea how to cite our project
+  tags$br(),
+  tags$p(strong("License Statement")),
+    tags$p("Copyright © 2007 Free Software Foundation, Inc.",
+    tags$a("<https://fsf.org/>", href = "https://fsf.org/"),
+    tags$p("Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.")),
+  tags$br(),
+  tags$br(),
+  tags$image(src = "image/download.png", width = "20%", height = "20%", align = "center")
+  )
+
+  
 
 
