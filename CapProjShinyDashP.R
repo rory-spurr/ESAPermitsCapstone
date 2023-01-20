@@ -86,11 +86,12 @@ ui <- dashboardPage(
                               choices = levels(df$ESU),  
                               multiple = F), 
                   background = "light-blue", solidHeader = T,
-                  actionButton(inputId = "updat", label = "Update Plots and Table")),
-                box(
-                  title = "Glossary",
-                  background = "light-blue"
-                  
+                  actionButton(inputId = "updat", label = "Update Plots and Table")
+                  #),
+                # box(
+                #   title = "Glossary",
+                #   background = "light-blue"
+                #   
                 
                   #,
                   # br(),
