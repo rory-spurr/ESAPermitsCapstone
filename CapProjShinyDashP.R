@@ -27,6 +27,9 @@ ui <- dashboardPage(
   
   dashboardBody(
     # includeCSS("www/appTheme.css"),
+    
+    # =========================================
+    # Home Tab
     tabItems(
       tabItem(tabName = "welcome",
               box(title = "Welcome to the ESA-Listed Fish Research App for West Coast Permits!",
@@ -45,6 +48,9 @@ ui <- dashboardPage(
       tabItem(tabName = "disclaimer",
               box(title= "Assumptions, Limitations, and Delimitations", uiOutput("discUI"), width = 12, height = 900)
       ),
+      
+      # =========================================
+      # Take Map Tab
       tabItem(tabName = "takeMap",
               fluidRow(
                 box(
@@ -68,11 +74,18 @@ ui <- dashboardPage(
                 ),
                 box(
                   title = "Raw Data Table",
+                  uiOutput("tblCapt"),
+                  width = 12
+                ),
+                box(
                   width = 12,
                   dataTableOutput("wcr_table")
                 ),
               )
       ),
+      
+      # =========================================
+      # Time Series Tab
       tabItem(tabName = "timeSeries", 
               fluidRow(
                 box(
@@ -124,6 +137,9 @@ ui <- dashboardPage(
               )
       
       ),
+      
+      # =========================================
+      # About Tab
       tabItem(tabName = "About",
               userBox(
                 title = userDescription(
@@ -154,7 +170,9 @@ server <- function(input, output) {
   output$backUI <- renderUI({
     backgroundText
   })
-  
+  output$tblCapt <- renderUI({
+    tblCaptText
+  })
   output$discUI <- renderUI({
     disclaimerText
   })
@@ -277,12 +295,8 @@ server <- function(input, output) {
   # Data table processing and rendering
   output$wcr_table <- DT::renderDataTable({
     filteredWCR()},
-    caption = "Table displays raw data that is summed by area in the map above. Note that permits 
-    issued under the ESA 4(d) authority specific to Tribal Resource Management are not individually
-    listed in the table because they are not considered public, but those data are included in the 
-    totals displayed in the map above.",
-    colnames = c("File Number", "Permit Type", "Organization", "HUC 8", "Location",
-                 "Water Type", "Take Action","Capture Method", "Total Take", "Lethal Take"),
+    colnames = c("Permit Code", "Permit Type", "Organization", "HUC 8", "Location",
+                 "Water Type", "Take Action","Gear Type", "Total Take", "Lethal Take"),
     options = list(pageLength = 10, autoWidth = F, scrollX = T, 
                    columnDefs = list(list(
                      targets = "_all",

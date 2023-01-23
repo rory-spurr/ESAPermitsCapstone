@@ -159,6 +159,15 @@ disclaimerText <- tagList(
   tags$image(src = "image/download.png", width = "20%", height = "20%", align = "center")
   )
 
-  
+tblCaptText <- tagList(
+  tags$p("Table displays relevant columns from raw data. Column Definitions: Permit Code, 
+  code automatically assigned by the APPS system and used in correspondence about the application; 
+  Permit Type, kind of permit (more detail ",
+  tags$a("here", href =  "https://www.fisheries.noaa.gov/west-coast/endangered-species-conservation/endangered-species-act-permits-and-authorizations-west"),
+  "); Organization, entity in charge of research operations; HUC 8, Hydrologic Unit Code (HUC) 8 where research is taking place; 
+  Location, name or description of research location; Water Type, Freshwater (FW) or Saltwater (SW); Take Action, was the animal 
+  captured/tagged/killed; Gear Type, type of gear used in capture; Total Take, total amount of take authorized; Lethal Take, Total 
+  amount of fish mortality authorized.")
+)
 
 
