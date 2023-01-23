@@ -22,7 +22,8 @@ welcomeText <- tagList(
 )
 
 how2Text <- tagList(
-  tags$video(id="videoID", type = "video/mp4", src = "image/how2.mov", controls = "controls")
+  tags$video(id="videoID", width = "500px", height = "350px", type = "video/mp4", 
+             src = "image/how2.mov", controls = "controls")
 )
 
 
