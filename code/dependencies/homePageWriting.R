@@ -192,4 +192,26 @@ mapGlossText <- tagList(
   )
 )
 
+# ==========================
+# Text for use boxes
+
+# Rory
+roryText <- tagList(
+  p("Rory Spurr has worn many hats throughout his life, working as a fisheries scientist, in research
+    and development for a fish passage company, and most recently as an R programmer. Rory will graduate with 
+    his Master's in March and would love for someone to hire him ASAP."),
+  tags$br(),
+  h1(strong("Contact Info:"), style = "font-size:25px"),
+  p(tags$a("Website", href = "https://rory-spurr.github.io/")),
+  p("Github: ", tags$a("rory-spurr", href = "https://github.com/rory-spurr")),
+  p("Email: rjspurr5@live.com")
+)
+
+
+
+
+
+
+
+
 

@@ -152,14 +152,16 @@ ui <- dashboardPage(
                   subtitle = "Lead Developer",
                   type = 2,
                   image = "https://avatars.githubusercontent.com/u/103059893?v=4",
-                )),
+              )),
               userBox(
                 title = userDescription(
                   title = "Rory Spurr",
                   subtitle = "Lead Developer",
                   type = 2,
                   image = "https://avatars.githubusercontent.com/u/104161019?v=4",
-                ))
+                ),
+              uiOutput("roryUI")
+              )
       )
     )
   )
@@ -167,6 +169,9 @@ ui <- dashboardPage(
 
 server <- function(input, output) { 
   # have to use renderUI to render HTML correctly
+  output$roryUI <- renderUI({
+    roryText
+  })
   output$welcomeUI <- renderUI({
     welcomeText
   })
