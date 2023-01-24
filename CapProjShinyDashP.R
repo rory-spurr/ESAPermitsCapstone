@@ -73,9 +73,14 @@ ui <- dashboardPage(
                   leafletOutput("map")
                 ),
                 box(
+                  title = "Glossary",
+                  width = 6,
+                  uiOutput("mapGloss")
+                ),
+                box(
                   title = "Raw Data Table",
                   uiOutput("tblCapt"),
-                  width = 12
+                  width = 6
                 ),
                 box(
                   width = 12,
@@ -169,6 +174,9 @@ server <- function(input, output) {
   })
   output$backUI <- renderUI({
     backgroundText
+  })
+  output$mapGloss <- renderUI({
+    mapGlossText
   })
   output$tblCapt <- renderUI({
     tblCaptText

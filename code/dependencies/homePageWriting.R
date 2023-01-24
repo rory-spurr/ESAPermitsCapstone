@@ -1,8 +1,8 @@
 # This webpage is helpful for formatting these lengthy paragraphs
 # https://shiny.rstudio.com/tutorial/written-tutorial/lesson2/
 
-
-
+# ==========================
+# Text for welcome page
 welcomeText <- tagList(
   tags$p("This platform summarizes and displays data collected by the National Marine 
          Fisheries Service (NMFS) on the permits they issue for scientific research that 
@@ -21,13 +21,16 @@ welcomeText <- tagList(
   tags$image(src = "image/mapGraph.png", width = "80%", height = "65%")
 )
 
+# ==========================
+# Text/video on instructional page
 how2Text <- tagList(
   tags$video(id="videoID", width = "500px", height = "350px", type = "video/mp4", 
              src = "image/how2.mov", controls = "controls")
 )
 
 
-
+# ==========================
+# Text for background and purpose page
 backgroundText <- tagList(
   tags$p(strong("What is the ESA?")),
   tags$p("The Endangered Species Act (ESA) was enacted in 1973 to provide a policy 
@@ -85,6 +88,8 @@ backgroundText <- tagList(
     Fisheries Service. 1315 East-West Highway Silver Spring, MD 20910.")
 )
 
+# ==========================
+# Text for general glossary page
 glossText <- tagList(
   tags$p(strong("Acronyms")),
     tags$li("Evolutionarily significant unit (ESU): a population of organisms that is considered distinct for purposes of conservation."),
@@ -105,7 +110,8 @@ glossText <- tagList(
 
 
 
-
+# ==========================
+# Text for use and limitations page
 disclaimerText <- tagList(
   tags$p("Users of this app should be aware of the following assumptions, limitations, and delimitations
             regarding the raw data and data summaries:"),
@@ -159,15 +165,31 @@ disclaimerText <- tagList(
   tags$image(src = "image/download.png", width = "20%", height = "20%", align = "center")
   )
 
+# ==========================
+# Text for table captions
 tblCaptText <- tagList(
   tags$p("Table displays relevant columns from raw data. Column Definitions: Permit Code, 
   code automatically assigned by the APPS system and used in correspondence about the application; 
-  Permit Type, kind of permit (more detail ",
-  tags$a("here", href =  "https://www.fisheries.noaa.gov/west-coast/endangered-species-conservation/endangered-species-act-permits-and-authorizations-west"),
-  "); Organization, entity in charge of research operations; HUC 8, Hydrologic Unit Code (HUC) 8 where research is taking place; 
+  Permit Type, kind of permit ",
+  tags$a("(more detail here);", href =  "https://www.fisheries.noaa.gov/west-coast/endangered-species-conservation/endangered-species-act-permits-and-authorizations-west"),
+  "Organization, entity in charge of research operations; HUC 8, Hydrologic Unit Code (HUC) 8 where research is taking place; 
   Location, name or description of research location; Water Type, Freshwater (FW) or Saltwater (SW); Take Action, was the animal 
   captured/tagged/killed; Gear Type, type of gear used in capture; Total Take, total amount of take authorized; Lethal Take, Total 
   amount of fish mortality authorized.")
+)
+
+# ==========================
+# Text for Map Glossary
+mapGlossText <- tagList(
+  tags$ul(
+    tags$li("Take: Any action that harasses, harms, pursues, hunts, shoots, wounds, kills, 
+            traps, captures, or collects, or attempts to engage in any such conduct."),
+    tags$li("Evolutionary Significant Unit (ESU): a population of organisms that is considered 
+            distinct for purposes of conservation."),
+    tags$li("Distinct Population Segment (DPS): the smallest division of a taxonomic species 
+            permitted to be protected under the U.S. Endangered Species Act."),
+    tags$li("Origin: Where the fish was born (in a hatchery, or naturally in the wild).")
+  )
 )
 
 
