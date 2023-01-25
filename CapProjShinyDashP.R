@@ -104,18 +104,13 @@ ui <- dashboardPage(
                               choices = levels(df$ESU),  
                               multiple = F), 
                   background = "light-blue", solidHeader = T,
-                  actionButton(inputId = "updat", label = "Update Plots and Table")
-                  #),
-                # box(
-                #   title = "Glossary",
-                #   background = "light-blue"
-                #   
-                
-                  #,
-                  # br(),
-                  # br(),
-                  # br() ,
-                  #imageOutput("take_type")
+                  actionButton(inputId = "updat", label = "Update Plots and Table"),
+                  br(),
+                  "*ESU = Evolutionarily Significant Unit, DPS = Distinct Population Segments.
+                    ESUs and DPSs are the organizational units (i.e., groups of populations) of salmon 
+                    and steelhead (respectively) recognized as species for listing under the Endangered 
+                    Species Act. See ‘Glossary’ Tab for more information.",
+                  imageOutput("blank")
                 ),
                 box(
                   title = "Time Series",
@@ -128,19 +123,27 @@ ui <- dashboardPage(
                   width = 12, height = 180, solidHeader = T, status = "primary", 
                   background = "light-blue", 
                   "These plots display the authorized take and reported take of 
-                  fish per year. Total take (number of fish) is the sum of reported 
-                  take or what was actually used (yellow) and the remaining authorized 
-                  take that was unused (blue). Note that the data is only showing what 
-                  was reported through APPs and is not complete due to unreported take 
-                  by researchers and the current year is incomplete."
+                  fish per year. Take is considerdd any action that harasses, harms, 
+                  pursues, hunts, shoots, wounds, kills, traps, captures, or collects, or 
+                  attempts to engage in any such conductTotal take (number of fish) is 
+                  the sum of reported take or what was actually used (yellow) and the 
+                  remaining authorized take that was unused (blue). Note that the data 
+                  is only showing what was reported through APPs and is not complete 
+                  due to unreported take by researchers. Additionally, the current year
+                  is incomplete."
                 ),
                 box(
                   title = "Raw Data Table",
                   solidHeader = T, 
                   width = 12,
                   dataTableOutput("table")),
-              )
-      
+                
+                box(title = "About the table",
+                  width = 12, height = 180, solidHeader = T, status = "primary", 
+                  background = "light-blue", 
+                  uiOutput("TSgloss")
+                )
+          )
       ),
       
       # =========================================
@@ -152,7 +155,9 @@ ui <- dashboardPage(
                   subtitle = "Lead Developer",
                   type = 2,
                   image = "https://avatars.githubusercontent.com/u/103059893?v=4",
-              )),
+              ),
+              uiOutput("alanaUI")
+              ),
               userBox(
                 title = userDescription(
                   title = "Rory Spurr",
@@ -171,6 +176,9 @@ server <- function(input, output) {
   # have to use renderUI to render HTML correctly
   output$roryUI <- renderUI({
     roryText
+  })
+  output$alanaUI <- renderUI({
+    alanaText
   })
   output$welcomeUI <- renderUI({
     welcomeText
@@ -191,6 +199,9 @@ server <- function(input, output) {
   })
   output$glossUI <- renderUI({
     glossText
+  })
+  output$TSgloss <- renderUI({
+    TSglossText
   })
   #output$take_type <- renderImage({
     
@@ -343,7 +354,7 @@ server <- function(input, output) {
     ggplotly(tooltip = c("y", "x", "fill"))
  })
   output$table <- DT::renderDataTable({dat3()},
-                                      caption = "Note: permits issued under the ESA 4(d) authority specific 
+                                      caption = "Note: Permits issued under the ESA 4(d) authority specific 
                                       to Tribal Resource Management are not individually listed in the table 
                                       because they are not considered public, but those data are included in 
                                       the totals displayed in the map above.", 

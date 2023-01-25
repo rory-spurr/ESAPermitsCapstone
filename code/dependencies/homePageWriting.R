@@ -100,11 +100,24 @@ glossText <- tagList(
     tags$li("Take: Defined as any action that harasses, harms, pursues, hunts, shoots, wounds, kills, traps, captures, or collects, or attempts to engage in any such conduct."),
   tags$br(),
   tags$p(strong("Fish Glossary")),
-    tags$p("Below are the names of the fish species that are included within this app. Clicking on the species will take you 
-           to a link of the fish and ESA-status:"),
-           tags$li(
-             tags$a("Chinook Salmon", href = "https://www.fisheries.noaa.gov/species/chinook-salmon-protected")
-           )
+    tags$p("Below are the names of the fish species that are included within this app."), 
+    #Clicking on the species will take you to a link of the fish and ESA-status:"),
+  tags$p(strong("Salmonids:")),
+           tags$li("Chinook Salmon (Oncorhynchus tshawytscha)"),
+           tags$li("Coho Salmon (Oncorhynchus kisutch)"),
+           tags$li("Chum Salmon (Oncorhynchus keta)"),
+           tags$li("Sockeye Salmon (Oncorhynchus nerka)"),
+           tags$li("Steelhead Salmon (Oncorhynchus mykiss)"),
+  tags$p("For more information regarding salmonids and their listing statuses, see here"),
+         #tags$a("")
+  tags$p(strong("Rockfish and other species:")),
+           tags$li("Boccaccio Rockifish (Sebastes paucispinis)"),
+           tags$li("Eulachon (Thaleichthys pacificus)"),
+           tags$li("Green Sturgeon (Acipenser medirostris)"),
+           tags$li("Yelloweye Rockfish (Sebastes ruberrimus)"),
+  tags$p("For more information regarding rockfish and other species, and their listing statuses, see here"),
+           #tags$a("Chinook Salmon", href = "https://www.fisheries.noaa.gov/species/chinook-salmon-protected")
+           
 )
 
 
@@ -141,20 +154,20 @@ disclaimerText <- tagList(
     tags$pre(" \t \t Ex. 'Smolt' = 'Juvenile'"),
     tags$pre(" \t \t Ex. 'Listed Hatchery, Clipped and Intact' = 'Listed Hatchery'"),
   tags$br(),
-  tags$p(strong("Limitations")),
+  tags$p(strong("Limitations - To be edited")),
     tags$p("This encountered a few limitations in which the developers had no control over. These limitations include:"),
       tags$li("Unreported take from researchers failing to complete exit reports."),
   tags$br(),
-  tags$p(strong("Delimitations")),
+  tags$p(strong("Delimitations - To be edited")),
     tags$p("To maintain scope and presentation of the data within this project, the following was either excluded or modified:"),
       tags$li("Unlisted hatchery, observe/harass, observe/sample dead tissues, unknown take action, permits with ocean polygons, tribal 4d, etc."),
   tags$br(),
-  tags$p(strong("Metadata")),
+  tags$p(strong("Metadata - To be edited")),
     tags$p("For further information regarding the data source, data attributes, 
          coding, and general metadata for this project, please visit our Github ",
     tags$a("here.", href = "https://github.com/rory-spurr/ESAPermitsCapstone")), # this will/can be edited with true metadata or be linked to our git with the metadata page
   tags$br(),
-  tags$p(strong("How to Cite")), #no idea how to cite our project
+  tags$p(strong("How to Cite - To be edited")), #no idea how to cite our project
   tags$br(),
   tags$p(strong("License Statement")),
     tags$p("Copyright © 2007 Free Software Foundation, Inc.",
@@ -191,9 +204,27 @@ mapGlossText <- tagList(
     tags$li("Origin: Where the fish was born (in a hatchery, or naturally in the wild).")
   )
 )
-
 # ==========================
+# Text for time series glossary
+TSglossText <- tagList(
+  tags$p("This table displays the raw data from the plots above. The fields 
+         within this table are defined as:"),
+    tags$li("Year: The year field indicates the year that each permit was issued."),
+    tags$li("Report ID: A five-digit unique code for each active project that reported take and mortality within their research."),
+    tags$li("Permit Code: The code automatically assigned by the APPS system and used in correspondence about the application."),
+    tags$li("Permit Type: Indicates the kind of permit or authority ",
+            tags$a("(more detail here).", href =  "https://www.fisheries.noaa.gov/west-coast/endangered-species-conservation/endangered-species-act-permits-and-authorizations-west")),
+    tags$li("Gear Type: Gear used to capture species."),
+    tags$li("Authorized Take: Predicted and allocated number of individuals the project expects to take as a result of research. Includes number from lethal and non-lethal take."),
+    tags$li("Reported Take: The number of individuals reportedly taken as a result of research. Includes number from lethal and non-lethal take."),
+    tags$li("Unused Take: The number of take that was allocated but went unused by the researcher. The difference between the authorized number and the reported number."),
+    tags$li("Authorized Mortality: Predicted and allocated number of individuals the project expects to kill as a result of research. Includes ONLY lethal take."),
+    tags$li("Reported Mortality: The number of individuals reportedly killed as a result of research. Includes ONLY lethal take."),
+    tags$li("Unused Mortality: The number of lethal take that was allocated but went unused by the researcher. The difference between the authorized number and the reported number.")
+)
+
 # Text for use boxes
+# ==========================
 
 # Rory
 roryText <- tagList(
@@ -207,6 +238,16 @@ roryText <- tagList(
   p("Email: rjspurr5@live.com")
 )
 
+# =========================
+
+# Alana 
+alanaText <- tagList(
+  p("~Insert profile here~"),
+  tags$br(),
+  h1(strong("Contact Info:"), style = "font-size:25px"),
+  p("Github: ", tags$a("asantan8", href = "https://github.com/asantan8")),
+  p("Email: asantan7@uw.edu")
+)
 
 
 
