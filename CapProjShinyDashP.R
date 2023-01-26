@@ -229,7 +229,8 @@ server <- function(input, output) {
       filter(Species == input$DPS) %>%
       filter(LifeStage == input$lifestage) %>% 
       filter(Prod == input$Prod) %>%
-      filter(ResultCode != "Tribal 4d") %>%
+      filter(ResultCode != "Tribal 4d") %>% # suppress tribal 4d permits in the table
+      # note that these permits still add to the total in the map and table.
       select(FileNumber:TotalMorts)
   }) %>%
     bindEvent(input$update)
