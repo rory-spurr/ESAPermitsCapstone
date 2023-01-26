@@ -125,7 +125,7 @@ ui <- dashboardPage(
                   "These plots display the authorized take and reported take of 
                   fish per year. Take is considerdd any action that harasses, harms, 
                   pursues, hunts, shoots, wounds, kills, traps, captures, or collects, or 
-                  attempts to engage in any such conductTotal take (number of fish) is 
+                  attempts to engage in any such conduct. Total take (number of fish) is 
                   the sum of reported take or what was actually used (yellow) and the 
                   remaining authorized take that was unused (blue). Note that the data 
                   is only showing what was reported through APPs and is not complete 
