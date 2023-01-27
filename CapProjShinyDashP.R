@@ -341,7 +341,9 @@ server <- function(input, output) {
       scale_fill_manual(values = mycols, name = "Take Type") +
       labs(x = "Year", y = "Total Take (Number of fish)", title = "Total Fish Authorized To Be Handled")+ 
       theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
-            panel.background = element_rect(fill = "#D0D3D4" ))
+            panel.background = element_rect(fill = "#D0D3D4" )) +
+      scale_y_continuous(expand = c(0,0)) +
+      scale_x_discrete(expand = c(0,0))
     ggplotly(tooltip = c("y", "x", "fill"))
   })
   
@@ -351,7 +353,9 @@ server <- function(input, output) {
       scale_fill_manual(values = mycols, name = "Take Type") +
       labs(x = "Year", y = "Total Take (Number of fish)", title = "Fish Authorized To Be Killed")+ 
       theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
-            panel.background = element_rect(fill = "#D0D3D4" ))
+            panel.background = element_rect(fill = "#D0D3D4" )) +
+      scale_y_continuous(expand = c(0,0)) +
+      scale_x_discrete(expand = c(0,0))
     ggplotly(tooltip = c("y", "x", "fill"))
  })
   output$table <- DT::renderDataTable({dat3()},
