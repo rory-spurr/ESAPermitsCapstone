@@ -13,7 +13,7 @@ ui <- dashboardPage(
                   titleWidth = 500),
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Home", tabName = "home", icon = icon("home"), #info-sign can be another option
+      menuItem("Home", tabName = "home", icon = icon("home"), startExpanded = T, #info-sign can be another option
                menuSubItem("Welcome", tabName = "welcome"),
                menuSubItem("How it works", tabName = "how2"),
                menuSubItem("Background and Purpose", tabName = "background"),
