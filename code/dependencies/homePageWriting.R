@@ -179,31 +179,32 @@ disclaimerText <- tagList(
   )
 
 # ==========================
-# Text for table captions
-tblCaptText <- tagList(
-  tags$p("Table displays relevant columns from raw data. Column Definitions: Permit Code, 
-  code automatically assigned by the APPS system and used in correspondence about the application; 
-  Permit Type, kind of permit ",
-  tags$a("(more detail here);", href =  "https://www.fisheries.noaa.gov/west-coast/endangered-species-conservation/endangered-species-act-permits-and-authorizations-west"),
-  "Organization, entity in charge of research operations; HUC 8, Hydrologic Unit Code (HUC) 8 where research is taking place; 
-  Location, name or description of research location; Water Type, Freshwater (FW) or Saltwater (SW); Take Action, was the animal 
-  captured/tagged/killed; Gear Type, type of gear used in capture; Total Take, total amount of take authorized; Lethal Take, Total 
-  amount of fish mortality authorized.")
-)
+# Text for about Map section
+aboutMapTxt <- tags$p("The map displays total authorized take (or total lethal take depending on what data 
+       is selected to display), for each Hydrologic Unit Code 8 (HUC 8). The black outline shows
+       all the possible HUC 8's where these species may be encountered. Individual HUC 8's may be
+       clicked on inside the map to reveal more information for the HUC, including specific 
+       authorized take values.")
 
 # ==========================
-# Text for Map Glossary
-mapGlossText <- tagList(
-  tags$ul(
-    tags$li("Take: Any action that harasses, harms, pursues, hunts, shoots, wounds, kills, 
-            traps, captures, or collects, or attempts to engage in any such conduct."),
-    tags$li("Evolutionary Significant Unit (ESU): a population of organisms that is considered 
-            distinct for purposes of conservation."),
-    tags$li("Distinct Population Segment (DPS): the smallest division of a taxonomic species 
-            permitted to be protected under the U.S. Endangered Species Act."),
-    tags$li("Origin: Where the fish was born (in a hatchery, or naturally in the wild).")
-  )
+# Text for Map table caption
+tblCaptText <- tagList(
+  tags$p("This table displays the raw data from the plots above. The fields 
+         within this table are defined as:"),
+  tags$li("Permit Code: The code automatically assigned by the APPS system and used in correspondence about the application.
+          Can be searched on APPS to learn more about an individual permit."),
+  tags$li("Permit Type: Indicates the kind of permit or authority ",
+          tags$a("(more detail here).", href =  "https://www.fisheries.noaa.gov/west-coast/endangered-species-conservation/endangered-species-act-permits-and-authorizations-west")),
+  tags$li("Organization: Entity in charge of research operations."),
+  tags$li("HUC 8: Hydrologic Unit 8 (HUC 8) code where research is taking place."),
+  tags$li("Location: Name or description of research location."),
+  tags$li("Water Type: Whether the research is happening in freshwater (FW) or saltwater (SW)."),
+  tags$li("Take Action: Action taken to capture/tag/kill animal."),
+  tags$li("Gear Type: Gear used to capture species."),
+  tags$li("Total Take: Total amount of take authorized. Includes both lethal and non-lethal take."),
+  tags$li("Lethal Take: Total amount of fish mortality authorized.")
 )
+
 # ==========================
 # Text for time series glossary
 TSglossText <- tagList(
@@ -223,7 +224,7 @@ TSglossText <- tagList(
     tags$li("Unused Mortality: The number of lethal take that was allocated but went unused by the researcher. The difference between the authorized number and the reported number.")
 )
 
-# Text for use boxes
+# Text for user boxes
 # ==========================
 
 # Rory

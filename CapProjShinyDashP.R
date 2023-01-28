@@ -73,19 +73,22 @@ ui <- dashboardPage(
                   leafletOutput("map")
                 ),
                 box(
-                  title = "Glossary",
-                  width = 6,
-                  uiOutput("mapGloss")
+                  title = "About the Map",
+                  width = 12,
+                  uiOutput("aboutMap"),
+                  background = "light-blue"
                 ),
                 box(
-                  title = "Raw Data Table",
-                  uiOutput("tblCapt"),
-                  width = 6
-                ),
-                box(
+                  title = "Reactive Data Table",
                   width = 12,
                   dataTableOutput("wcr_table")
                 ),
+                box(
+                  title = "About the Table",
+                  uiOutput("tblCapt"),
+                  width = 12,
+                  background = "light-blue"
+                )
               )
       ),
       
@@ -193,6 +196,9 @@ server <- function(input, output) {
   })
   output$tblCapt <- renderUI({
     tblCaptText
+  })
+  output$aboutMap <- renderUI({
+    aboutMapTxt
   })
   output$discUI <- renderUI({
     disclaimerText
