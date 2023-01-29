@@ -73,7 +73,7 @@ backgroundText <- tagList(
   tags$ul(
     tags$li("Support the decision-making process for scientific research permits in NMFS' West
             Coast Region,"),
-    tags$li("Provide more transparency to researchers as well as state and tribal governement employees
+    tags$li("Provide more transparency to researchers as well as state and tribal government employees
             about the permitting process, and"),
     tags$li("Educate the public about the role of research to inform
             the mangement of ESA-listed species.")

@@ -109,10 +109,6 @@ ui <- dashboardPage(
                   background = "light-blue", solidHeader = T,
                   actionButton(inputId = "updat", label = "Update Plots and Table"),
                   br(),
-                  "*ESU = Evolutionarily Significant Unit, DPS = Distinct Population Segments.
-                    ESUs and DPSs are the organizational units (i.e., groups of populations) of salmon 
-                    and steelhead (respectively) recognized as species for listing under the Endangered 
-                    Species Act. See ‘Glossary’ Tab for more information.",
                   imageOutput("blank")
                 ),
                 box(
@@ -345,7 +341,7 @@ server <- function(input, output) {
     ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
       geom_bar(stat = "identity", position = "stack", color = "black")+
       scale_fill_manual(values = mycols, name = "Take Type") +
-      labs(x = "Year", y = "Total Take (Number of fish)", title = "Total Fish Authorized To Be Handled")+ 
+      labs(x = "Year", y = "Total Take (Number of fish)", title = "Total Authorized Take (lethal & non-lethal)")+ 
       theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
             panel.background = element_rect(fill = "#D0D3D4" )) +
       scale_y_continuous(expand = c(0,0)) +
@@ -357,7 +353,7 @@ server <- function(input, output) {
     ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
       geom_bar(stat = "identity", position = "stack", color = "black")+
       scale_fill_manual(values = mycols, name = "Take Type") +
-      labs(x = "Year", y = "Total Take (Number of fish)", title = "Fish Authorized To Be Killed")+ 
+      labs(x = "Year", y = "Total Take (Number of fish)", title = "Lethal Authorized Take")+ 
       theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
             panel.background = element_rect(fill = "#D0D3D4" )) +
       scale_y_continuous(expand = c(0,0)) +
