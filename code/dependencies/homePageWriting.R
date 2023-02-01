@@ -164,8 +164,9 @@ disclaimerText <- tagList(
   tags$br(),
   tags$p(strong("Metadata - To be edited")),
     tags$p("For further information regarding the data source, data attributes, 
-         coding, and general metadata for this project, please visit our Github ",
-    tags$a("here.", href = "https://github.com/rory-spurr/ESAPermitsCapstone")), # this will/can be edited with true metadata or be linked to our git with the metadata page
+         R packages used, and general metadata for this project, please visit the 
+          metadata folder of our Github ",
+    tags$a("here.", href = "https://github.com/rory-spurr/ESAPermitsCapstone/tree/main/docs/Metadata")), 
   tags$br(),
   tags$p(strong("How to Cite - To be edited")), #no idea how to cite our project
   tags$br(),
