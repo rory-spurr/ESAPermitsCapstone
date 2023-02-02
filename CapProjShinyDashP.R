@@ -62,7 +62,7 @@ ui <- dashboardPage(
                                choices = c("Natural", "Hatchery")),
                   radioButtons(inputId = "displayData", label = "Choose Data to Display",
                                choices = c("Total Take", "Lethal Take")),
-                  selectInput(inputId = "DPS", label = "Choose an ESU/DPS* to View",
+                  selectInput(inputId = "DPS", label = "Choose an ESU/DPS to View",
                               choices = levels(wcr$Species), multiple = F),
                   actionButton(inputId = "update", label = "Update Map and Table"), # action button to control when map updates
                   background = "light-blue"
@@ -103,7 +103,7 @@ ui <- dashboardPage(
                                choices = c("Adult", "Juvenile")),
                   radioButtons(inputId = "Production", label = "Choose an Origin",
                                choices = c("Natural", "Hatchery")),
-                  selectInput(inputId = "ESU", label = "Choose an ESU/DPS* to View",
+                  selectInput(inputId = "ESU", label = "Choose an ESU/DPS to View",
                               choices = levels(df$ESU),  
                               multiple = F), 
                   background = "light-blue", solidHeader = T,
@@ -121,10 +121,8 @@ ui <- dashboardPage(
                 box(title = "About the plots",
                   width = 12, height = 180, solidHeader = T, status = "primary", 
                   background = "light-blue", 
-                  "These plots display the authorized take and reported take of 
-                  fish per year. Take is considerdd any action that harasses, harms, 
-                  pursues, hunts, shoots, wounds, kills, traps, captures, or collects, or 
-                  attempts to engage in any such conduct. Total take (number of fish) is 
+                  "This plot display the total authorized take and reported take of 
+                  fish per year (both lethal and non-lethal). Total take (number of fish) is 
                   the sum of reported take or what was actually used (yellow) and the 
                   remaining authorized take that was unused (blue). Note that the data 
                   is only showing what was reported through APPs and is not complete 
@@ -132,7 +130,7 @@ ui <- dashboardPage(
                   is incomplete."
                 ),
                 box(
-                  title = "Raw Data Table",
+                  title = "Reactive Data Table",
                   solidHeader = T, 
                   width = 12,
                   dataTableOutput("table")),
@@ -341,12 +339,25 @@ server <- function(input, output) {
     ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
       geom_bar(stat = "identity", position = "stack", color = "black")+
       scale_fill_manual(values = mycols, name = "Take Type") +
-      labs(x = "Year", y = "Total Take (Number of fish)", title = "Total Authorized Take (lethal & non-lethal)")+ 
+      labs(x = "Year", y = "Total Take (Number of fish)", title = "Total Authorized Take (lethal and non-lethal)")+ 
       theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
             panel.background = element_rect(fill = "#D0D3D4" )) +
       scale_y_continuous(expand = c(0,0)) +
       scale_x_discrete(expand = c(0,0))
-    ggplotly(tooltip = c("y", "x", "fill"))
+    ggplotly(tooltip = c("y", "x", "fill")) 
+    # %>% 
+    #   layout(annotations = list(text = paste0(
+    #                                     '<br>',
+    #                                     '<sup>',
+    #                                     'This plot display the total authorized and reported take of 
+    #                                     fish per year (lethal and non-lethal). Total take (number of fish) is 
+    #                                     the sum of reported take or what was actually used (yellow) and the 
+    #                                     remaining authorized take that was unused (blue). Note that the data 
+    #                                     is only showing what was reported through APPs and is not complete 
+    #                                     due to unreported take by researchers. Additionally, the current year
+    #                                     is incomplete.',
+    #                                     '<br>','</sup>'
+    #                                     )))
   })
   
   output$plot2 <-renderPlotly({
@@ -358,7 +369,17 @@ server <- function(input, output) {
             panel.background = element_rect(fill = "#D0D3D4" )) +
       scale_y_continuous(expand = c(0,0)) +
       scale_x_discrete(expand = c(0,0))
-    ggplotly(tooltip = c("y", "x", "fill"))
+    ggplotly(tooltip = c("y", "x", "fill")) 
+    # %>% 
+    #   layout(title = list(text = paste0('Lethal Authorized Take',
+    #                                     '<br>',
+    #                                     '<sup>',
+    #                                     'This plot display the total authorized and reported lethal take of fish per year. Total take (number of fish) is
+    #                                      the sum of reported take or what was actually used (yellow) and the 
+    #               remaining authorized take that was unused (blue). Note that the data 
+    #               is only showing what was reported through APPs and is not complete 
+    #               due to unreported take by researchers. Additionally, the current year
+    #               is incomplete.','</sup>')))
  })
   output$table <- DT::renderDataTable({dat3()},
                                       caption = "Note: Permits issued under the ESA 4(d) authority specific 
