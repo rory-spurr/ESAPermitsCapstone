@@ -96,6 +96,16 @@ ui <- dashboardPage(
       # Time Series Tab
       tabItem(tabName = "timeSeries", 
               fluidRow(
+                box(title = "About the plots",
+                  width = 12, height = 180, solidHeader = T, status = "primary", 
+                  background = "light-blue", 
+                  "These plots display the total authorized take and reported take of 
+                  fish per year (both lethal and non-lethal). Total take (number of fish) is 
+                  the sum of reported take or what was actually used (yellow) and the 
+                  remaining authorized take that was unused (blue). Note that the data 
+                  is only showing what was reported through APPs and is not complete 
+                  due to unreported take by researchers."
+                ),
                 box(
                   title = "Build Your Plot",
                   width = 4, height = 900,
@@ -118,17 +128,7 @@ ui <- dashboardPage(
                   plotlyOutput("plot1"),
                   plotlyOutput("plot2")
                 ),
-                box(title = "About the plots",
-                  width = 12, height = 180, solidHeader = T, status = "primary", 
-                  background = "light-blue", 
-                  "This plot display the total authorized take and reported take of 
-                  fish per year (both lethal and non-lethal). Total take (number of fish) is 
-                  the sum of reported take or what was actually used (yellow) and the 
-                  remaining authorized take that was unused (blue). Note that the data 
-                  is only showing what was reported through APPs and is not complete 
-                  due to unreported take by researchers. Additionally, the current year
-                  is incomplete."
-                ),
+                
                 box(
                   title = "Reactive Data Table",
                   solidHeader = T, 
@@ -345,19 +345,16 @@ server <- function(input, output) {
       scale_y_continuous(expand = c(0,0)) +
       scale_x_discrete(expand = c(0,0))
     ggplotly(tooltip = c("y", "x", "fill")) 
-    # %>% 
-    #   layout(annotations = list(text = paste0(
-    #                                     '<br>',
-    #                                     '<sup>',
-    #                                     'This plot display the total authorized and reported take of 
-    #                                     fish per year (lethal and non-lethal). Total take (number of fish) is 
-    #                                     the sum of reported take or what was actually used (yellow) and the 
-    #                                     remaining authorized take that was unused (blue). Note that the data 
-    #                                     is only showing what was reported through APPs and is not complete 
-    #                                     due to unreported take by researchers. Additionally, the current year
-    #                                     is incomplete.',
-    #                                     '<br>','</sup>'
-    #                                     )))
+    #     %>% 
+    #       layout(title = list(text = paste0('Lethal Authorized Take',
+    #                                         '<br>',
+    #                                         '<sup>',
+    #                                         'This plot display the total authorized and reported take of fish per year.
+    # Total take (number of fish) is the sum of reported take or what was actually used (yellow) 
+    # and the remaining authorized take that was unused (blue). Note that the data is only showing 
+    # what was reported through APPs and is not complete due to unreported take by researchers.', 
+    #                                         '<br>',
+    #                                         '</sup>')))
   })
   
   output$plot2 <-renderPlotly({
@@ -370,16 +367,16 @@ server <- function(input, output) {
       scale_y_continuous(expand = c(0,0)) +
       scale_x_discrete(expand = c(0,0))
     ggplotly(tooltip = c("y", "x", "fill")) 
-    # %>% 
-    #   layout(title = list(text = paste0('Lethal Authorized Take',
-    #                                     '<br>',
-    #                                     '<sup>',
-    #                                     'This plot display the total authorized and reported lethal take of fish per year. Total take (number of fish) is
-    #                                      the sum of reported take or what was actually used (yellow) and the 
-    #               remaining authorized take that was unused (blue). Note that the data 
-    #               is only showing what was reported through APPs and is not complete 
-    #               due to unreported take by researchers. Additionally, the current year
-    #               is incomplete.','</sup>')))
+#     %>% 
+#       layout(title = list(text = paste0('Lethal Authorized Take',
+#                                         '<br>',
+#                                         '<sup>',
+#                                         'This plot display the total authorized and reported lethal take of fish per year.
+# Total take (number of fish) is the sum of reported take or what was actually used (yellow) 
+# and the remaining authorized take that was unused (blue). Note that the data is only showing 
+# what was reported through APPs and is not complete due to unreported take by researchers.', 
+#                                         '<br>',
+#                                         '</sup>')))
  })
   output$table <- DT::renderDataTable({dat3()},
                                       caption = "Note: Permits issued under the ESA 4(d) authority specific 
