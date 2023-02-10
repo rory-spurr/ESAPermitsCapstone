@@ -73,7 +73,7 @@ backgroundText <- tagList(
   tags$ul(
     tags$li("Support the decision-making process for scientific research permits in NMFS' West
             Coast Region,"),
-    tags$li("Provide more transparency to researchers as well as state and tribal governement employees
+    tags$li("Provide more transparency to researchers as well as state and tribal government employees
             about the permitting process, and"),
     tags$li("Educate the public about the role of research to inform
             the mangement of ESA-listed species.")
@@ -103,35 +103,31 @@ glossText <- tagList(
     tags$p("Below are the names of the fish species that are included within this app."), 
     #Clicking on the species will take you to a link of the fish and ESA-status:"),
   tags$p(strong("Salmonids:")),
-           tags$li("Chinook Salmon (Oncorhynchus tshawytscha)"),
-           tags$li("Coho Salmon (Oncorhynchus kisutch)"),
-           tags$li("Chum Salmon (Oncorhynchus keta)"),
-           tags$li("Sockeye Salmon (Oncorhynchus nerka)"),
-           tags$li("Steelhead Salmon (Oncorhynchus mykiss)"),
-  tags$p("For more information regarding salmonids and their listing statuses, see here"),
-         #tags$a("")
+           tags$li("Chinook Salmon", em("(Oncorhynchus tshawytscha)")),
+           tags$li("Coho Salmon", em("(Oncorhynchus kisutch)")),
+           tags$li("Chum Salmon", em("(Oncorhynchus keta)")),
+           tags$li("Sockeye Salmon", em("(Oncorhynchus nerka)")),
+           tags$li("Steelhead Salmon", em("(Oncorhynchus mykiss)")),
+  tags$p("For more information regarding salmonids and their listing statuses, see ",
+         tags$a("here", href = "https://www.fisheries.noaa.gov/species/pacific-salmon-and-steelhead")),
   tags$p(strong("Rockfish and other species:")),
-           tags$li("Boccaccio Rockifish (Sebastes paucispinis)"),
-           tags$li("Eulachon (Thaleichthys pacificus)"),
-           tags$li("Green Sturgeon (Acipenser medirostris)"),
-           tags$li("Yelloweye Rockfish (Sebastes ruberrimus)"),
-  tags$p("For more information regarding rockfish and other species, and their listing statuses, see here"),
-           #tags$a("Chinook Salmon", href = "https://www.fisheries.noaa.gov/species/chinook-salmon-protected")
+           tags$li("Boccaccio Rockfish",em("(Sebastes paucispinis)")),
+           tags$li("Eulachon", em("(Thaleichthys pacificus)")),
+           tags$li("Green Sturgeon", em("(Acipenser medirostris)")),
+           tags$li("Yelloweye Rockfish", em("(Sebastes ruberrimus)")),
+  tags$p("For more information regarding rockfish and other species, and their listing statuses, see ",
+           tags$a("here", href = "https://www.fisheries.noaa.gov/species-directory/threatened-endangered?oq=&field_species_categories_vocab=1000000031&field_species_details_status=All&field_region_vocab=1000001126&items_per_page=25"))
            
 )
-
-
-
 
 # ==========================
 # Text for use and limitations page
 disclaimerText <- tagList(
-  tags$p("Users of this app should be aware of the following assumptions, limitations, and delimitations
-            regarding the raw data and data summaries:"),
-  tags$p(strong("Assumptions")),
+  tags$p("Users of this app should be aware of the following limitations and assumptions regarding the raw data and data summaries:"),
+  tags$p(strong("Things to know about this app")),
     tags$p("Note: These data are provisional, and are subject to change at any time. Additionally, 
             this app is specifically for ESA-listed fish species in the west coast region under NOAA
-            juridisction. Therefore, ESA-listed fish species under the jurisdiction of DFW
+            jurisdiction. Therefore, ESA-listed fish species under the jurisdiction of Department of Fish and Wildlife (DFW)
             or other federal and international organizations are not represented here."),
   tags$br(),
   tags$p("For the purpose of this project, some fields and data entries were modified to 
@@ -149,23 +145,26 @@ disclaimerText <- tagList(
   tags$li("Renaming and classifying waterbodies in the 'WaterbodyName' field to allow for consistent
           nomenclature and inform users about the type of waterbodies (saltwater or freshwater) these species exist in. 
           Renaming practices were performed using best available data provided by the 'LocationDescription' field."),
+  tags$br(),
+    tags$pre(" \t \t Ex. 'Smolt' = 'Juvenile'"),
   tags$li("Reclassifying 'Lifestage' and 'Production' fields to reduce the amount of unique entries."),
   tags$br(),
     tags$pre(" \t \t Ex. 'Smolt' = 'Juvenile'"),
     tags$pre(" \t \t Ex. 'Listed Hatchery, Clipped and Intact' = 'Listed Hatchery'"),
   tags$br(),
-  tags$p(strong("Limitations - To be edited")),
+  tags$p(strong("Limitation of this app - To be edited")),
     tags$p("This encountered a few limitations in which the developers had no control over. These limitations include:"),
       tags$li("Unreported take from researchers failing to complete exit reports."),
   tags$br(),
-  tags$p(strong("Delimitations - To be edited")),
+  tags$p(strong("Things we did not include in this app- To be edited")),
     tags$p("To maintain scope and presentation of the data within this project, the following was either excluded or modified:"),
       tags$li("Unlisted hatchery, observe/harass, observe/sample dead tissues, unknown take action, permits with ocean polygons, tribal 4d, etc."),
   tags$br(),
   tags$p(strong("Metadata - To be edited")),
     tags$p("For further information regarding the data source, data attributes, 
-         coding, and general metadata for this project, please visit our Github ",
-    tags$a("here.", href = "https://github.com/rory-spurr/ESAPermitsCapstone")), # this will/can be edited with true metadata or be linked to our git with the metadata page
+         R packages used, and general metadata for this project, please visit the 
+          metadata folder of our Github ",
+    tags$a("here.", href = "https://github.com/rory-spurr/ESAPermitsCapstone/tree/main/docs/Metadata")), 
   tags$br(),
   tags$p(strong("How to Cite - To be edited")), #no idea how to cite our project
   tags$br(),
@@ -179,31 +178,32 @@ disclaimerText <- tagList(
   )
 
 # ==========================
-# Text for table captions
-tblCaptText <- tagList(
-  tags$p("Table displays relevant columns from raw data. Column Definitions: Permit Code, 
-  code automatically assigned by the APPS system and used in correspondence about the application; 
-  Permit Type, kind of permit ",
-  tags$a("(more detail here);", href =  "https://www.fisheries.noaa.gov/west-coast/endangered-species-conservation/endangered-species-act-permits-and-authorizations-west"),
-  "Organization, entity in charge of research operations; HUC 8, Hydrologic Unit Code (HUC) 8 where research is taking place; 
-  Location, name or description of research location; Water Type, Freshwater (FW) or Saltwater (SW); Take Action, was the animal 
-  captured/tagged/killed; Gear Type, type of gear used in capture; Total Take, total amount of take authorized; Lethal Take, Total 
-  amount of fish mortality authorized.")
-)
+# Text for about Map section
+aboutMapTxt <- tags$p("The map displays total authorized take (or total lethal take depending on what data 
+       is selected to display), for each Hydrologic Unit Code 8 (HUC 8). The black outline shows
+       all the possible HUC 8's where these species may be encountered. Individual HUC 8's may be
+       clicked on inside the map to reveal more information for the HUC, including specific 
+       authorized take values.")
 
 # ==========================
-# Text for Map Glossary
-mapGlossText <- tagList(
-  tags$ul(
-    tags$li("Take: Any action that harasses, harms, pursues, hunts, shoots, wounds, kills, 
-            traps, captures, or collects, or attempts to engage in any such conduct."),
-    tags$li("Evolutionary Significant Unit (ESU): a population of organisms that is considered 
-            distinct for purposes of conservation."),
-    tags$li("Distinct Population Segment (DPS): the smallest division of a taxonomic species 
-            permitted to be protected under the U.S. Endangered Species Act."),
-    tags$li("Origin: Where the fish was born (in a hatchery, or naturally in the wild).")
-  )
+# Text for Map table caption
+tblCaptText <- tagList(
+  tags$p("This table displays the raw data from the map above. The fields 
+         within this table are defined as:"),
+  tags$li("Permit Code: The code automatically assigned by the APPS system and used in correspondence about the application.
+          Can be searched on APPS to learn more about an individual permit."),
+  tags$li("Permit Type: Indicates the kind of permit or authority ",
+          tags$a("(more detail here).", href =  "https://www.fisheries.noaa.gov/west-coast/endangered-species-conservation/endangered-species-act-permits-and-authorizations-west")),
+  tags$li("Organization: Entity in charge of research operations."),
+  tags$li("HUC 8: Hydrologic Unit 8 (HUC 8) code where research is taking place."),
+  tags$li("Location: Name or description of research location."),
+  tags$li("Water Type: Whether the research is happening in freshwater (FW) or saltwater (SW)."),
+  tags$li("Take Action: Action taken to capture/tag/kill animal."),
+  tags$li("Gear Type: Gear used to capture species."),
+  tags$li("Total Take: Total amount of take authorized. Includes both lethal and non-lethal take."),
+  tags$li("Lethal Take: Total amount of fish mortality authorized.")
 )
+
 # ==========================
 # Text for time series glossary
 TSglossText <- tagList(
@@ -215,15 +215,15 @@ TSglossText <- tagList(
     tags$li("Permit Type: Indicates the kind of permit or authority ",
             tags$a("(more detail here).", href =  "https://www.fisheries.noaa.gov/west-coast/endangered-species-conservation/endangered-species-act-permits-and-authorizations-west")),
     tags$li("Gear Type: Gear used to capture species."),
-    tags$li("Authorized Take: Predicted and allocated number of individuals the project expects to take as a result of research. Includes number from lethal and non-lethal take."),
-    tags$li("Reported Take: The number of individuals reportedly taken as a result of research. Includes number from lethal and non-lethal take."),
+    tags$li("Authorized Take: Predicted and allocated number of individuals the project expects to take as a result of research. Includes numbers from lethal and non-lethal take."),
+    tags$li("Reported Take: The number of individuals reportedly taken as a result of research. Includes numbers from lethal and non-lethal take."),
     tags$li("Unused Take: The number of take that was allocated but went unused by the researcher. The difference between the authorized number and the reported number."),
     tags$li("Authorized Mortality: Predicted and allocated number of individuals the project expects to kill as a result of research. Includes ONLY lethal take."),
     tags$li("Reported Mortality: The number of individuals reportedly killed as a result of research. Includes ONLY lethal take."),
     tags$li("Unused Mortality: The number of lethal take that was allocated but went unused by the researcher. The difference between the authorized number and the reported number.")
 )
 
-# Text for use boxes
+# Text for user boxes
 # ==========================
 
 # Rory

@@ -13,7 +13,7 @@ ui <- dashboardPage(
                   titleWidth = 500),
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Home", tabName = "home", icon = icon("home"), #info-sign can be another option
+      menuItem("Home", tabName = "home", icon = icon("home"), startExpanded = T, #info-sign can be another option
                menuSubItem("Welcome", tabName = "welcome"),
                menuSubItem("How it works", tabName = "how2"),
                menuSubItem("Background and Purpose", tabName = "background"),
@@ -62,7 +62,7 @@ ui <- dashboardPage(
                                choices = c("Natural", "Hatchery")),
                   radioButtons(inputId = "displayData", label = "Choose Data to Display",
                                choices = c("Total Take", "Lethal Take")),
-                  selectInput(inputId = "DPS", label = "Choose an ESU/DPS* to View",
+                  selectInput(inputId = "DPS", label = "Choose an ESU/DPS to View",
                               choices = levels(wcr$Species), multiple = F),
                   actionButton(inputId = "update", label = "Update Map and Table"), # action button to control when map updates
                   background = "light-blue"
@@ -73,19 +73,22 @@ ui <- dashboardPage(
                   leafletOutput("map")
                 ),
                 box(
-                  title = "Glossary",
-                  width = 6,
-                  uiOutput("mapGloss")
+                  title = "About the Map",
+                  width = 12,
+                  uiOutput("aboutMap"),
+                  background = "light-blue"
                 ),
                 box(
-                  title = "Raw Data Table",
-                  uiOutput("tblCapt"),
-                  width = 6
-                ),
-                box(
+                  title = "Reactive Data Table",
                   width = 12,
                   dataTableOutput("wcr_table")
                 ),
+                box(
+                  title = "About the Table",
+                  uiOutput("tblCapt"),
+                  width = 12,
+                  background = "light-blue"
+                )
               )
       ),
       
@@ -93,6 +96,16 @@ ui <- dashboardPage(
       # Time Series Tab
       tabItem(tabName = "timeSeries", 
               fluidRow(
+                box(title = "About the plots",
+                  width = 12, height = 180, solidHeader = T, status = "primary", 
+                  background = "light-blue", 
+                  "These plots display the total authorized take and reported take of 
+                  fish per year (both lethal and non-lethal). Total take (number of fish) is 
+                  the sum of reported take or what was actually used (yellow) and the 
+                  remaining authorized take that was unused (blue). Note that the data 
+                  is only showing what was reported through APPs and is not complete 
+                  due to unreported take by researchers."
+                ),
                 box(
                   title = "Build Your Plot",
                   width = 4, height = 900,
@@ -100,16 +113,12 @@ ui <- dashboardPage(
                                choices = c("Adult", "Juvenile")),
                   radioButtons(inputId = "Production", label = "Choose an Origin",
                                choices = c("Natural", "Hatchery")),
-                  selectInput(inputId = "ESU", label = "Choose an ESU/DPS* to View",
+                  selectInput(inputId = "ESU", label = "Choose an ESU/DPS to View",
                               choices = levels(df$ESU),  
                               multiple = F), 
                   background = "light-blue", solidHeader = T,
                   actionButton(inputId = "updat", label = "Update Plots and Table"),
                   br(),
-                  "*ESU = Evolutionarily Significant Unit, DPS = Distinct Population Segments.
-                    ESUs and DPSs are the organizational units (i.e., groups of populations) of salmon 
-                    and steelhead (respectively) recognized as species for listing under the Endangered 
-                    Species Act. See ‘Glossary’ Tab for more information.",
                   imageOutput("blank")
                 ),
                 box(
@@ -119,21 +128,9 @@ ui <- dashboardPage(
                   plotlyOutput("plot1"),
                   plotlyOutput("plot2")
                 ),
-                box(title = "About the plots",
-                  width = 12, height = 180, solidHeader = T, status = "primary", 
-                  background = "light-blue", 
-                  "These plots display the authorized take and reported take of 
-                  fish per year. Take is considerdd any action that harasses, harms, 
-                  pursues, hunts, shoots, wounds, kills, traps, captures, or collects, or 
-                  attempts to engage in any such conductTotal take (number of fish) is 
-                  the sum of reported take or what was actually used (yellow) and the 
-                  remaining authorized take that was unused (blue). Note that the data 
-                  is only showing what was reported through APPs and is not complete 
-                  due to unreported take by researchers. Additionally, the current year
-                  is incomplete."
-                ),
+                
                 box(
-                  title = "Raw Data Table",
+                  title = "Reactive Data Table",
                   solidHeader = T, 
                   width = 12,
                   dataTableOutput("table")),
@@ -194,6 +191,9 @@ server <- function(input, output) {
   output$tblCapt <- renderUI({
     tblCaptText
   })
+  output$aboutMap <- renderUI({
+    aboutMapTxt
+  })
   output$discUI <- renderUI({
     disclaimerText
   })
@@ -229,7 +229,8 @@ server <- function(input, output) {
       filter(Species == input$DPS) %>%
       filter(LifeStage == input$lifestage) %>% 
       filter(Prod == input$Prod) %>%
-      filter(ResultCode != "Tribal 4d") %>%
+      filter(ResultCode != "Tribal 4d") %>% # suppress tribal 4d permits in the table
+      # note that these permits still add to the total in the map and table.
       select(FileNumber:TotalMorts)
   }) %>%
     bindEvent(input$update)
@@ -338,20 +339,44 @@ server <- function(input, output) {
     ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
       geom_bar(stat = "identity", position = "stack", color = "black")+
       scale_fill_manual(values = mycols, name = "Take Type") +
-      labs(x = "Year", y = "Total Take (Number of fish)", title = "Total Fish Authorized To Be Handled")+ 
+      labs(x = "Year", y = "Total Take (Number of fish)", title = "Total Authorized Take (lethal and non-lethal)")+ 
       theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
-            panel.background = element_rect(fill = "#D0D3D4" ))
-    ggplotly(tooltip = c("y", "x", "fill"))
+            panel.background = element_rect(fill = "#D0D3D4" )) +
+      scale_y_continuous(expand = c(0,0)) +
+      scale_x_discrete(expand = c(0,0))
+    ggplotly(tooltip = c("y", "x", "fill")) 
+    #     %>% 
+    #       layout(title = list(text = paste0('Lethal Authorized Take',
+    #                                         '<br>',
+    #                                         '<sup>',
+    #                                         'This plot display the total authorized and reported take of fish per year.
+    # Total take (number of fish) is the sum of reported take or what was actually used (yellow) 
+    # and the remaining authorized take that was unused (blue). Note that the data is only showing 
+    # what was reported through APPs and is not complete due to unreported take by researchers.', 
+    #                                         '<br>',
+    #                                         '</sup>')))
   })
   
   output$plot2 <-renderPlotly({
     ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
       geom_bar(stat = "identity", position = "stack", color = "black")+
       scale_fill_manual(values = mycols, name = "Take Type") +
-      labs(x = "Year", y = "Total Take (Number of fish)", title = "Fish Authorized To Be Killed")+ 
+      labs(x = "Year", y = "Total Take (Number of fish)", title = "Lethal Authorized Take")+ 
       theme(axis.text.x = element_text(angle = 30, hjust = 0.5, vjust = 0.5), 
-            panel.background = element_rect(fill = "#D0D3D4" ))
-    ggplotly(tooltip = c("y", "x", "fill"))
+            panel.background = element_rect(fill = "#D0D3D4" )) +
+      scale_y_continuous(expand = c(0,0)) +
+      scale_x_discrete(expand = c(0,0))
+    ggplotly(tooltip = c("y", "x", "fill")) 
+#     %>% 
+#       layout(title = list(text = paste0('Lethal Authorized Take',
+#                                         '<br>',
+#                                         '<sup>',
+#                                         'This plot display the total authorized and reported lethal take of fish per year.
+# Total take (number of fish) is the sum of reported take or what was actually used (yellow) 
+# and the remaining authorized take that was unused (blue). Note that the data is only showing 
+# what was reported through APPs and is not complete due to unreported take by researchers.', 
+#                                         '<br>',
+#                                         '</sup>')))
  })
   output$table <- DT::renderDataTable({dat3()},
                                       caption = "Note: Permits issued under the ESA 4(d) authority specific 

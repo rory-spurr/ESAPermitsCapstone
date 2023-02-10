@@ -50,10 +50,10 @@ wcr <- wcr.init %>%
   mutate(Species = paste(Population, CommonName, sep = " ")) %>% 
   mutate(Prod = recode(Production, 
                        "Natural" = "Natural", 
-                       "Listed Hatchery" = "Listed Hatchery", 
-                       "Listed Hatchery, Clipped and Intact" = "Listed Hatchery",  
-                       "Listed Hatchery Intact Adipose" = "Listed Hatchery", 
-                       "Listed Hatchery Adipose Clip" = "Listed Hatchery", 
+                       "Listed Hatchery" = "Hatchery", 
+                       "Listed Hatchery, Clipped and Intact" = "Hatchery",  
+                       "Listed Hatchery Intact Adipose" = "Hatchery", 
+                       "Listed Hatchery Adipose Clip" = "Hatchery", 
                        # "Listed Hatchery and Natural Origin" = "All", # Only applies to abundance data
                        "Unlisted Hatchery" = "Unlisted Hatchery")) %>%
   filter(Prod != "Unlisted Hatchery") %>%
@@ -90,10 +90,10 @@ wcr_act <- wcr_act %>%
   mutate(Species = paste(Population, CommonName, sep = " ")) %>% 
   mutate(Prod = recode(Production, 
                        "Natural" = "Natural", 
-                       "Listed Hatchery" = "Listed Hatchery", 
-                       "Listed Hatchery, Clipped and Intact" = "Listed Hatchery",  
-                       "Listed Hatchery Intact Adipose" = "Listed Hatchery", 
-                       "Listed Hatchery Adipose Clip" = "Listed Hatchery",
+                       "Listed Hatchery" = "Hatchery", 
+                       "Listed Hatchery, Clipped and Intact" = "Hatchery",  
+                       "Listed Hatchery Intact Adipose" = "Hatchery", 
+                       "Listed Hatchery Adipose Clip" = "Hatchery",
                        "Unlisted Hatchery" = "Unlisted Hatchery")) %>%
   filter(Prod != "Unlisted Hatchery") %>% 
   filter(TakeAction != "Observe/Harass") %>%
