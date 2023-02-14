@@ -126,39 +126,32 @@ disclaimerText <- tagList(
   tags$p("Users of this app should be aware of the following limitations and assumptions regarding the raw data and data summaries:"),
   tags$p(strong("Things to know about this app")),
     tags$p("Note: These data are provisional, and are subject to change at any time. Additionally, 
-            this app is specifically for ESA-listed fish species in the west coast region under NOAA
-            jurisdiction. Therefore, ESA-listed fish species under the jurisdiction of Department of Fish and Wildlife (DFW)
-            or other federal and international organizations are not represented here."),
+            this app is specifically for ESA-listed fish species in the", 
+           tags$a("west coast region", href = "https://www.fisheries.noaa.gov/about/west-coast-region"),
+            "under NOAA jurisdiction. Therefore, ESA-listed fish species under the jurisdiction of the U.S. Fish and Wildlife
+            Service or other federal and international organizations are not represented here."),
   tags$br(),
   tags$p("For the purpose of this project, some fields and data entries were modified to 
-          simplify analyses and provide consistency across the nomenclature. These fields include:"),
-  tags$li("Adjusting HUC 8 codes to encompass redrawn boundaries, specifically:"),
-  tags$br(),
-    tags$pre(" \t \t# 18020103 = 18020156 # very certain"),
-    tags$pre(" \t \t# 18020109 = 18020163 # very certain"),
-    tags$pre(" \t \t# 18020112 = 18020154 # very certain based on location descriptions"),
-    tags$pre(" \t \t# 18020118 = 18020154 # very certain based on location descriptions"),
-    tags$pre(" \t \t# 18040005 = 18040012 # very certain based on location descriptions"),
-    tags$pre(" \t \t# 18060001 = 18060015 # split between 18050006 as well, arbitrarily picked"),
-    tags$pre(" \t \t# 18060012 = 18060006 # chose this over Monterey Bay as population is South-Central Cal Coast"),
-  tags$br(),
+          simplify analyses and provide consistency across the nomenclature. These include:"),
+  tags$li("Adjusting HUC 8 codes to encompass redrawn boundaries; see",
+    tags$a("metadata", href = "https://github.com/rory-spurr/ESAPermitsCapstone/tree/main/docs/Metadata"),
+    "for details"),
   tags$li("Renaming and classifying waterbodies in the 'WaterbodyName' field to allow for consistent
           nomenclature and inform users about the type of waterbodies (saltwater or freshwater) these species exist in. 
           Renaming practices were performed using best available data provided by the 'LocationDescription' field."),
+  tags$li("Reclassifying 'Lifestage' and 'Production' fields to reduce the number of unique entries."),
+  tags$ul(
+    tags$li("Ex. 'Smolt' was replaced by 'Juvenile'"),
+    tags$li("Ex. 'Listed Hatchery, Clipped and Intact' was replaced by 'Listed Hatchery'")
+  ),
   tags$br(),
-    tags$pre(" \t \t Ex. 'Smolt' = 'Juvenile'"),
-  tags$li("Reclassifying 'Lifestage' and 'Production' fields to reduce the amount of unique entries."),
-  tags$br(),
-    tags$pre(" \t \t Ex. 'Smolt' = 'Juvenile'"),
-    tags$pre(" \t \t Ex. 'Listed Hatchery, Clipped and Intact' = 'Listed Hatchery'"),
-  tags$br(),
-  tags$p(strong("Limitation of this app - To be edited")),
-    tags$p("This encountered a few limitations in which the developers had no control over. These limitations include:"),
-      tags$li("Unreported take from researchers failing to complete exit reports."),
-  tags$br(),
-  tags$p(strong("Things we did not include in this app- To be edited")),
-    tags$p("To maintain scope and presentation of the data within this project, the following was either excluded or modified:"),
-      tags$li("Unlisted hatchery, observe/harass, observe/sample dead tissues, unknown take action, permits with ocean polygons, tribal 4d, etc."),
+  tags$p(strong("Limitations and Omissions")),
+    tags$p("This project encountered a few limitations in which the developers had no control over. 
+           These limitations include:",
+      tags$li("Unreported take from researchers failing to complete exit reports.")),
+    tags$p("To maintain scope and presentation of the data within this project, the following was either excluded or modified:",
+      tags$li("Unlisted hatchery, observe/harass, observe/sample dead tissues, unknown take action, 
+              permits with ocean polygons, tribal 4d, etc.")),
   tags$br(),
   tags$p(strong("Metadata - To be edited")),
     tags$p("For further information regarding the data source, data attributes, 
@@ -174,7 +167,16 @@ disclaimerText <- tagList(
     tags$p("Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.")),
   tags$br(),
   tags$br(),
-  tags$image(src = "image/download.png", width = "20%", height = "20%", align = "center")
+  tags$image(src = "image/download.png", width = "20%", height = "20%", align = "center"),
+  tags$p(strong("Acknowledgements")),
+    tags$p("We thank Diana Dishman for her conceptualization of the project, expert technical 
+    guidance surrounding the permitting process and editing and critiquing drafts of the application. 
+    We also want to thank Anne Beaudreau for her help editing and critiquing drafts of the 
+    application, as well as the professional and technical guidance she has shown us throughout 
+    our time in grad school. We want to thank both NOAA’s west Coast permit and communications 
+    teams for taking the time to meet with us and help with the application. Funding for this 
+    project was provided through NOAA, as well as the Jay Ginter Memorial Scholarship Fund at 
+    the University of Washington.")
   )
 
 # ==========================
