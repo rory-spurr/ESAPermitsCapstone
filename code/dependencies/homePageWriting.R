@@ -153,13 +153,13 @@ disclaimerText <- tagList(
       tags$li("Unlisted hatchery, observe/harass, observe/sample dead tissues, unknown take action, 
               permits with ocean polygons, tribal 4d, etc.")),
   tags$br(),
-  tags$p(strong("Metadata - To be edited")),
+  tags$p(strong("Metadata")),
     tags$p("For further information regarding the data source, data attributes, 
          R packages used, and general metadata for this project, please visit the 
           metadata folder of our Github ",
     tags$a("here.", href = "https://github.com/rory-spurr/ESAPermitsCapstone/tree/main/docs/Metadata")), 
   tags$br(),
-  tags$p(strong("How to Cite - To be edited")), #no idea how to cite our project
+  tags$p(strong("How to Cite")), #no idea how to cite our project
   tags$br(),
   tags$p(strong("License Statement")),
     tags$p("Copyright © 2007 Free Software Foundation, Inc.",

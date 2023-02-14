@@ -18,7 +18,7 @@ ui <- dashboardPage(
                menuSubItem("How it works", tabName = "how2"),
                menuSubItem("Background and Purpose", tabName = "background"),
                menuSubItem("Glossary", tabName = "gloss"),
-               menuSubItem("Use Statement", tabName = "disclaimer")), 
+               menuSubItem("Uses and Limitations", tabName = "disclaimer")), 
       menuItem("Authorized Take Map", tabName = "takeMap", icon = icon("globe", lib = "glyphicon")), #globe can be another option
       menuItem("Time Series Plots", tabName = "timeSeries", icon = icon("time", lib = "glyphicon")),
       menuItem("About Us", tabName = "About", icon = icon("info-sign", lib = "glyphicon"))
