@@ -18,7 +18,7 @@ ui <- dashboardPage(
                menuSubItem("How it works", tabName = "how2"),
                menuSubItem("Background and Purpose", tabName = "background"),
                menuSubItem("Glossary", tabName = "gloss"),
-               menuSubItem("Use Statement", tabName = "disclaimer")), 
+               menuSubItem("Uses and Limitations", tabName = "disclaimer")), 
       menuItem("Authorized Take Map", tabName = "takeMap", icon = icon("globe", lib = "glyphicon")), #globe can be another option
       menuItem("Time Series Plots", tabName = "timeSeries", icon = icon("time", lib = "glyphicon")),
       menuItem("About Us", tabName = "About", icon = icon("info-sign", lib = "glyphicon"))
@@ -32,21 +32,21 @@ ui <- dashboardPage(
     # Home Tab
     tabItems(
       tabItem(tabName = "welcome",
-              box(title = "Welcome to the ESA-Listed Fish Research App for West Coast Permits!",
+              box(title = h3("Welcome to the ESA-Listed Fish Research App for West Coast Permits!"),
                   uiOutput("welcomeUI"), width = 12)
       ),
       # use uiOutput for HTML (can also use htmlOutput)
       tabItem(tabName = "how2", 
-              box(title = "How to work the app", uiOutput("vidUI"), width = 12)
+              box(title = h3("How to work the app"), uiOutput("vidUI"), width = 12)
       ),
       tabItem(tabName = "background", 
-              box(title = "What is the ESA and how does it affect scientific research?", uiOutput("backUI"), width = 12)
+              box(title = h3("What is the ESA and how does it affect scientific research?"), uiOutput("backUI"), width = 12)
       ),
       tabItem(tabName = "gloss", 
-              box(title = "Acronyms and Definitions", uiOutput("glossUI"), width = 12)
+              box(title = h3("Acronyms and Definitions"), uiOutput("glossUI"), width = 12)
       ),
       tabItem(tabName = "disclaimer",
-              box(title= "Assumptions, Limitations, and Delimitations", uiOutput("discUI"), width = 12, height = 900)
+              box(title= h3("Uses and Limitations"), uiOutput("discUI"), width = 12, height = 900)
       ),
       
       # =========================================
