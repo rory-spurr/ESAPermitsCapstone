@@ -156,7 +156,7 @@ wcr_spatial <- right_join(x = wbd.hucs, y = wcr, by = c("huc8" = "HUCNumber"))
 # =================================================================================
 # ESU Species with Basins -> for creation of ESU Boundaries
 # =================================================================================
-ESUBasins <- read_csv("data_raw/APPS_HUCassignments_24Oct22.csv")
+ESUBasins <- read_csv("data_raw/APPS_HUCassignments_11Feb23.csv")
 ESUBasins <- ESUBasins %>%
   filter(Species %in% c("Eulachon", "Salmon, Chinook", "Salmon, chum",
                         "Salmon, coho", "Salmon, sockeye", "Steelhead",
