@@ -68,15 +68,15 @@ ui <- dashboardPage(
                   background = "light-blue"
                 ),
                 box(
-                  title = "Authorized Take Map",
-                  width = 8,
-                  leafletOutput("map")
-                ),
-                box(
                   title = "About the Map",
                   width = 12,
                   uiOutput("aboutMap"),
-                  background = "light-blue"
+                  background = "light-blue" #changing position as per comms team suggestion
+                ),
+                box(
+                  title = "Authorized Take Map",
+                  width = 8,
+                  leafletOutput("map")
                 ),
                 box(
                   title = "Reactive Data Table",

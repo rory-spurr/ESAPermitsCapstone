@@ -5,19 +5,21 @@
 # Text for welcome page
 welcomeText <- tagList(
   tags$p("This platform summarizes and displays data collected by the National Marine 
-         Fisheries Service (NMFS) on the permits they issue for scientific research that 
-         may impact U.S. West Coast salmon, steelhead, eulachon, rockfish, or 
-         sturgeon that are listed for protection under the Endangered Species Act (ESA).",
+  Fisheries Service (NMFS) on the permits they issue for scientific research that may 
+  impact U.S. West Coast salmon, steelhead, eulachon, rockfish, and sturgeon that are 
+  listed for protection under the Endangered Species Act (ESA)",
          style = "font-size:15px"),
   tags$br(),
   tags$image(src = "image/fishJumping.png", width = "50%", height = "50%"),
   tags$br(),
   tags$br(),
-  tags$p("The app summarizes how much impact is occurring on ESA-listed fishes in particular
-  areas due to research. Users can choose what data to display to learn about projects on a 
-  particular species or in a region of interest, or look at trends over time. It was created 
-  to help NOAA staff see the ‘big picture’ view of research on the landscape, let researchers 
-  learn about each other’s work, and make permitting decisions more transparent.",
+  tags$p("The app summarizes how much impact is occurring on ESA-listed fishes in 
+         particular areas due to research. Users can choose what data to display to 
+         learn about projects  on a particular species or in a region of interest, 
+         or look at trends over time. It was created to help the National Oceanic 
+         and Atmospheric Administration (NOAA) staff see the ‘big picture’ view 
+         of research on the landscape, let researchers learn about each other’s 
+         work, and make permitting decisions more transparent.",
   style = "font-size:15px"),
   tags$br(),
   tags$image(src = "image/mapGraph.png", width = "80%", height = "65%")
@@ -43,15 +45,15 @@ backgroundText <- tagList(
     tags$li("Threatened species are those that are likely to become an endangered species within 
         the foreseeable future throughout all or a significant portion of its range.")
     ),
-    tags$p("The ESA prohibits take, which means to harass, harm, pursue, hunt, shoot, wound, kill, 
-      trap, capture, or collect, or to attempt to engage in any such conduct (16 U.S.C. 1531-1544). 
+    tags$p("The ESA prohibits 'take', which means to 'harass, harm, pursue, hunt, shoot, wound, kill, 
+      trap, capture, or collect, or to attempt to engage in any such conduct' (16 U.S.C. 1531-1544). 
            For more information, click",
     tags$a("here.", href = "https://www.fisheries.noaa.gov/national/endangered-species-conservation/endangered-species-act#section-4.-determination-of-endangered-species-and-threatened-species")),
     tags$br(),
     tags$h4(strong("How does it affect scientific research?")),
-    tags$p("Research on ESA-listed species is important to understand their current extinction risk and 
-      threats to recovery. The ESA therefore outlined exceptions to the prohibitions on take where 
-      researchers can apply for permits to conduct studies on ESA-listed species:"),
+    tags$p("Research on ESA-listed species is important to understand their current extinction risk 
+    and threats to recovery. The ESA therefore outlined exceptions to the prohibitions on take where 
+    researchers can apply for permits to conduct studies on ESA-listed species:"),
     tags$ul(
       tags$li("Under section 10(a)(1)(A) of the ESA, for studies conducted by any entity that have a 
          bona fide scientific purpose and meet other key",
@@ -62,7 +64,7 @@ backgroundText <- tagList(
     ),
     tags$p("Researchers apply for permits through the Authorizations and Permits for Protected Species", 
        tags$a("(APPS)", href = "https://apps.nmfs.noaa.gov/index.cfm"), # adds a hyperlink to APPS 
-       " application, and National Marine Fisheries Service (NMFS) personnel view this information and make permitting decisions based on the 
+       " application, and NMFS personnel view this information and make permitting decisions based on the 
        expected harm the research will do to the species realtive to the value of the information that would be collected.
        For more information on permits and authorizations under section 10(a)(1)(A) and section 4(d), see ",
   tags$a("here.", href = "https://www.fisheries.noaa.gov/west-coast/endangered-species-conservation/endangered-species-act-permits-and-authorizations-west")),
@@ -94,12 +96,24 @@ backgroundText <- tagList(
 # Text for general glossary page
 glossText <- tagList(
   tags$h4(strong("Acronyms")),
-    tags$li("Evolutionarily significant unit (ESU): a population of organisms that is considered distinct for purposes of conservation."),
+    tags$li("Department of Fish and Wildlife (DFW): State agencies tasked with the protection and conservation of the state’s fish, wildlife, and ecosystems for the benefit of their citizens. One DFW exists for each state in the west coast region."),
     tags$li("Distinct Population Segment (DPS): the smallest division of a taxonomic species permitted to be protected under the U.S. Endangered Species Act."),
+    tags$li("Endangered Species Act (ESA): Piece of United States federal legislation that outlines the protection and conservation of the nation’s at risk species."),
+    tags$li("Evolutionarily significant unit (ESU): a population of organisms that is considered distinct for purposes of conservation."),
     tags$li("Hydrologic Unit Code (HUC): A HUC is a hierarchical land area classification system created by the United States Geological Survey (USGS)."),
+    tags$li("National Marine Fisheries Service (NMFS): Agency within NOAA responsible for the management, protection and conservation of United States marine resources."),
+    tags$li("National Oceanic and Atmospheric Administration (NOAA): Scientific and regulatory agency in the United States that researches weather and atmospheric conditions as well as managing fisheries, marine mammals and endangered species. To learn more about NOAA look ",
+            tags$a("here.", href = "https://www.noaa.gov/about-our-agency")),
   tags$br(),
   tags$h4(strong("Terms and Definitions")),
+    tags$li("Dip Net: method of capture where a long handled fishing net (up to five feet in diameter) is dipped into the water to catch unsuspecting fish below."), 
+    tags$li("Electrofishing: Method of capture where electrical current is used to inhibit or stun fish that can then be captured."), 
+    tags$li("Metadata: represents data about data, enriches the data with information that makes it easier to find, use and manage."),
+    tags$li("Nomenclature: The devising or choosing of names for things, especially in a science or other discipline."), 
     tags$li("Take: Defined as any action that harasses, harms, pursues, hunts, shoots, wounds, kills, traps, captures, or collects, or attempts to engage in any such conduct."),
+    tags$li("Trap: Various capture methods (screw trap, incline plane trap) that involve the setup of a device that passively catches fish and accumulates them into a live holding tank."), 
+    tags$li("Trawl: Capture method that involves pulling a large net through the water using one or more boats."), 
+    tags$li("Seine: a net with floats on top and weights on the bottom that encircles the fish. Can be used from shore (beach seine) or from a boat (purse seine)."), 
   tags$br(),
   tags$h4(strong("Fish Glossary")),
     tags$p("Below are the names of the fish species that are included within this app."), 
@@ -111,14 +125,14 @@ glossText <- tagList(
            tags$li("Sockeye Salmon", em("(Oncorhynchus nerka)")),
            tags$li("Steelhead", em("(Oncorhynchus mykiss)")),
   tags$p("For more information regarding salmonids and their listing statuses, see ",
-         tags$a("here", href = "https://www.fisheries.noaa.gov/species/pacific-salmon-and-steelhead")),
+         tags$a("here.", href = "https://www.fisheries.noaa.gov/species/pacific-salmon-and-steelhead")),
   tags$h5(strong("Rockfish and other species:")),
            tags$li("Boccaccio Rockfish",em("(Sebastes paucispinis)")),
            tags$li("Eulachon", em("(Thaleichthys pacificus)")),
            tags$li("Green Sturgeon", em("(Acipenser medirostris)")),
            tags$li("Yelloweye Rockfish", em("(Sebastes ruberrimus)")),
   tags$p("For more information regarding rockfish and other species, and their listing statuses, see ",
-           tags$a("here", href = "https://www.fisheries.noaa.gov/species-directory/threatened-endangered?oq=&field_species_categories_vocab=1000000031&field_species_details_status=All&field_region_vocab=1000001126&items_per_page=25"))
+           tags$a("here.", href = "https://www.fisheries.noaa.gov/species-directory/threatened-endangered?oq=&field_species_categories_vocab=1000000031&field_species_details_status=All&field_region_vocab=1000001126&items_per_page=25"))
            
 )
 
@@ -151,9 +165,14 @@ disclaimerText <- tagList(
     tags$p("This project encountered a few limitations in which the developers had no control over. 
            These limitations include:",
       tags$li("Unreported take from researchers failing to complete exit reports.")),
+      tags$li("The input of incorrect HUC 8 codes by researchers applying for permits (for example: the ‘9999999’ HUC codes seen in the reactive data table)"),
     tags$p("To maintain scope and presentation of the data within this project, the following was either excluded or modified:",
-      tags$li("Unlisted hatchery, observe/harass, observe/sample dead tissues, unknown take action, 
-              permits with ocean polygons, tribal 4d, etc.")),
+      tags$li("Unlisted hatchery fish."),
+      tags$li("Non-invasive take actions were filtered out (Ex. snorkel surveys, dead tissue samples)."),
+      tags$li("Unknown take actions."),
+      tags$li("Research happening across a large geographic scope (whole states or coasts) were omitted from the map. "),
+      tags$li("Tribal 4d permits omitted for data privacy reasons."),
+      tags$li("Permits that are expired or were never issued.")),
   tags$br(),
   tags$h4(strong("Metadata")),
     tags$p("For further information regarding the data source, data attributes, 

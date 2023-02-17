@@ -15,13 +15,13 @@ sf_use_s2(FALSE)
 # Permit Data
 # =================================================================================
 # West Coast region read in -> with Alana's filters
-wcr.init <- read_csv("data_raw/WCRpermits_demo_20221129.csv")
-
+wcr.init <- read_csv("data_raw/WCRpermits_demo_2023Feb9.csv")
 
 wcr <- wcr.init %>% 
   filter(PermitStatus == "Issued") %>%
   filter(DateIssued >"2012-01-01") %>%
-  filter(DateExpired >= Sys.Date()) %>% #DateField >= Sys.Date() puts it to the date of the system
+  filter(DateExpired >= "2023-02-16") %>% 
+  #filter(DateExpired > Sys.Date()) %>% #DateField >= Sys.Date() puts it to the date of the system
   filter(ResultCode %in% c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d")) %>%
   mutate(LifeStage = recode(LifeStage,
                             "Smolt" = "Juvenile",
@@ -63,7 +63,7 @@ wcr <- wcr.init %>%
   filter(TakeAction != "Unknown")
 
 
-wcr_act <- read_csv("data_raw/WCRpermit_reports_demo_20221129.csv")
+wcr_act <- read_csv("data_raw/WCRpermit_reports_demo_2023Feb9.csv")
 wcr_act <- wcr_act %>%
   filter(ResultCode %in% c("NMFS 10a1A Salmon","4d", "NMFS BiOp DTA", "Tribal 4d")) %>% 
   mutate(LifeStage = recode(LifeStage,
