@@ -40,7 +40,7 @@ TM <- df %>%
   summarise(Authorized_Mortality = sum(TotalMorts))
 ET <-df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Authorized_Take = sum(ExpTake))
+  summarise(Authorized_Take = sum(as.numeric(ExpTake)))
 #==============================================================
 #Merging data sets
 Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage"))
@@ -95,7 +95,7 @@ TM <- dt %>%
   summarise(Authorized_Mortality = sum(TotalMorts))
 ET <-dt %>%
   group_by(Year, ESU, Production, LifeStage, FileNumber, CaptureMethod, ReportID, ResultCode) %>% 
-  summarise(Authorized_Take = sum(ExpTake))
+  summarise(Authorized_Take = sum(as.numeric(ExpTake)))
 # #==============================================================
 # #Merging data sets
 Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage", "FileNumber", "CaptureMethod", "ReportID", "ResultCode"))
@@ -110,3 +110,4 @@ dt %>%
 #==============================================================
 #Creating custom color palette 
 mycols <- colors()[c(461, 142, 525, 87)]
+

@@ -54,6 +54,12 @@ ui <- dashboardPage(
       tabItem(tabName = "takeMap",
               fluidRow(
                 box(
+                  title = "About the Map",
+                  width = 12,
+                  uiOutput("aboutMap"),
+                  background = "light-blue" #changing position as per comms team suggestion
+                ),
+                box(
                   title = "Build Your Map",
                   width = 4,
                   radioButtons(inputId = "lifestage", label = "Choose a Life Stage",
@@ -66,12 +72,6 @@ ui <- dashboardPage(
                               choices = levels(wcr$Species), multiple = F),
                   actionButton(inputId = "update", label = "Update Map and Table"), # action button to control when map updates
                   background = "light-blue"
-                ),
-                box(
-                  title = "About the Map",
-                  width = 12,
-                  uiOutput("aboutMap"),
-                  background = "light-blue" #changing position as per comms team suggestion
                 ),
                 box(
                   title = "Authorized Take Map",
