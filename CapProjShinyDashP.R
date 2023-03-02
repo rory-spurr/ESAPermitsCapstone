@@ -43,7 +43,7 @@ ui <- dashboardPage(
               box(title = h3("What is the ESA and how does it affect scientific research?"), uiOutput("backUI"), width = 12)
       ),
       tabItem(tabName = "gloss", 
-              box(title = h3("Acronyms and Definitions"), uiOutput("glossUI"), width = 12)
+              box(title = h3("Terms and Definitions"), uiOutput("glossUI"), width = 12)
       ),
       tabItem(tabName = "disclaimer",
               box(title= h3("Uses and Limitations"), uiOutput("discUI"), width = 12, height = 900)
