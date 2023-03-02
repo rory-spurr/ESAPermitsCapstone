@@ -13,13 +13,13 @@ ui <- dashboardPage(
                   titleWidth = 500),
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Home", tabName = "home", icon = icon("home"), startExpanded = T, #info-sign can be another option
+      menuItem("Home", tabName = "home", icon = icon("home"), startExpanded = T, 
                menuSubItem("Welcome", tabName = "welcome"),
                menuSubItem("How it works", tabName = "how2"),
                menuSubItem("Background and Purpose", tabName = "background"),
                menuSubItem("Glossary", tabName = "gloss"),
                menuSubItem("Uses and Limitations", tabName = "disclaimer")), 
-      menuItem("Authorized Take Map", tabName = "takeMap", icon = icon("globe", lib = "glyphicon")), #globe can be another option
+      menuItem("Authorized Take Map", tabName = "takeMap", icon = icon("globe", lib = "glyphicon")), 
       menuItem("Time Series Plots", tabName = "timeSeries", icon = icon("time", lib = "glyphicon")),
       menuItem("About Us", tabName = "About", icon = icon("info-sign", lib = "glyphicon"))
     )
@@ -203,11 +203,6 @@ server <- function(input, output) {
   output$TSgloss <- renderUI({
     TSglossText
   })
-  #output$take_type <- renderImage({
-    
-    #list(src = "www/image/take_type.png",
-         #width = "100%",
-         #height = 400)}, deleteFile = F) #code used from https://algoritmaonline.com/advancing-your-shinyapp/#:~:text=To%20add%20an%20image%20in,by%20using%20renderImage()%20function.
   
   # Filter for take data within HUC 8's
   # for the following three "filteredXXX" chunks, the bindEvent(input$update)
@@ -242,7 +237,7 @@ server <- function(input, output) {
   }) %>%
     bindEvent(input$update)
   
-  #Timeseries plot total take
+  #Filtering for Time Series plot total take
   dat <- reactive({
     req(c(input$LifeStage, input$Production, input$ESU))
     df1 <- df_plot %>% 
@@ -251,7 +246,7 @@ server <- function(input, output) {
       filter(ESU %in% input$ESU)
   }) %>% bindEvent(input$updat)
   
-  #Timeseries plot total mortality
+  #Filter for Time Series plot total mortality
   dat2 <- reactive({
     req(c(input$LifeStage, input$Production, input$ESU))
     df1 <- df_plot2 %>% 
@@ -260,7 +255,7 @@ server <- function(input, output) {
       filter(ESU %in% input$ESU)
   }) %>% bindEvent(input$updat)
   
-  #Timeseries data table 
+  #Filter for Time Series data table 
   dat3 <- reactive({
     dt %>%
       filter(ESU == input$ESU) %>%
@@ -334,7 +329,7 @@ server <- function(input, output) {
                    list(width = '500px', targets = c(5,7,8)))),
     callback = JS('table.page(3).draw(false);')
   )
-  
+# Time Series Total Take plot process and rendering
   output$plot1 <-renderPlotly({
     ggplot(data = dat(), aes (y = N, x = Year, fill = Take_Type))+ 
       geom_bar(stat = "identity", position = "stack", color = "black")+
@@ -356,7 +351,7 @@ server <- function(input, output) {
     #                                         '<br>',
     #                                         '</sup>')))
   })
-  
+# Time Series Total Mortality plot process and rendering
   output$plot2 <-renderPlotly({
     ggplot(data = dat2(), aes (y = N, x = Year, fill = Take_Type))+ 
       geom_bar(stat = "identity", position = "stack", color = "black")+
@@ -367,17 +362,9 @@ server <- function(input, output) {
       scale_y_continuous(expand = c(0,0)) +
       scale_x_discrete(expand = c(0,0))
     ggplotly(tooltip = c("y", "x", "fill")) 
-#     %>% 
-#       layout(title = list(text = paste0('Lethal Authorized Take',
-#                                         '<br>',
-#                                         '<sup>',
-#                                         'This plot display the total authorized and reported lethal take of fish per year.
-# Total take (number of fish) is the sum of reported take or what was actually used (yellow) 
-# and the remaining authorized take that was unused (blue). Note that the data is only showing 
-# what was reported through APPs and is not complete due to unreported take by researchers.', 
-#                                         '<br>',
-#                                         '</sup>')))
+
  })
+# Time Series data table process and rendering
   output$table <- DT::renderDataTable({dat3()},
                                       caption = "Note: Permits issued under the ESA 4(d) authority specific 
                                       to Tribal Resource Management are not individually listed in the table 
