@@ -94,6 +94,7 @@ backgroundText <- tagList(
 # ==========================
 # Text for general glossary page
 glossText <- tagList(
+<<<<<<< Updated upstream
   tags$h4(strong("Acronyms")),
     tags$li("Department of Fish and Wildlife (DFW): State agencies tasked with the protection and 
             conservation of the state’s fish, wildlife, and ecosystems for the benefit of their citizens. 
@@ -141,6 +142,27 @@ glossText <- tagList(
                      href = "https://www.fisheries.noaa.gov/laws-and-policies/glossary-endangered-species-act#:
                      ~:text=Take%20as%20defined%20under%20the,%2C%20but%20not%20unexpected%2C%20taking.")),
     style = "font-size:10px"),
+=======
+  tags$h4(strong("Commonly used acronyms")),
+    tags$li("Department of Fish and Wildlife (DFW): State agencies tasked with the protection and conservation of the state’s fish, wildlife, and ecosystems for the benefit of their citizens. One DFW exists for each state in the west coast region."),
+    tags$li("Distinct Population Segment (DPS): the smallest division of a taxonomic species permitted to be protected under the U.S. Endangered Species Act."),
+    tags$li("Endangered Species Act (ESA): Piece of United States federal legislation that outlines the protection and conservation of the nation’s at risk species."),
+    tags$li("Evolutionarily significant unit (ESU): a population of organisms that is considered distinct for purposes of conservation."),
+    tags$li("Hydrologic Unit Code (HUC): A HUC is a hierarchical land area classification system created by the United States Geological Survey (USGS)."),
+    tags$li("National Marine Fisheries Service (NMFS): Agency within NOAA responsible for the management, protection and conservation of United States marine resources."),
+    tags$li("National Oceanic and Atmospheric Administration (NOAA): Scientific and regulatory agency in the United States that researches weather and atmospheric conditions as well as managing fisheries, marine mammals and endangered species. To learn more about NOAA look ",
+            tags$a("here.", href = "https://www.noaa.gov/about-our-agency")),
+  tags$br(),
+  tags$h4(strong("Other key terms")),
+    tags$li("Dip Net: method of capture where a long handled fishing net (up to five feet in diameter) is dipped into the water to catch unsuspecting fish below."), 
+    tags$li("Electrofishing: Method of capture where electrical current is used to inhibit or stun fish that can then be captured."), 
+    tags$li("Metadata: represents data about data, enriches the data with information that makes it easier to find, use and manage."),
+    tags$li("Nomenclature: The devising or choosing of names for things, especially in a science or other discipline."), 
+    tags$li("Take: Defined as any action that harasses, harms, pursues, hunts, shoots, wounds, kills, traps, captures, or collects, or attempts to engage in any such conduct."),
+    tags$li("Trap: Various capture methods (screw trap, incline plane trap) that involve the setup of a device that passively catches fish and accumulates them into a live holding tank."), 
+    tags$li("Trawl: Capture method that involves pulling a large net through the water using one or more boats."), 
+    tags$li("Seine: a net with floats on top and weights on the bottom that encircles the fish. Can be used from shore (beach seine) or from a boat (purse seine)."), 
+>>>>>>> Stashed changes
   tags$br(),
   tags$h4(strong("Fish Glossary")),
     tags$p("Below are the names of the fish species that are included within this app. They are the fish species
@@ -152,15 +174,20 @@ glossText <- tagList(
            tags$li("Coho Salmon", em("(Oncorhynchus kisutch)")),
            tags$li("Chum Salmon", em("(Oncorhynchus keta)")),
            tags$li("Sockeye Salmon", em("(Oncorhynchus nerka)")),
+<<<<<<< Updated upstream
            tags$li("Steelhead Trout", em("(Oncorhynchus mykiss)")),
   tags$p("For more information regarding salmonids and their listing statuses, see ",
+=======
+           tags$li("Steelhead", em("(Oncorhynchus mykiss)")),
+  tags$p("Find more information regarding salmonids and their listing statuses ",
+>>>>>>> Stashed changes
          tags$a("here.", href = "https://www.fisheries.noaa.gov/species/pacific-salmon-and-steelhead")),
-  tags$h5(strong("Rockfish and other species:")),
+  tags$h5(strong("Other species:")),
            tags$li("Boccaccio Rockfish",em("(Sebastes paucispinis)")),
            tags$li("Eulachon", em("(Thaleichthys pacificus)")),
            tags$li("Green Sturgeon", em("(Acipenser medirostris)")),
            tags$li("Yelloweye Rockfish", em("(Sebastes ruberrimus)")),
-  tags$p("For more information regarding rockfish and other species, and their listing statuses, see ",
+  tags$p("Find more information regarding rockfish and other species, and their listing statuses ",
            tags$a("here.", href = "https://www.fisheries.noaa.gov/species-directory/threatened-endangered?oq=&field_species_categories_vocab=1000000031&field_species_details_status=All&field_region_vocab=1000001126&items_per_page=25"))
            
 )
@@ -185,16 +212,22 @@ disclaimerText <- tagList(
   tags$li("Renaming and classifying waterbodies in the 'WaterbodyName' field to allow for consistent
           nomenclature and inform users about the type of waterbodies (saltwater or freshwater) these locations describe. 
           Renaming practices were performed using best available data provided by the 'LocationDescription' field."),
-  tags$li("Reclassifying 'Lifestage' and 'Production' fields to reduce the number of unique entries."),
+  tags$li("Reclassifying 'Lifestage' and 'Production' fields to reduce the number of unique entries. For example:"),
   tags$ul(
+<<<<<<< Updated upstream
     tags$li("Ex. 'Smolt' and 'fry' were replaced by 'Juvenile'"),
     tags$li("Ex. 'Listed Hatchery, Clipped and Intact', 'Listed Hatchery Adipose Clip'
             'Listed Hatchery Intact Adipose' were replaced by 'Hatchery'")
+=======
+    tags$li("'Smolt' was replaced by 'Juvenile'"),
+    tags$li("'Listed Hatchery, Clipped and Intact' was replaced by 'Listed Hatchery'")
+>>>>>>> Stashed changes
   ),
   tags$p("Details of the rule sets used to create these fields can be found within the script files 
          accessible through the github repository."),
   tags$br(),
   tags$h4(strong("Limitations and Omissions")),
+<<<<<<< Updated upstream
     tags$p("Some data limitations were beyond the developers' control. 
            These include:",
       tags$li("Take may have occured which was not reported, and any take not submitted through the APPS system would not 
@@ -203,14 +236,26 @@ disclaimerText <- tagList(
               HUC codes seen in the reactive data table) meant these data could not be accurately plotted with the other map data."),
   tags$br(),
     tags$p("For the purpose of this project, the following data types were intentionally omitted:",
+=======
+    tags$p("Some data limitations were beyond the developers' control. These include:",
+      tags$li("Unreported take from projects for which exit reports were not completed by permittees.")),
+      tags$li("The input of incorrect HUC 8 codes by researchers applying for permits (for example: the ‘9999999’ HUC codes seen in the reactive data table)"),
+    tags$p("For the purpose of this project, the following were omitted:",
+>>>>>>> Stashed changes
       tags$li("Unlisted hatchery fish."),
-      tags$li("Non-invasive take actions were filtered out (Ex. snorkel surveys, dead tissue samples)."),
+      tags$li("Non-invasive take actions (e.g., snorkel surveys, dead tissue samples)"),
       tags$li("Unknown take actions."),
+<<<<<<< Updated upstream
       tags$li("Permits that are expired or were never issued.")),
       tags$li("Research happening across a large geographic scope (whole states or coasts) were omitted from the map,
               but are included in the time series. "),
       tags$li("Tribal 4d permits were omitted from tables showing individual permit information for data privacy reasons, 
               but included in the totals shown in the map and time series."),
+=======
+      tags$li("Permits that are expired or were never issued"),
+      tags$li("Research happening across a large geographic scope (whole states or coasts) were omitted from the map, but are included in time series."),
+      tags$li("Tribal 4d permits omitted for data privacy reasons.")),
+>>>>>>> Stashed changes
   tags$br(),
   tags$h4(strong("Metadata")),
     tags$p("For further information regarding the data source, data attributes, 
@@ -234,10 +279,17 @@ disclaimerText <- tagList(
     guidance surrounding the permitting process and editing and critiquing drafts of the application. 
     We also want to thank Anne Beaudreau for her help editing and critiquing drafts of the 
     application, as well as the professional and technical guidance she has shown us throughout 
+<<<<<<< Updated upstream
     our time in grad school. We want to thank both NMFS' West Coast Region research permit and communications 
     teams for taking the time to meet with us and help with the application. Funding for this 
     project was provided through NMFS West Coast Region Protected Resources Division, as well as 
     the Jay Ginter Memorial Scholarship Fund at the University of Washington.")
+=======
+    our time in grad school. We want to thank both NOAA’s West Coast permit and communications 
+    teams for taking the time to meet with us and help with the application. Funding for this 
+    project was provided through the NOAA West Coast Region Protected Resource Division, as well as the Jay Ginter Memorial Scholarship Fund at 
+    the University of Washington.")
+>>>>>>> Stashed changes
   )
 
 # ==========================
