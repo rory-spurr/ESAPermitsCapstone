@@ -169,7 +169,7 @@ glossText <- tagList(
            tags$li("Eulachon", em("(Thaleichthys pacificus)")),
            tags$li("Green Sturgeon", em("(Acipenser medirostris)")),
            tags$li("Yelloweye Rockfish", em("(Sebastes ruberrimus)")),
-  tags$p("Find more information regarding these species ",
+  tags$p("Find more information regarding these species see ",
            tags$a("here.", href = "https://www.fisheries.noaa.gov/species-directory/threatened-endangered?oq=&field_species_categories_vocab=1000000031&field_species_details_status=All&field_region_vocab=1000001126&items_per_page=25"))
            
 )
@@ -197,8 +197,8 @@ disclaimerText <- tagList(
   tags$li("Reclassifying 'Lifestage' and 'Production' fields to reduce the number of unique entries. For example:"),
   tags$ul(
     tags$li("E.g. 'Smolt' and 'fry' were replaced by 'Juvenile'"),
-    tags$li("E.g 'Listed Hatchery, Clipped and Intact', 'Listed Hatchery Adipose Clip'
-            'Listed Hatchery Intact Adipose' were replaced by 'Hatchery'"))
+    tags$li("E.g. 'Listed Hatchery, Clipped and Intact', 'Listed Hatchery Adipose Clip'
+            'Listed Hatchery Intact Adipose' were replaced by 'Hatchery'")),
 
   tags$p("Details of the rule sets used to create these fields can be found within the script files 
          accessible through the github repository."),
@@ -249,7 +249,9 @@ disclaimerText <- tagList(
     our time in grad school. We want to thank both NMFS' West Coast Region research permit and communications 
     teams for taking the time to meet with us and help with the application. Funding for this 
     project was provided through NMFS West Coast Region Protected Resources Division, as well as 
-    the Jay Ginter Memorial Scholarship Fund at the University of Washington.")))
+    the Jay Ginter Memorial Scholarship Fund at the University of Washington.")
+  )
+)
 
 # ==========================
 # Text for about Map section

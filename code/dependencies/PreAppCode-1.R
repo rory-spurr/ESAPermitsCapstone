@@ -26,7 +26,7 @@ library(NMFSResPermits)
 # Use functions from NMFSResPermits package to organize data and create columns
 wcr <- wcr %>%
   rename_population() %>%
-  rename_takeaction() %>%
+ # abbrev_takeaction() %>%
   create_totalmorts() %>%
   order_table()
 # =================================================

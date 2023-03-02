@@ -100,7 +100,7 @@ wcr_act <- wcr_act %>%
 
 
 # =================================================================================
-# check notes below:
+# Check notes below:
 # recoding HUCs to account for HUCs that were altered or moved
 # broken hucs are 18020103, 18020109, 18020112, 18020118,
 # 18040005, 18060001, 18060012 -> they are broken as they don't have spatial data info in the USGS WBD

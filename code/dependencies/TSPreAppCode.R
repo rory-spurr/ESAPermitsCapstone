@@ -1,5 +1,8 @@
-# Alana Santana and Rory Spurr
-# Script to run prior to running time series app - plot codes 
+# Alana Santana 
+# Script to run before Shiny App
+# Summary: This script runs the filters and math for the time series plots and data table. 
+# =================================================================================
+# Load in packages
 #install.packages("plotly")
 library(DT)
 library(shinyjqui)
@@ -28,7 +31,7 @@ df <- aggregate(wcr.v$ExpTake,
 
 names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake")
 #==============================================================
-#Summing each variable by year
+#Summing each variable by year and grouping by ESU, Production, and Lifestage
 YT <-df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
   summarise(Used = sum(ActTake))
@@ -45,31 +48,28 @@ ET <-df %>%
 #Merging data sets
 Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage"))
 Mort <- merge(YM, TM, by = c("Year", "ESU", "Production", "LifeStage"))
-#df1 <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage"))
 #==============================================================
 #Replacing NaN or NA or Inf with 0
 Take[is.na(Take)] <- 0
 Mort[is.na(Mort)] <- 0
 #==============================================================
+#Math for determining unused take
 Take %>%
   mutate(Unused = Authorized_Take - Used) -> t
 Mort %>% 
   mutate(Unused = Authorized_Mortality - Used) -> m
-
+#==============================================================
+#Delineating columns we want to include within plot data
 df1 <- t %>%
   gather("Take_Type","N", 5:7) 
 df2 <- m %>% 
   gather("Take_Type","N", 5:7) 
 #==============================================================
+#Creating plot data for further filtering 
 df1 %>%
   filter(Take_Type %in% c("Used","Unused")) -> df_plot
 df2 %>%
   filter(Take_Type %in% c("Used","Unused")) -> df_plot2
-#==============================================================
-# df_plot <- df_plot %>% add_trace(fill = ~Authorized_Take_Unused, name = 'Unused Authorized Take')
-# df_plot <- df_plot %>% add_trace(fill = ~Reported_Take, name = 'Reported Take')
-# df_plot2 <- df_plot %>% add_trace(fill = ~Authorized_Mortality_Unused, name = 'Unused Authorized Mortality')
-# df_plot2 <- df_plot %>% add_trace(fill = ~Reported_Mortality, name = 'Reported Mortality')
 #==================================================================================
 ################################### Table code ##################################
 # =================================================================================
@@ -96,17 +96,18 @@ TM <- dt %>%
 ET <-dt %>%
   group_by(Year, ESU, Production, LifeStage, FileNumber, CaptureMethod, ReportID, ResultCode) %>% 
   summarise(Authorized_Take = sum(as.numeric(ExpTake)))
-# #==============================================================
-# #Merging data sets
+#==============================================================
+#Merging data sets back together
 Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage", "FileNumber", "CaptureMethod", "ReportID", "ResultCode"))
 Mort <- merge(YM, TM, by = c("Year", "ESU", "Production", "LifeStage", "FileNumber", "CaptureMethod", "ReportID", "ResultCode"))
 dt <- merge(Take, Mort, by = c("Year", "ESU", "Production", "LifeStage", "FileNumber", "CaptureMethod", "ReportID", "ResultCode"))
 #==============================================================
+#Math for determining the Unused Take/Mortality 
 dt %>%
   mutate(Authorized_Take_Unused = Authorized_Take - Reported_Take) %>%
   mutate(Authorized_Mortality_Unused = Authorized_Mortality - Reported_Mortality) -> dt
 #==============================================================
-#labels = c("Unused Authorized Take", "Reported Take")
+################################### Extras ####################
 #==============================================================
 #Creating custom color palette 
 mycols <- colors()[c(461, 142, 525, 87)]
