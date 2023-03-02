@@ -7,19 +7,17 @@ welcomeText <- tagList(
   tags$p("This platform summarizes and displays data collected by the National Marine 
   Fisheries Service (NMFS) on the permits they issue for scientific research that may 
   impact U.S. West Coast salmon, steelhead, eulachon, rockfish, and sturgeon that are 
-  listed for protection under the Endangered Species Act (ESA)",
+  listed under the Endangered Species Act (ESA).",
          style = "font-size:15px"),
   tags$br(),
   tags$image(src = "image/fishJumping.png", width = "50%", height = "50%"),
   tags$br(),
   tags$br(),
-  tags$p("The app summarizes how much impact is occurring on ESA-listed fishes in 
-         particular areas due to research. Users can choose what data to display to 
-         learn about projects  on a particular species or in a region of interest, 
-         or look at trends over time. It was created to help the National Oceanic 
-         and Atmospheric Administration (NOAA) staff see the ‘big picture’ view 
-         of research on the landscape, let researchers learn about each other’s 
-         work, and make permitting decisions more transparent.",
+  tags$p("The app summarizes how much impact is authorized to occur to ESA-listed fishes in particular
+  areas due to research. Users can choose what data to display to learn about projects on a 
+  particular species or in a region of interest, or look at trends over time. It was created 
+  to help NMFS staff see the ‘big picture’ view of research on the landscape, let researchers 
+  learn about each other’s work, and make permitting decisions more transparent.",
   style = "font-size:15px"),
   tags$br(),
   tags$image(src = "image/mapGraph.png", width = "80%", height = "65%")
@@ -37,8 +35,11 @@ how2Text <- tagList(
 # Text for background and purpose page
 backgroundText <- tagList(
   tags$h4(strong("What is the ESA?")),
-  tags$p("The Endangered Species Act (ESA) was enacted in 1973 to provide a policy 
-      framework for the protection and conservation of threatened and endangered species:"),
+  tags$p("The",
+         tags$a("Endangered Species Act (ESA)", 
+         href = "https://www.fisheries.noaa.gov/national/endangered-species-conservation/endangered-species-act"),
+         " was enacted in 1973 to provide a policy framework for the protection and conservation of 
+         threatened and endangered species:"),
   tags$ul(
     tags$li("Endangered species are species that are at risk of extinction throughout all or a 
         significant portion of its range."),
@@ -46,14 +47,12 @@ backgroundText <- tagList(
         the foreseeable future throughout all or a significant portion of its range.")
     ),
     tags$p("The ESA prohibits 'take', which means to 'harass, harm, pursue, hunt, shoot, wound, kill, 
-      trap, capture, or collect, or to attempt to engage in any such conduct' (16 U.S.C. 1531-1544). 
-           For more information, click",
-    tags$a("here.", href = "https://www.fisheries.noaa.gov/national/endangered-species-conservation/endangered-species-act#section-4.-determination-of-endangered-species-and-threatened-species")),
+      trap, capture, or collect, or to attempt to engage in any such conduct' (16 U.S.C. 1531-1544)."),
     tags$br(),
-    tags$h4(strong("How does it affect scientific research?")),
-    tags$p("Research on ESA-listed species is important to understand their current extinction risk 
-    and threats to recovery. The ESA therefore outlined exceptions to the prohibitions on take where 
-    researchers can apply for permits to conduct studies on ESA-listed species:"),
+    tags$h4(strong("How does the ESA affect scientific research?")),
+    tags$p("Research on ESA-listed species is important to understand their current extinction risk and 
+      threats to recovery. The ESA therefore outlines exceptions to the prohibitions on take where 
+      researchers can apply for permits to conduct studies on ESA-listed species:"),
     tags$ul(
       tags$li("Under section 10(a)(1)(A) of the ESA, for studies conducted by any entity that have a 
          bona fide scientific purpose and meet other key",
@@ -64,20 +63,20 @@ backgroundText <- tagList(
     ),
     tags$p("Researchers apply for permits through the Authorizations and Permits for Protected Species", 
        tags$a("(APPS)", href = "https://apps.nmfs.noaa.gov/index.cfm"), # adds a hyperlink to APPS 
-       " application, and NMFS personnel view this information and make permitting decisions based on the 
-       expected harm the research will do to the species realtive to the value of the information that would be collected.
+       " application, and National Marine Fisheries Service (NMFS) personnel view this information and make permitting decisions based on the 
+       expected impacts of the research to the species relative to the value of the information that would be collected.
        For more information on permits and authorizations under section 10(a)(1)(A) and section 4(d), see ",
   tags$a("here.", href = "https://www.fisheries.noaa.gov/west-coast/endangered-species-conservation/endangered-species-act-permits-and-authorizations-west")),
   tags$br(),
   tags$h4(strong("Why was this app developed?")),
-  tags$p("Currently NMFS' West Coast Region does not have an easy way to map and visually summarize their research
+  tags$p("Currently NMFS' West Coast Region staff do not have an easy way to map and visually summarize their research
          permitting information for internal use, or to share with applicants and co-managers.
          Therefore, students from the School of Marine and Environmental Affairs (SMEA) at the University of Washington (UW)
-         were contracted with the primary purpose of developing an application that will:"),
+         were contracted with the primary purpose of developing an application that would:"),
   tags$ul(
-    tags$li("Support the decision-making process for scientific research permits in NMFS' West
+    tags$li("Support the decision-making process for issuing scientific research permits in NMFS' West
             Coast Region,"),
-    tags$li("Provide more transparency to researchers as well as state and tribal government employees
+    tags$li("Provide more transparency to researchers as well as state and tribal government co-managers
             about the permitting process, and"),
     tags$li("Educate the public about the role of research to inform
             the mangement of ESA-listed species.")
@@ -96,34 +95,64 @@ backgroundText <- tagList(
 # Text for general glossary page
 glossText <- tagList(
   tags$h4(strong("Acronyms")),
-    tags$li("Department of Fish and Wildlife (DFW): State agencies tasked with the protection and conservation of the state’s fish, wildlife, and ecosystems for the benefit of their citizens. One DFW exists for each state in the west coast region."),
-    tags$li("Distinct Population Segment (DPS): the smallest division of a taxonomic species permitted to be protected under the U.S. Endangered Species Act."),
-    tags$li("Endangered Species Act (ESA): Piece of United States federal legislation that outlines the protection and conservation of the nation’s at risk species."),
-    tags$li("Evolutionarily significant unit (ESU): a population of organisms that is considered distinct for purposes of conservation."),
-    tags$li("Hydrologic Unit Code (HUC): A HUC is a hierarchical land area classification system created by the United States Geological Survey (USGS)."),
-    tags$li("National Marine Fisheries Service (NMFS): Agency within NOAA responsible for the management, protection and conservation of United States marine resources."),
-    tags$li("National Oceanic and Atmospheric Administration (NOAA): Scientific and regulatory agency in the United States that researches weather and atmospheric conditions as well as managing fisheries, marine mammals and endangered species. To learn more about NOAA look ",
+    tags$li("Department of Fish and Wildlife (DFW): State agencies tasked with the protection and 
+            conservation of the state’s fish, wildlife, and ecosystems for the benefit of their citizens. 
+            One DFW exists for each state in NMFS' West Coast Region; Oregon Department of Fish and Wildlife
+            (ODFW), Washington Department of Fish and Wildlife (WDFW), California Department of Fish and Wildlife
+            (CDFW), and Idaho Department of Fish and Game (IDFG)."),
+    tags$li("Distinct Population Segment (DPS): A vertebrate population or group of populations that is discrete 
+            from other populations of the species and significant in relation to the entire species.", tags$sup("1")),
+    tags$li("Endangered Species Act (ESA): United States federal legislation that outlines the 
+            protection and conservation of the nation’s at risk species."),
+    tags$li("Evolutionarily significant unit (ESU): A Pacific salmon population or group of populations 
+            that is substantially reproductively isolated from other conspecific populations and that 
+            represents an important component of the evolutionary legacy of the species.", tags$sup("1")),
+    tags$li("Hydrologic Unit Code (HUC): A HUC is a hierarchical land area classification system created 
+            by the United States Geological Survey (USGS)."),
+    tags$li("National Marine Fisheries Service (NMFS): Agency within NOAA responsible for the management, 
+            protection and conservation of United States marine resources."),
+    tags$li("National Oceanic and Atmospheric Administration (NOAA): Scientific and regulatory agency in 
+            the United States that researches weather and atmospheric conditions as well as managing 
+            fisheries, marine mammals and endangered species. To learn more about NOAA look ",
             tags$a("here.", href = "https://www.noaa.gov/about-our-agency")),
   tags$br(),
   tags$h4(strong("Terms and Definitions")),
-    tags$li("Dip Net: method of capture where a long handled fishing net (up to five feet in diameter) is dipped into the water to catch unsuspecting fish below."), 
-    tags$li("Electrofishing: Method of capture where electrical current is used to inhibit or stun fish that can then be captured."), 
-    tags$li("Metadata: represents data about data, enriches the data with information that makes it easier to find, use and manage."),
-    tags$li("Nomenclature: The devising or choosing of names for things, especially in a science or other discipline."), 
-    tags$li("Take: Defined as any action that harasses, harms, pursues, hunts, shoots, wounds, kills, traps, captures, or collects, or attempts to engage in any such conduct."),
-    tags$li("Trap: Various capture methods (screw trap, incline plane trap) that involve the setup of a device that passively catches fish and accumulates them into a live holding tank."), 
-    tags$li("Trawl: Capture method that involves pulling a large net through the water using one or more boats."), 
-    tags$li("Seine: a net with floats on top and weights on the bottom that encircles the fish. Can be used from shore (beach seine) or from a boat (purse seine)."), 
+    tags$li("Dip Net: Method of capture where a long handled fishing net (up to five feet in diameter) 
+            is dipped into the water to catch unsuspecting fish below."), 
+    tags$li("Electrofishing: Method of capture where electrical current is used to inhibit or stun 
+            fish that can then be captured."), 
+    tags$li("Metadata: Represents data about data, enriches the data with information that makes it 
+            easier to find, use and manage."),
+    tags$li("Nomenclature: The devising or choosing of names for things, especially in a science or 
+            other discipline."), 
+    tags$li("Take: Defined as any action that harasses, harms, pursues, hunts, shoots, wounds, kills, 
+            traps, captures, or collects listed species or attempting to engage in any such conduct.", tags$sup("1")),
+    tags$li("Trap: Various capture methods (minnow trap, screw trap, incline plane trap, etc.) that involve the setup 
+            of a device that passively catches fish and accumulates them into a live holding tank or compartment."), 
+    tags$li("Trawl: Capture method that involves pulling a large net through the water using one or 
+            more boats."), 
+    tags$li("Seine: A net with floats on top and weights on the bottom that encircles the fish. Can 
+            be used from shore (beach seine) or from a boat (purse seine)."), 
+  tags$br(),
+  tags$h6(strong("Sources", style = "font-size=10px")),
+    tags$ol(
+      tags$li(tags$a("https://www.fisheries.noaa.gov/laws-and-policies/glossary-endangered-species-act#:~
+                           :text=Take%20as%20defined%20under%20the,%2C%20but%20not%20unexpected%2C%20taking.",
+                     href = "https://www.fisheries.noaa.gov/laws-and-policies/glossary-endangered-species-act#:
+                     ~:text=Take%20as%20defined%20under%20the,%2C%20but%20not%20unexpected%2C%20taking.")),
+    style = "font-size:10px"),
   tags$br(),
   tags$h4(strong("Fish Glossary")),
-    tags$p("Below are the names of the fish species that are included within this app."), 
+    tags$p("Below are the names of the fish species that are included within this app. They are the fish species
+           under NMFS' jurisdiction for which an ESU or DPS is currently listed as threatened or endangered
+           under the ESA."), 
     #Clicking on the species will take you to a link of the fish and ESA-status:"),
   tags$h5(strong("Salmonids:")),
            tags$li("Chinook Salmon", em("(Oncorhynchus tshawytscha)")),
            tags$li("Coho Salmon", em("(Oncorhynchus kisutch)")),
            tags$li("Chum Salmon", em("(Oncorhynchus keta)")),
            tags$li("Sockeye Salmon", em("(Oncorhynchus nerka)")),
-           tags$li("Steelhead", em("(Oncorhynchus mykiss)")),
+           tags$li("Steelhead Trout", em("(Oncorhynchus mykiss)")),
   tags$p("For more information regarding salmonids and their listing statuses, see ",
          tags$a("here.", href = "https://www.fisheries.noaa.gov/species/pacific-salmon-and-steelhead")),
   tags$h5(strong("Rockfish and other species:")),
@@ -140,12 +169,13 @@ glossText <- tagList(
 # Text for use and limitations page
 disclaimerText <- tagList(
   tags$h4(strong("Things to know about this app")),
-  tags$p("Users of this app should be aware of the following limitations and assumptions regarding the raw data and data summaries:"),
-    tags$p("Note: These data are provisional, and are subject to change at any time. Additionally, 
+  tags$p("Users of this app should be aware of the following limitations and assumptions regarding the raw data and data summaries
+         presented in this application:"),
+    tags$p("These data are provisional, and are subject to change at any time. Additionally, 
             this app is specifically for ESA-listed fish species in the", 
            tags$a("west coast region", href = "https://www.fisheries.noaa.gov/about/west-coast-region"),
             "under NOAA jurisdiction. Therefore, ESA-listed fish species under the jurisdiction of the U.S. Fish and Wildlife
-            Service or other federal and international organizations are not represented here."),
+            Service or proteced under other state and international organizations are not represented here."),
   tags$br(),
   tags$p("For the purpose of this project, some fields and data entries were modified to 
           simplify analyses and provide consistency across the nomenclature. These include:"),
@@ -153,26 +183,34 @@ disclaimerText <- tagList(
     tags$a("metadata", href = "https://github.com/rory-spurr/ESAPermitsCapstone/tree/main/docs/Metadata"),
     "for details"),
   tags$li("Renaming and classifying waterbodies in the 'WaterbodyName' field to allow for consistent
-          nomenclature and inform users about the type of waterbodies (saltwater or freshwater) these species exist in. 
+          nomenclature and inform users about the type of waterbodies (saltwater or freshwater) these locations describe. 
           Renaming practices were performed using best available data provided by the 'LocationDescription' field."),
   tags$li("Reclassifying 'Lifestage' and 'Production' fields to reduce the number of unique entries."),
   tags$ul(
-    tags$li("Ex. 'Smolt' was replaced by 'Juvenile'"),
-    tags$li("Ex. 'Listed Hatchery, Clipped and Intact' was replaced by 'Listed Hatchery'")
+    tags$li("Ex. 'Smolt' and 'fry' were replaced by 'Juvenile'"),
+    tags$li("Ex. 'Listed Hatchery, Clipped and Intact', 'Listed Hatchery Adipose Clip'
+            'Listed Hatchery Intact Adipose' were replaced by 'Hatchery'")
   ),
+  tags$p("Details of the rule sets used to create these fields can be found within the script files 
+         accessible through the github repository."),
   tags$br(),
   tags$h4(strong("Limitations and Omissions")),
-    tags$p("This project encountered a few limitations in which the developers had no control over. 
-           These limitations include:",
-      tags$li("Unreported take from researchers failing to complete exit reports.")),
-      tags$li("The input of incorrect HUC 8 codes by researchers applying for permits (for example: the ‘9999999’ HUC codes seen in the reactive data table)"),
-    tags$p("To maintain scope and presentation of the data within this project, the following was either excluded or modified:",
+    tags$p("Some data limitations were beyond the developers' control. 
+           These include:",
+      tags$li("Take may have occured which was not reported, and any take not submitted through the APPS system would not 
+              be captured.")),
+      tags$li("The input of incorrect HUC 8 codes by researchers applying for permits (for example: the ‘9999999’ 
+              HUC codes seen in the reactive data table) meant these data could not be accurately plotted with the other map data."),
+  tags$br(),
+    tags$p("For the purpose of this project, the following data types were intentionally omitted:",
       tags$li("Unlisted hatchery fish."),
       tags$li("Non-invasive take actions were filtered out (Ex. snorkel surveys, dead tissue samples)."),
       tags$li("Unknown take actions."),
-      tags$li("Research happening across a large geographic scope (whole states or coasts) were omitted from the map. "),
-      tags$li("Tribal 4d permits omitted for data privacy reasons."),
       tags$li("Permits that are expired or were never issued.")),
+      tags$li("Research happening across a large geographic scope (whole states or coasts) were omitted from the map,
+              but are included in the time series. "),
+      tags$li("Tribal 4d permits were omitted from tables showing individual permit information for data privacy reasons, 
+              but included in the totals shown in the map and time series."),
   tags$br(),
   tags$h4(strong("Metadata")),
     tags$p("For further information regarding the data source, data attributes, 
@@ -180,7 +218,9 @@ disclaimerText <- tagList(
           metadata folder of our Github ",
     tags$a("here.", href = "https://github.com/rory-spurr/ESAPermitsCapstone/tree/main/docs/Metadata")), 
   tags$br(),
-  tags$h4(strong("How to Cite")), #no idea how to cite our project
+  tags$h4(strong("Citation")), 
+  tags$p("Spurr, R., & Santana, A. (2023). Visualizing ESA-Listed Fish Research on the West Coast (Version 1.0.0) 
+          [Computer software]. https://github.com/rory-spurr/ESAPermitsCapstone"),
   tags$br(),
   tags$h4(strong("License Statement")),
     tags$p("Copyright © 2007 Free Software Foundation, Inc.",
@@ -194,10 +234,10 @@ disclaimerText <- tagList(
     guidance surrounding the permitting process and editing and critiquing drafts of the application. 
     We also want to thank Anne Beaudreau for her help editing and critiquing drafts of the 
     application, as well as the professional and technical guidance she has shown us throughout 
-    our time in grad school. We want to thank both NOAA’s west Coast permit and communications 
+    our time in grad school. We want to thank both NMFS' West Coast Region research permit and communications 
     teams for taking the time to meet with us and help with the application. Funding for this 
-    project was provided through NOAA, as well as the Jay Ginter Memorial Scholarship Fund at 
-    the University of Washington.")
+    project was provided through NMFS West Coast Region Protected Resources Division, as well as 
+    the Jay Ginter Memorial Scholarship Fund at the University of Washington.")
   )
 
 # ==========================
