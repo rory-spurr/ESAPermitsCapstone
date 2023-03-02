@@ -61,19 +61,3 @@ esuBound <- st_as_sf(esuBound)
 st_crs(esuBound) <- 4326 # CRS for playing nice with Leaflet
 
 
-
-
-
-#========================================
-# Checks to see if the above code worked 
-# commented out now that we know it does
-
-# test <- esuBound %>% filter(DPS == "Southern DPS Eulachon")
-# 
-# ggplot(test) +
-#   geom_sf()
-# 
-# leaflet(data = test) %>%
-#   addPolygons()
-
-
