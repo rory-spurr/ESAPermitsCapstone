@@ -99,12 +99,11 @@ ui <- dashboardPage(
                 box(title = "About the plots",
                   width = 12, height = 180, solidHeader = T, status = "primary", 
                   background = "light-blue", 
-                  "These plots display the total authorized take and reported take of 
-                  fish per year (both lethal and non-lethal). Total take (number of fish) is 
-                  the sum of reported take or what was actually used (yellow) and the 
-                  remaining authorized take that was unused (blue). Note that the data 
-                  is only showing what was reported through APPs and is not complete 
-                  due to unreported take by researchers."
+                  "These plots display the authorized take and reported take of fish per year. 
+                  Total take (number of fish) is the sum of reported take or what was actually 
+                  used (yellow) and the remaining authorized take that was unused (blue). Note 
+                  that the data is only showing what was reported through APPS and may not be 
+                  complete due to unreported take by researchers."
                 ),
                 box(
                   title = "Build Your Plot",
@@ -340,16 +339,6 @@ server <- function(input, output) {
       scale_y_continuous(expand = c(0,0)) +
       scale_x_discrete(expand = c(0,0))
     ggplotly(tooltip = c("y", "x", "fill")) 
-    #     %>% 
-    #       layout(title = list(text = paste0('Lethal Authorized Take',
-    #                                         '<br>',
-    #                                         '<sup>',
-    #                                         'This plot display the total authorized and reported take of fish per year.
-    # Total take (number of fish) is the sum of reported take or what was actually used (yellow) 
-    # and the remaining authorized take that was unused (blue). Note that the data is only showing 
-    # what was reported through APPs and is not complete due to unreported take by researchers.', 
-    #                                         '<br>',
-    #                                         '</sup>')))
   })
 # Time Series Total Mortality plot process and rendering
   output$plot2 <-renderPlotly({

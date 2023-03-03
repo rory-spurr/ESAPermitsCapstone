@@ -1,6 +1,8 @@
 # This webpage is helpful for formatting these lengthy paragraphs
 # https://shiny.rstudio.com/tutorial/written-tutorial/lesson2/
-
+#Summary: Here lies all the in app text for the various portions within the app.
+#Each page or segment of the app is delineated here.
+#Refer here for text editing. 
 # ==========================
 # Text for welcome page
 welcomeText <- tagList(
@@ -240,6 +242,12 @@ disclaimerText <- tagList(
     tags$p("CC BY-NC: This license allows reusers to distribute, remix, adapt, and build upon the material in any medium or format for noncommercial purposes only, and only so long as attribution is given to the creator.")),
   tags$br(),
   tags$br(),
+  tags$h4(strong("Datasets Cited")),
+  tags$p("National Marine Fisheries Service and Oregon Department of Fish and Wildlife. 
+         Authorizations and Permits for Protected Species (APPS). Current authorizations 
+         for research under ESA Section 10(a)(1)(A) and Section 4(d), and reported take 
+         from 2012-2023, for fish species in Washington, Oregon, Idaho, and California. 
+         Available online at https://apps.nmfs.noaa.gov/. Accessed 02/09/23."),
   tags$image(src = "image/download.png", width = "20%", height = "20%", align = "center"),
   tags$h4(strong("Acknowledgements")),
     tags$p("We thank Diana Dishman for her conceptualization of the project, expert technical 
@@ -292,10 +300,10 @@ TSglossText <- tagList(
     tags$li("Gear Type: Gear used to capture species."),
     tags$li("Authorized Take: Predicted and allocated number of individuals the project expects to take as a result of research. Includes numbers from lethal and non-lethal take."),
     tags$li("Reported Take: The number of individuals reportedly taken as a result of research. Includes numbers from lethal and non-lethal take."),
-    tags$li("Unused Take: The number of take that was allocated but went unused by the researcher. The difference between the authorized number and the reported number."),
-    tags$li("Authorized Mortality: Predicted and allocated number of individuals the project expects to kill as a result of research. Includes ONLY lethal take."),
+    tags$li("Unused Take: The number of fish authorized to be taken that was allocated but went unused by the researcher. The difference between the authorized number and the reported number."),
+    tags$li("Authorized Mortality: Authorized number of individuals that may be killed as a result of research. Includes ONLY lethal take."),
     tags$li("Reported Mortality: The number of individuals reportedly killed as a result of research. Includes ONLY lethal take."),
-    tags$li("Unused Mortality: The number of lethal take that was allocated but went unused by the researcher. The difference between the authorized number and the reported number.")
+    tags$li("Unused Mortality: The number of fish authorized to be killed that went unused by the researcher. The difference between the authorized number and the reported number.")
 )
 
 # Text for user boxes
