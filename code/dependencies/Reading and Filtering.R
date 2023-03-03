@@ -1,5 +1,9 @@
 # Rory Spurr and Alana Santana
 # Script to read in and filter data
+#Summary: The below script filters data from NOAA's WCR APPS database 
+#into relevant and usable data for the purpose of this app. 
+#Includes filters on permit data and reporting data. 
+#Also includes filtering for spatial data and boundary data. 
 library(shiny)
 library(ggplot2)
 library(tidyr)
@@ -14,9 +18,9 @@ sf_use_s2(FALSE)
 # =================================================================================
 # Permit Data
 # =================================================================================
-# West Coast region read in -> with Alana's filters
+# West Coast region read in
 wcr.init <- read_csv("data_raw/WCRpermits_demo_20221129.csv")
-
+#Filters for condensing to relevant data
 wcr <- wcr.init %>% 
   filter(PermitStatus == "Issued") %>% # only permits actually issued
   filter(DateIssued >"2012-01-01") %>% # permits issued within last 10 years

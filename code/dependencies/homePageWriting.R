@@ -20,7 +20,7 @@ welcomeText <- tagList(
   learn about each other’s work, and make permitting decisions more transparent.",
   style = "font-size:15px"),
   tags$br(),
-  tags$image(src = "image/mapGraph.png", width = "80%", height = "65%")
+  tags$image(src = "image/mapGraph2.png", width = "80%", height = "65%")
 )
 
 # ==========================
@@ -228,16 +228,16 @@ disclaimerText <- tagList(
     tags$p("For further information regarding the data source, data attributes, 
          R packages used, and general metadata for this project, please visit the 
           metadata folder of our Github ",
-    tags$a("here.", href = "https://github.com/rory-spurr/ESAPermitsCapstone/tree/main/docs/Metadata")), 
+    tags$a("here.", href = "https://github.com/rory-spurr/ESAPermitsCapstone/tree/main/Metadata")), 
   tags$br(),
   tags$h4(strong("Citation")), 
   tags$p("Spurr, R., & Santana, A. (2023). Visualizing ESA-Listed Fish Research on the West Coast (Version 1.0.0) 
           [Computer software]. https://github.com/rory-spurr/ESAPermitsCapstone"),
   tags$br(),
   tags$h4(strong("License Statement")),
-    tags$p("Copyright © 2007 Free Software Foundation, Inc.",
-    tags$a("<https://fsf.org/>", href = "https://fsf.org/"),
-    tags$p("Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.")),
+    tags$image(src = "image/by-nc.png", width = "15%", height = "10%", align = "center"),
+  
+    tags$p("CC BY-NC: This license allows reusers to distribute, remix, adapt, and build upon the material in any medium or format for noncommercial purposes only, and only so long as attribution is given to the creator.")),
   tags$br(),
   tags$br(),
   tags$image(src = "image/download.png", width = "20%", height = "20%", align = "center"),
@@ -251,7 +251,6 @@ disclaimerText <- tagList(
     project was provided through NMFS West Coast Region Protected Resources Division, as well as 
     the Jay Ginter Memorial Scholarship Fund at the University of Washington.")
   )
-)
 
 # ==========================
 # Text for about Map section
