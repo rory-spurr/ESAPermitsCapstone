@@ -1,3 +1,16 @@
+# =================================================
+# Rory Spurr and Alana Santana                                   
+# Script to create research permit data viz application              
+
+# Summary:
+# This script stitches together all of the data filtering and processing scripts
+# and then creates the web application using the research permit information.
+# To run the script and create the app, hit the green 'Run App' button in the top
+# middle of the screen.
+# =================================================
+
+# =================================================
+# Load in Packages
 library(shiny)
 library(shinydashboard)
 library(shinydashboardPlus)
@@ -7,10 +20,19 @@ source(paste(getwd(),"/code/dependencies/PreAppCode-1.R", sep = ""))
 source(paste(getwd(),"/code/dependencies/PreAppCode-2.R", sep = ""))
 source(paste(getwd(),"/code/dependencies/PreAppCode-3.R", sep = ""))
 source(paste(getwd(),"/code/dependencies/homePageWriting.R", sep = ""))
+# =================================================
+
+# =================================================
+# This section creates the UI for the App (front end pieces
+# including user interface, placeholders for figures and text,
+# also action buttons and other controls.)
 
 ui <- dashboardPage(
+  # Creates title 
   dashboardHeader(title = "Visualizing ESA-Listed Fish Research on the West Coast",
                   titleWidth = 500),
+  
+  # Outlines the menu on the left side
   dashboardSidebar(
     sidebarMenu(
       menuItem("Home", tabName = "home", icon = icon("home"), startExpanded = T, 
@@ -25,8 +47,8 @@ ui <- dashboardPage(
     )
   ), 
   
+  # This organizes each of the "body" pages -> the real interactive pieces of the app
   dashboardBody(
-    # includeCSS("www/appTheme.css"),
     
     # =========================================
     # Home Tab
@@ -168,6 +190,10 @@ ui <- dashboardPage(
   )
 )
 
+
+# This section does all the back end processing, doing things such as filtering data
+# based on user inputs and rendering text and charts.
+# =================================================
 server <- function(input, output) { 
   # have to use renderUI to render HTML correctly
   output$roryUI <- renderUI({
@@ -319,6 +345,10 @@ server <- function(input, output) {
     options = list(pageLength = 10, autoWidth = F, scrollX = T, 
                    columnDefs = list(list(
                      targets = "_all",
+                     # javascript that truncates text in data table cells.
+                     # can change the number of allowed characters before truncating
+                     # by modifying the '25' in 'data.length > 25' and 'data.substr(0, 25)'
+                     # where 25 is the number of allowed characters
                      render = JS(
                        "function(data, type, row, meta) {",
                        "return type === 'display' && data.length > 25 ?",
