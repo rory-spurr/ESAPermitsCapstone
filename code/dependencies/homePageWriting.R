@@ -325,7 +325,10 @@ roryText <- tagList(
 
 # Alana 
 alanaText <- tagList(
-  p("~Insert profile here~"),
+  p("Alana Santana is a multifaceted individual, specializing in several areas including 
+    fish and marine biology, conservation, biomechanics, R coding, and ArcGIS. After 
+    Alana obtains her Master’s, she is interested in pursuing a career that
+    allow her to integrate coding and spatial analysis skills into her work for conservation purposes."),
   tags$br(),
   h1(strong("Contact Info:"), style = "font-size:25px"),
   p("Github: ", tags$a("asantan8", href = "https://github.com/asantan8")),
