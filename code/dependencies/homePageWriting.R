@@ -313,7 +313,7 @@ TSglossText <- tagList(
 roryText <- tagList(
   p("Rory Spurr has worn many hats throughout his life, working as a fisheries scientist, in research
     and development for a fish passage company, and most recently as an R programmer. Rory will graduate with 
-    his Master's in March and would love for someone to hire him ASAP."),
+    his Master's in March and is excited to see where his career will take him."),
   tags$br(),
   h1(strong("Contact Info:"), style = "font-size:25px"),
   p(tags$a("Website", href = "https://rory-spurr.github.io/")),

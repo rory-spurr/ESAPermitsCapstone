@@ -1,9 +1,16 @@
+# =================================================
 # Rory Spurr and Alana Santana
 # Script to read in and filter data
-#Summary: The below script filters data from NOAA's WCR APPS database 
-#into relevant and usable data for the purpose of this app. 
-#Includes filters on permit data and reporting data. 
-#Also includes filtering for spatial data and boundary data. 
+
+#Summary: 
+# The below script filters data from the NMFS' WCR APPS database 
+# into relevant and usable data for the purpose of this app. 
+# Includes filters on permit data and reporting data. 
+# Also includes filtering for spatial data. 
+# =================================================
+
+# =================================================
+# Read in Packages
 library(shiny)
 library(ggplot2)
 library(tidyr)
@@ -15,6 +22,7 @@ library(NMFSResPermits)
 library(plotly)
 library(viridis)
 sf_use_s2(FALSE)
+
 # =================================================================================
 # Permit Data
 # =================================================================================
