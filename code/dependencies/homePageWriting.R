@@ -28,6 +28,7 @@ welcomeText <- tagList(
 # ==========================
 # Text/video on instructional page
 how2Text <- tagList(
+  tags$p("The following short video demonstrates how to use the various features of the app."),
   tags$video(id="videoID", width = "500px", height = "350px", type = "video/mp4", 
              src = "image/how2.mov", controls = "controls")
 )
@@ -328,7 +329,7 @@ alanaText <- tagList(
   p("Alana Santana is a multifaceted individual, specializing in several areas including 
     fish and marine biology, conservation, biomechanics, R coding, and ArcGIS. After 
     Alana obtains her Master’s, she is interested in pursuing a career that
-    allow her to integrate coding and spatial analysis skills into her work for conservation purposes."),
+    allows her to integrate coding and spatial analysis skills into her work for conservation purposes."),
   tags$br(),
   h1(strong("Contact Info:"), style = "font-size:25px"),
   p("Github: ", tags$a("asantan8", href = "https://github.com/asantan8")),
