@@ -23,6 +23,9 @@ excel tables that helped with QA/QC among other things.
 6. The 'www' folder contains all images and videos used within this application. 
 
 
+Citation:
+Spurr, R., & Santana, A. (2023). Visualizing ESA-Listed Fish Research on the West Coast (Version 1.0.0) [Computer software]. https://doi.org/10.5281/zenodo.7718894
+
 
 
 
