@@ -7,6 +7,7 @@
 library(DT)
 library(shinyjqui)
 library(RColorBrewer)
+source(paste(getwd(), "/code/dependencies/ReadingFiltering.R", sep = ""))
 # =================================================================================
 #Setting up data - Changing time factor
 a<-as.factor(wcr_act$DateReportPeriodEnd)
