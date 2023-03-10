@@ -282,7 +282,7 @@ tblCaptText <- tagList(
   tags$li("HUC 8: Hydrologic Unit 8 (HUC 8) code where research is taking place."),
   tags$li("Location: Name or description of research location."),
   tags$li("Water Type: Whether the research is happening in freshwater (FW) or saltwater (SW)."),
-  tags$li("Take Action: Action taken to capture/tag/kill animal."),
+  tags$li("Take Action: Action taken to capture/tag/kill animals."),
   tags$li("Gear Type: Gear used to capture species."),
   tags$li("Total Take: Total amount of take authorized. Includes both lethal and non-lethal take."),
   tags$li("Lethal Take: Total amount of fish mortality authorized.")
