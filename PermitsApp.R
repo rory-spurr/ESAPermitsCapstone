@@ -393,7 +393,6 @@ server <- function(input, output) {
                                                    "Authorized Take", "Reported Take", "Unused Take",
                                                    "Authorized Mortality", "Reported Mortality", "Unused Mortality"),
                                       options = list(pageLength = 10, autoWidth = F, scrollX = T)
-  )
-  jqui_sortable("#table thead tr")}
+  )}
 
 shinyApp(ui = ui, server = server)

@@ -5,16 +5,15 @@
 # Load in packages
 #install.packages("plotly")
 library(DT)
-library(shinyjqui)
 library(RColorBrewer)
 source(paste(getwd(), "/code/dependencies/ReadingFiltering.R", sep = ""))
 # =================================================================================
 #Setting up data - Changing time factor
-a<-as.factor(wcr_act$DateReportPeriodEnd)
-b<-strptime(a,format="%Y-%m-%d") 
-Year <- format(as.Date(b, format ="%Y-%m-%d" ), "%Y")
-Year <- as.data.frame(Year)
-wcr.v <- cbind(wcr_act, Year) #look into annual time start vs annual start end
+a<-as.factor(wcr_act$DateReportPeriodEnd) #identifies the column we'll use for time factor and makes object
+b<-strptime(a,format="%Y-%m-%d") # reformat date column
+Year <- format(as.Date(b, format ="%Y-%m-%d" ), "%Y") # creates new column just for the year
+Year <- as.data.frame(Year) #reassigns year column as object and own data
+wcr.v <- cbind(wcr_act, Year) #merges back to the original data frame
 #==============================================================
 #Setting up data - Creating totalmorts and QC NA values
 wcr.v <-wcr.v %>% 
@@ -29,25 +28,25 @@ df <- aggregate(wcr.v$ExpTake,
                 by = list(wcr.v$CommonName, wcr.v$ResultCode, wcr.v$ActMort, wcr.v$ActTake, wcr.v$TakeAction, wcr.v$Species, wcr.v$LifeStage, wcr.v$Prod, 
                           wcr.v$Year, wcr.v$TotalMorts), FUN = sum) 
 
-names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake")
+names(df) <- c("CommonName", "ResultCode", "ActMort", "ActTake", "TakeAction", "ESU", "LifeStage", "Production", "Year", "TotalMorts", "ExpTake") #renaming columns
 #==============================================================
 #Summing each variable by year and grouping by ESU, Production, and Lifestage
 YT <-df %>%
-  group_by(Year, ESU, Production, LifeStage) %>%
+  group_by(Year, ESU, Production, LifeStage) %>% # Actual Take
   summarise(Used = sum(ActTake))
 YM <- df %>%
-  group_by(Year, ESU, Production, LifeStage) %>%
+  group_by(Year, ESU, Production, LifeStage) %>% # Actual Mortality
   summarise(Used = sum(ActMort))
 TM <- df %>%
-  group_by(Year, ESU, Production, LifeStage) %>%
+  group_by(Year, ESU, Production, LifeStage) %>% # Authorized Mortality
   summarise(Authorized_Mortality = sum(TotalMorts))
 ET <-df %>%
   group_by(Year, ESU, Production, LifeStage) %>%
-  summarise(Authorized_Take = sum(as.numeric(ExpTake)))
+  summarise(Authorized_Take = sum(as.numeric(ExpTake))) #Authorized Take 
 #==============================================================
 #Merging data sets
-Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage"))
-Mort <- merge(YM, TM, by = c("Year", "ESU", "Production", "LifeStage"))
+Take <- merge(YT, ET, by = c("Year", "ESU", "Production", "LifeStage")) #grouping authorized and expected take together
+Mort <- merge(YM, TM, by = c("Year", "ESU", "Production", "LifeStage")) #grouping auth mortality and expected mortality together
 #==============================================================
 #Replacing NaN or NA or Inf with 0
 Take[is.na(Take)] <- 0
