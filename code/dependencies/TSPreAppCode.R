@@ -6,7 +6,7 @@
 #install.packages("plotly")
 library(DT)
 library(RColorBrewer)
-source(paste(getwd(), "/code/dependencies/ReadingFiltering.R", sep = ""))
+# source(paste(getwd(), "/code/dependencies/ReadingFiltering.R", sep = ""))
 # =================================================================================
 #Setting up data - Changing time factor
 a<-as.factor(wcr_act$DateReportPeriodEnd) #identifies the column we'll use for time factor and makes object

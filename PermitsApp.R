@@ -295,7 +295,7 @@ server <- function(input, output) {
   # Base map output (does not change)
   output$map <- renderLeaflet({
     leaflet(filteredData()) %>% 
-      addProviderTiles(providers$Stamen.TerrainBackground) %>%
+      addProviderTiles(providers$Stadia.StamenTerrainBackground) %>%
       setView(map, lng = -124.072971, lat = 40.887325, zoom = 4)
   })
   
